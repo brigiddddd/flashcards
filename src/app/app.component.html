@@ -1,16 +1,6 @@
-<!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
-  <h1>
-    {{title}}
-  </h1>
+    <h1>
+        {{title}}
+    </h1>
 </div>
-<div>
-  <ul class="stacks">
-    <li *ngFor="let stack of stacks" (click)="onSelect(stack)" [class.selected]="stack === selectedStack">
-      <h2> {{stack.title}} </h2>
-      <stack-detail *ngIf="selectedStack === stack" [stack]="stack"></stack-detail>
-    </li>
-  </ul>
-</div>
-
-
+<stacks></stacks>
