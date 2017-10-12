@@ -1,0 +1,12 @@
+<div>
+    <div>
+        <label>Title: </label>
+        <input [(ngModel)]="stack.title" placeholder="title">
+    </div>
+    
+    <ul class="cards">
+        <li *ngFor="let card of stack.cards">
+        {{ card }}
+        </li>
+    </ul>
+</div>
