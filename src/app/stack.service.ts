@@ -8,4 +8,9 @@ export class StackService {
     getStacks(): Promise<Stack[]> {
         return Promise.resolve(STACKS);
     }
+
+    getStack(title: string): Promise<Stack> {
+        return this.getStacks()
+                .then(stacks => stacks.find(stack => stack.title === title));
+    }
 }

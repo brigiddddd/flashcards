@@ -1,4 +1,5 @@
-<div>
+<div *ngIf='stack'>
+    <h2>{{ stack.title }}</h2>
     <div>
         <label>Title: </label>
         <input [(ngModel)]="stack.title" placeholder="title">
@@ -9,4 +10,5 @@
         {{ card }}
         </li>
     </ul>
+    <button (click)="goBack()">Back</button>
 </div>

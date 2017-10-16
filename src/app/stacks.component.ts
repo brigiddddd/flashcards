@@ -1,6 +1,7 @@
 import { StackService } from './stack.service';
 import { Component, OnInit } from '@angular/core';
 import { Stack } from './stack';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'stacks',
@@ -11,7 +12,7 @@ export class StacksComponent implements OnInit {
   stacks: Stack[];
   selectedStack: Stack;
   
-  constructor(private _stackService: StackService) {}
+  constructor(private _stackService: StackService, private _router: Router) {}
 
   ngOnInit(): void {
     this.getStacks();
@@ -23,5 +24,6 @@ export class StacksComponent implements OnInit {
 
   onSelect(stack: Stack): void {
     this.selectedStack = stack;
+    this._router.navigate(['/stack', this.selectedStack.title]);
   }
 }

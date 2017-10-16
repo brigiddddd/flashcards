@@ -1,10 +1,9 @@
 <div>
   <ul class="stacks">
-    <li *ngFor="let stack of stacks" (click)="onSelect(stack)" [class.selected]="stack === selectedStack">
-      <h2> {{stack.title}} </h2>
-      <stack-detail *ngIf="selectedStack === stack" [stack]="stack"></stack-detail>
+    <li *ngFor="let stack of stacks" 
+        (click)="onSelect(stack)" 
+        [class.selected]="stack === selectedStack">
+        <span title="{{ stack.cards }}">{{stack.title}}</span>
     </li>
   </ul>
 </div>
-
-
