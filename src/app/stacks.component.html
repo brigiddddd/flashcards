@@ -4,6 +4,13 @@
         (click)="onSelect(stack)" 
         [class.selected]="stack === selectedStack">
         <span title="{{ stack.cards }}">{{stack.title}}</span>
+        <button class="delete" (click)="delete(stack); $event.stopPropagation()">X</button>
     </li>
   </ul>
+</div>
+<div>
+  <label>Stack title:</label> <input #stackTitle />
+  <button (click)="add(stackTitle.value); stackTitle.value=''">
+    Add
+  </button>
 </div>

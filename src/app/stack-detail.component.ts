@@ -21,12 +21,17 @@ export class StackDetailComponent implements OnInit{
 
     ngOnInit(): void {
         this._route.paramMap
-            .switchMap( (params:ParamMap) => this._stackService.getStack(params.get('title')))
+            .switchMap( (params:ParamMap) => this._stackService.getStack(params.get('id')))
             .subscribe(stack => this.stack = stack);
     }
 
     goBack(): void {
         this._location.back();
         // TODO: CanDeactivate guard (https://angular.io/api/router/CanDeactivate)
+    }
+
+    save(): void {
+        this._stackService.update(this.stack)
+            .then(() => this.goBack());
     }
 }

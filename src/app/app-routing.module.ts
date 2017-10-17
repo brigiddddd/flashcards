@@ -8,7 +8,7 @@ import { StackDetailComponent }  from './stack-detail.component';
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard',  component: DashboardComponent },
-  { path: 'stack/:title', component: StackDetailComponent },
+  { path: 'detail/:id', component: StackDetailComponent },
   { path: 'stacks',     component: StacksComponent }
 ];
 

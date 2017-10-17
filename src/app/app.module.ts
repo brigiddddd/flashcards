@@ -1,11 +1,16 @@
-import { AppRoutingModule } from './app-routing.module';
-import { DashboardComponent } from './dashboard.component';
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RouterModule }   from '@angular/router';
+import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
+import { HttpModule } from '@angular/http';
+
+import { AppRoutingModule } from './app-routing.module';
+
+// Imports for loading & configuring the in-memory web api
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService }  from './in-memory-data.service';
 
 import { AppComponent } from './app.component';
+import { DashboardComponent } from './dashboard.component';
 import { StacksComponent } from './stacks.component';
 import { StackDetailComponent } from './stack-detail.component';
 import { StackService } from './stack.service';
@@ -20,11 +25,11 @@ import { StackService } from './stack.service';
   imports: [
     BrowserModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpModule,
+    InMemoryWebApiModule.forRoot(InMemoryDataService),
   ],
-  providers: [
-    StackService
-  ],
+  providers: [StackService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
