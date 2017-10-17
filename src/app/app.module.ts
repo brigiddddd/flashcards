@@ -14,13 +14,15 @@ import { DashboardComponent } from './dashboard.component';
 import { StacksComponent } from './stacks.component';
 import { StackDetailComponent } from './stack-detail.component';
 import { StackService } from './stack.service';
+import { StackSearchComponent } from './stack-search.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     StackDetailComponent,
-    StacksComponent
+    StacksComponent,
+    StackSearchComponent
   ],
   imports: [
     BrowserModule,
