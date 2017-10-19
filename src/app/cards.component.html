@@ -1,7 +1,7 @@
 <div>
-  <div *ngIf="cards" (click)="onClick()">
+  <h1 *ngIf="cards" (click)="onClick()">
     {{cards[cardIndex]}}
-  </div>
+  </h1>
   <br>
   <button *ngIf="cards && cardIndex >= cards.length" (click)="goBack()" title="Back">
     <i class="fa fa-arrow-left"></i>

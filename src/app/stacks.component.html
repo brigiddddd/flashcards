@@ -1,5 +1,10 @@
 <div>
   <ul class="stacks">
+    <li>
+      <button (click)="addStack()">
+        <i class="fa fa-plus"></i>
+      </button>
+    </li>
     <!--li *ngFor="let stack of stacks"
         (click)="onSelect(stack)"
         [class.selected]="stack === selectedStack"-->
@@ -14,10 +19,10 @@
     </li>
   </ul>
 </div>
-<div>
+<!--div>
   <label>Stack title:</label>
   <input #stackTitle />
   <button (click)="addStack(stackTitle.value); stackTitle.value=''">
     <i class="fa fa-plus"></i>
   </button>
-</div>
+</div-->
