@@ -8,24 +8,23 @@
 
   <div>
     <label>Title: </label>
-    <input [(ngModel)]="stack.title" placeholder="title">
+    <input [(ngModel)]="stack.title" placeholder="Title">
   </div>
 
   <ul class="cards">
     <li *ngFor="let card of stack.cards" (click)="onSelect(card)">
       {{ card }}
-      <button class="delete" (click)="deleteCard(card); $event.stopPropagation()">
+      <button class="delete" (click)="deleteCard(card); $event.stopPropagation()" title="Delete">
         <i class="fa fa-trash"></i>
       </button>
     </li>
+    <li>
+      <input #cardContent />
+      <button (click)="addCard(cardContent.value); cardContent.value=''" title="Add">
+        <i class="fa fa-plus"></i>
+      </button>
+    </li>
   </ul>
-  <div>
-    <label>New: </label>
-    <input #cardContent />
-    <button (click)="addCard(cardContent.value); cardContent.value=''">
-      <i class="fa fa-plus"></i>
-    </button>
-  </div>
   <button (click)="goBack()" title="Back">
     <i class="fa fa-arrow-left"></i>
   </button>

@@ -48,6 +48,9 @@ export class StackDetailComponent implements OnInit {
   }
 
   addCard(cardContent: string): void {
+    cardContent = cardContent.trim();
+    if (!cardContent) { return; }
+
     if (!this.stack.cards) {
       this.stack.cards = [];
     }

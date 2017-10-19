@@ -1,7 +1,7 @@
 <div>
   <ul class="stacks">
     <li>
-      <button (click)="addStack()">
+      <button (click)="addStack()" title="Add">
         <i class="fa fa-plus"></i>
       </button>
     </li>
@@ -10,19 +10,12 @@
         [class.selected]="stack === selectedStack"-->
     <li *ngFor="let stack of stacks" (click)="onSelect(stack)">
       <span title="{{ stack.cards }}">{{stack.title}}</span>
-      <button class="edit" (click)="editStack(stack); $event.stopPropagation()">
+      <button class="edit" (click)="editStack(stack); $event.stopPropagation()" title="Edit">
         <i class="fa fa-pencil-square-o"></i>
       </button>
-      <button class="delete" (click)="deleteStack(stack); $event.stopPropagation()">
+      <button class="delete" (click)="deleteStack(stack); $event.stopPropagation()" title="Delete">
         <i class="fa fa-trash"></i>
       </button>
     </li>
   </ul>
 </div>
-<!--div>
-  <label>Stack title:</label>
-  <input #stackTitle />
-  <button (click)="addStack(stackTitle.value); stackTitle.value=''">
-    <i class="fa fa-plus"></i>
-  </button>
-</div-->
