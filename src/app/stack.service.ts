@@ -1,6 +1,6 @@
 import { Stack } from './stack';
 
-//import { STACKS } from './mock-stacks';
+// import { STACKS } from './mock-stacks';
 
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
@@ -15,7 +15,7 @@ export class StackService {
     constructor(private _http: Http) { }
 
     getStack(id: string): Promise<Stack> {
-        //return this.getStacks().then(stacks => stacks.find(stack => stack.id === id));
+        // return this.getStacks().then(stacks => stacks.find(stack => stack.id === id));
         const url = `${this._stacksUrl}/${id}`;
         return this._http.get(url)
             .toPromise()
@@ -24,7 +24,7 @@ export class StackService {
     }
 
     getStacks(): Promise<Stack[]> {
-        //return Promise.resolve(STACKS);
+        // return Promise.resolve(STACKS);
         return this._http.get(this._stacksUrl)
             .toPromise()
             .then(response => response.json() as Stack[])
@@ -45,14 +45,14 @@ export class StackService {
     }
 
     create(title: string): Promise<Stack> {
-        return this._http.post(this._stacksUrl, JSON.stringify({title: title}), {headers: this._headers})
+        return this._http.post(this._stacksUrl, JSON.stringify({title: title, cards: []}), {headers: this._headers})
             .toPromise()
             .then(result => result.json() as Stack)
             .catch(this._handleError);
     }
 
     delete(id: number): Promise<void> {
-        const url = `${this._stacksUrl}/${id}`
+        const url = `${this._stacksUrl}/${id}`;
         return this._http.delete(url, {headers: this._headers})
             .toPromise()
             .then(() => null)

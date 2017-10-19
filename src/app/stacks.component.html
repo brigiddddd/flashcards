@@ -1,16 +1,23 @@
 <div>
   <ul class="stacks">
-    <li *ngFor="let stack of stacks" 
-        (click)="onSelect(stack)" 
-        [class.selected]="stack === selectedStack">
-        <span title="{{ stack.cards }}">{{stack.title}}</span>
-        <button class="delete" (click)="delete(stack); $event.stopPropagation()">X</button>
+    <!--li *ngFor="let stack of stacks"
+        (click)="onSelect(stack)"
+        [class.selected]="stack === selectedStack"-->
+    <li *ngFor="let stack of stacks" (click)="onSelect(stack)">
+      <span title="{{ stack.cards }}">{{stack.title}}</span>
+      <button class="edit" (click)="editStack(stack); $event.stopPropagation()">
+        <i class="fa fa-pencil-square-o"></i>
+      </button>
+      <button class="delete" (click)="deleteStack(stack); $event.stopPropagation()">
+        <i class="fa fa-trash"></i>
+      </button>
     </li>
   </ul>
 </div>
 <div>
-  <label>Stack title:</label> <input #stackTitle />
-  <button (click)="add(stackTitle.value); stackTitle.value=''">
-    Add
+  <label>Stack title:</label>
+  <input #stackTitle />
+  <button (click)="addStack(stackTitle.value); stackTitle.value=''">
+    <i class="fa fa-plus"></i>
   </button>
 </div>

@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule }   from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppRoutingModule } from './app-routing.module';
 
 // Imports for loading & configuring the in-memory web api
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService }  from './in-memory-data.service';
+import { InMemoryDataService } from './in-memory-data.service';
 
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard.component';
@@ -15,6 +15,7 @@ import { StacksComponent } from './stacks.component';
 import { StackDetailComponent } from './stack-detail.component';
 import { StackService } from './stack.service';
 import { StackSearchComponent } from './stack-search.component';
+import { CardsComponent } from './cards.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { StackSearchComponent } from './stack-search.component';
     DashboardComponent,
     StackDetailComponent,
     StacksComponent,
-    StackSearchComponent
+    StackSearchComponent,
+    CardsComponent
   ],
   imports: [
     BrowserModule,

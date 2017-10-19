@@ -1,15 +1,19 @@
-import { NgModule }             from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { DashboardComponent }   from './dashboard.component';
-import { StacksComponent }      from './stacks.component';
-import { StackDetailComponent }  from './stack-detail.component';
+import { DashboardComponent } from './dashboard.component';
+import { StacksComponent } from './stacks.component';
+import { StackDetailComponent } from './stack-detail.component';
+import { StackSearchComponent } from './stack-search.component';
+import { CardsComponent } from './cards.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: 'dashboard',  component: DashboardComponent },
+  { path: '', redirectTo: '/stacks', pathMatch: 'full' },
+  // { path: 'dashboard',  component: DashboardComponent },
   { path: 'detail/:id', component: StackDetailComponent },
-  { path: 'stacks',     component: StacksComponent }
+  { path: 'stacks',     component: StacksComponent },
+  { path: 'search',     component: StackSearchComponent },
+  { path: 'cards/:id',  component: CardsComponent }
 ];
 
 @NgModule({

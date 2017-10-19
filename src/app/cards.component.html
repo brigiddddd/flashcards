@@ -1,0 +1,12 @@
+<div>
+  <div *ngIf="cards" (click)="onClick()">
+    {{cards[cardIndex]}}
+  </div>
+  <br>
+  <button *ngIf="cards && cardIndex >= cards.length" (click)="goBack()" title="Back">
+    <i class="fa fa-arrow-left"></i>
+  </button>
+  <button *ngIf="cards && cardIndex >= cards.length" (click)="replay()" title="Replay">
+    <i class="fa fa-repeat"></i>
+  </button>
+</div>

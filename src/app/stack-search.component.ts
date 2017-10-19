@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Observable }        from 'rxjs/Observable';
-import { Subject }           from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 
 // Observable class extensions
 import 'rxjs/add/observable/of';
@@ -21,7 +21,7 @@ import { Stack } from './stack';
     templateUrl: './stack-search.component.html',
     providers: [StackSearchService]
 })
-export class StackSearchComponent implements OnInit{
+export class StackSearchComponent implements OnInit {
     stacks: Observable<Stack[]>;
     private _searchTerms = new Subject<string>();
 
@@ -33,7 +33,7 @@ export class StackSearchComponent implements OnInit{
 
     ngOnInit(): void {
         this.stacks = this._searchTerms.debounceTime(300) // wait 300 ms after each keystroke before considering the term
-            .distinctUntilChanged() // if next search term is same as previous 
+            .distinctUntilChanged() // if next search term is same as previous
             .switchMap(term => term // switch to new observable each time the term changes
                 // return the http search observable
                 ? this._stackSearchService.search(term)
@@ -48,7 +48,7 @@ export class StackSearchComponent implements OnInit{
     }
 
     gotoDetail(stack: Stack): void {
-        let link = ['/detail', stack.id];
+        const link = ['/detail', stack.id];
         this._router.navigate(link);
     }
 }

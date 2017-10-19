@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class StacksComponent implements OnInit {
   stacks: Stack[];
-  selectedStack: Stack;
+  // selectedStack: Stack;
 
   constructor(private _stackService: StackService, private _router: Router) { }
 
@@ -22,27 +22,35 @@ export class StacksComponent implements OnInit {
   }
 
   onSelect(stack: Stack): void {
-    this.selectedStack = stack;
-    this._router.navigate(['/detail', this.selectedStack.id]);
+    console.log(stack.cards);
+    this._router.navigate(['/cards', stack.id]);
+    // this.selectedStack = stack;
+    // this._router.navigate(['/detail', this.selectedStack.id]);
   }
 
-  add(title: string): void {
+  addStack(title: string): void {
     title = title.trim();
     if (!title) { return; }
     this._stackService.create(title)
       .then(stack => {
         this.stacks.push(stack);
-        this.selectedStack = null;
-      })
+        // this.selectedStack = null;
+        this._router.navigate(['/detail', stack.id]);
+      });
   }
 
-  delete(stack: Stack): void {
+  editStack(stack: Stack): void {
+    // TODO
+    this._router.navigate(['/detail', stack.id]);
+  }
+
+  deleteStack(stack: Stack): void {
     this._stackService.delete(stack.id)
       .then(() => {
-        this.stacks = this.stacks.filter(s => s != stack);
-        if (this.selectedStack === stack) {
-          this.selectedStack = null;
-        }
+        this.stacks = this.stacks.filter(s => s !== stack);
+        // if (this.selectedStack === stack) {
+        //   this.selectedStack = null;
+        // }
       });
   }
 }

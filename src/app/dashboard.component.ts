@@ -6,13 +6,13 @@ import { Component, OnInit } from '@angular/core';
     selector: 'dashboard',
     templateUrl: './dashboard.component.html'
 })
-export class DashboardComponent implements OnInit{
+export class DashboardComponent implements OnInit {
     stacks: Stack[] = [];
 
     constructor(private _stackService: StackService) {}
 
     ngOnInit(): void {
         this._stackService.getStacks()
-            .then(stacks => this.stacks = stacks);// stacks.slice(0,3));
+            .then(stacks => this.stacks = stacks); // stacks.slice(0,3);
     }
 }
