@@ -26,7 +26,7 @@ export class StacksComponent implements OnInit {
   }
 
   addStack(): void {
-    this._stackService.create('New Stack').then(stack => {
+    this._stackService.create('new').then(stack => {
       this._router.navigate(['/detail', stack.id]);
     });
   }

@@ -1,7 +1,7 @@
-<div>
-  <h1 *ngIf="cards" (click)="onClick()">
+<div class="jumbotron">
+  <div class="flashcard-data" *ngIf="cards" (click)="onClick()">
     {{cards[cardIndex]}}
-  </h1>
+  </div>
   <br>
   <button *ngIf="cards && cardIndex >= cards.length" (click)="goBack()" title="Back">
     <i class="fa fa-arrow-left"></i>

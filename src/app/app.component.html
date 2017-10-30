@@ -1,11 +1,20 @@
-<div style="text-align:center">
-    <h1>
-        {{title}}
-    </h1>
-</div>
-<nav>
-    <!--a routerLink='/dashboard'>Dashboard</a-->
-    <a routerLink='/stacks' title="Home"><i class="fa fa-home"></i></a>
-    <a routerLink='/search' title="Search"><i class="fa fa-search"></i></a>
-</nav>
+<header>
+  <div class="navbar navbar-dark bg-dark">
+    <div class="container d-flex justify-content-between">
+      <a href="#" class="navbar-brand">{{title}}</a>
+      <div>
+        <button class="navbar-toggler" type="button">
+          <a routerLink='/stacks' title="Home">
+            <i class="fa fa-home"></i>
+          </a>
+        </button>
+        <button class="navbar-toggler" type="button">
+          <a routerLink='/search' title="Search">
+            <i class="fa fa-search"></i>
+          </a>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
 <router-outlet></router-outlet>

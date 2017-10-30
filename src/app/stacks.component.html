@@ -1,21 +1,24 @@
-<div>
-  <ul class="stacks">
-    <li>
-      <button (click)="addStack()" title="Add">
-        <i class="fa fa-plus"></i>
-      </button>
-    </li>
-    <!--li *ngFor="let stack of stacks"
-        (click)="onSelect(stack)"
-        [class.selected]="stack === selectedStack"-->
-    <li *ngFor="let stack of stacks" (click)="onSelect(stack)">
-      <span title="{{ stack.cards }}">{{stack.title}}</span>
-      <button class="edit" (click)="editStack(stack); $event.stopPropagation()" title="Edit">
-        <i class="fa fa-pencil-square-o"></i>
-      </button>
-      <button class="delete" (click)="deleteStack(stack); $event.stopPropagation()" title="Delete">
-        <i class="fa fa-trash"></i>
-      </button>
-    </li>
-  </ul>
+<div class="album">
+  <div class="container">
+    <div class="card-deck">
+      <div class="card text-center" *ngFor="let stack of stacks" (click)="onSelect(stack)">
+        <div class="card-header" title=" {{stack.cards}}">{{ stack.title }}</div>
+        <div class="card-footer">
+          <button class="edit" (click)="editStack(stack); $event.stopPropagation()" title="Edit">
+            <i class="fa fa-pencil-square-o"></i>
+          </button>
+          <button class="delete" (click)="deleteStack(stack); $event.stopPropagation()" title="Delete">
+            <i class="fa fa-trash"></i>
+          </button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <button (click)="addStack()" title="Add">
+            <i class="fa fa-plus"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

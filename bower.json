@@ -1,0 +1,17 @@
+{
+  "name": "flashcards",
+  "description": "",
+  "main": "",
+  "authors": [
+    "brigid <brigid.halling@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

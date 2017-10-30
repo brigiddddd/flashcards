@@ -54,6 +54,7 @@ export class StackDetailComponent implements OnInit {
     if (!this.stack.cards) {
       this.stack.cards = [];
     }
+    // TODO: comma delimited list?
     this.stack.cards.push(cardContent);
   }
 

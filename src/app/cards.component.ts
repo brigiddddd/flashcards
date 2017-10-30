@@ -7,7 +7,8 @@ import { Stack } from './stack';
 
 @Component({
   selector: 'cards',
-  templateUrl: './cards.component.html'
+  templateUrl: './cards.component.html',
+  styles: ['./cards.component.css']
 })
 export class CardsComponent implements OnInit {
   cards: string[];
