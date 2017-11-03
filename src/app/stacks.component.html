@@ -1,21 +1,21 @@
 <div>
-  <ul class="stacks">
-    <li>
+  <mat-grid-list class="stacks mat-grid-list" cols="4">
+    <mat-grid-tile class="mat-grid-tile">
       <button (click)="addStack()" title="Add">
-        <i class="fa fa-plus"></i>
+        <i class="material-icons md-light">add</i>
       </button>
-    </li>
+    </mat-grid-tile>
     <!--li *ngFor="let stack of stacks"
         (click)="onSelect(stack)"
         [class.selected]="stack === selectedStack"-->
-    <li *ngFor="let stack of stacks" (click)="onSelect(stack)">
+    <mat-grid-tile class="mat-grid-tile" style="background-color: white;" *ngFor="let stack of stacks" (click)="onSelect(stack)">
       <span title="{{ stack.cards }}">{{stack.title}}</span>
       <button class="edit" (click)="editStack(stack); $event.stopPropagation()" title="Edit">
-        <i class="fa fa-pencil-square-o"></i>
+        <i class="material-icons md-light">edit</i>
       </button>
       <button class="delete" (click)="deleteStack(stack); $event.stopPropagation()" title="Delete">
-        <i class="fa fa-trash"></i>
+        <i class="material-icons md-light">delete</i>
       </button>
-    </li>
-  </ul>
+    </mat-grid-tile>
+  </mat-grid-list>
 </div>

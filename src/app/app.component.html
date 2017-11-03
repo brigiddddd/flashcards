@@ -1,11 +1,19 @@
-<div style="text-align:center">
-    <h1>
+
+<mat-toolbar>
+  <button>
+    <a routerLink='/stacks' title="Home">
+      <i class="material-icons md-light">home</i>
+    </a>
+  </button>
+  <button>
+    <a routerLink='/search' title="Search">
+      <i class="material-icons md-light">search</i>
+    </a>
+  </button>
+  <div style="text-align:center; width: 100%;">
+      <h1>
         {{title}}
-    </h1>
-</div>
-<nav>
-    <!--a routerLink='/dashboard'>Dashboard</a-->
-    <a routerLink='/stacks' title="Home"><i class="fa fa-home"></i></a>
-    <a routerLink='/search' title="Search"><i class="fa fa-search"></i></a>
-</nav>
+      </h1>
+    </div>
+</mat-toolbar>
 <router-outlet></router-outlet>

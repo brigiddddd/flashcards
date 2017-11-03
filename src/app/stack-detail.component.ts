@@ -57,12 +57,13 @@ export class StackDetailComponent implements OnInit {
     this.stack.cards.push(cardContent);
   }
 
-  save(): void {
+  save(goBack): void {
     this._stackService.update(this.stack)
-      .then(() => this.goBack());
+      .then(() => { if (goBack) { this.goBack(); } });
   }
 
   play(): void {
+    this.save(false);
     this._router.navigate(['/cards', this.stack.id]);
   }
 }

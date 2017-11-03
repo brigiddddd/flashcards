@@ -2,7 +2,7 @@
   <h2>
     {{ stack.title }}
     <button (click)="play()" title="Play">
-      <i class="fa fa-play"></i>
+      <i class="material-icons md-light">play_circle_outline</i>
     </button>
   </h2>
 
@@ -15,20 +15,20 @@
     <li *ngFor="let card of stack.cards" (click)="onSelect(card)">
       {{ card }}
       <button class="delete" (click)="deleteCard(card); $event.stopPropagation()" title="Delete">
-        <i class="fa fa-trash"></i>
+        <i class="material-icons md-light">delete</i>
       </button>
     </li>
     <li>
       <input #cardContent />
       <button (click)="addCard(cardContent.value); cardContent.value=''" title="Add">
-        <i class="fa fa-plus"></i>
+        <i class="material-icons md-light">add_circle_outline</i>
       </button>
     </li>
   </ul>
   <button (click)="goBack()" title="Back">
-    <i class="fa fa-arrow-left"></i>
+    <i class="material-icons md-light">arrow_back</i>
   </button>
-  <button (click)="save()" title="Save">
-    <i class="fa fa-save"></i>
+  <button (click)="save(true)" title="Save">
+    <i class="material-icons md-light">save</i>
   </button>
 </div>
