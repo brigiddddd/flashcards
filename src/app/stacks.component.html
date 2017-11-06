@@ -1,6 +1,6 @@
 <div>
-  <mat-grid-list class="stacks mat-grid-list" cols="4">
-    <mat-grid-tile class="mat-grid-tile">
+  <mat-grid-list class="stacks mat-grid-list" cols="4" gutterSize="10px">
+    <mat-grid-tile class="mat-grid-tile stack">
       <button (click)="addStack()" title="Add">
         <i class="material-icons md-light">add</i>
       </button>
@@ -8,14 +8,17 @@
     <!--li *ngFor="let stack of stacks"
         (click)="onSelect(stack)"
         [class.selected]="stack === selectedStack"-->
-    <mat-grid-tile class="mat-grid-tile" style="background-color: white;" *ngFor="let stack of stacks" (click)="onSelect(stack)">
-      <span title="{{ stack.cards }}">{{stack.title}}</span>
-      <button class="edit" (click)="editStack(stack); $event.stopPropagation()" title="Edit">
-        <i class="material-icons md-light">edit</i>
-      </button>
-      <button class="delete" (click)="deleteStack(stack); $event.stopPropagation()" title="Delete">
+    <mat-grid-tile class="mat-grid-tile stack" *ngFor="let stack of stacks" (click)="onSelect(stack)" [style.background]="stack.color">
+      <h3 title="{{ stack.cards }}">{{stack.title}}</h3>
+      <mat-grid-tile-footer>
+
+        <button class="md-icon-button edit" (click)="editStack(stack); $event.stopPropagation()" title="Edit">
+          <i class="material-icons">edit</i>
+        </button>
+        <!--button class="delete" (click)="deleteStack(stack); $event.stopPropagation()" title="Delete">
         <i class="material-icons md-light">delete</i>
-      </button>
+      </button-->
+      </mat-grid-tile-footer>
     </mat-grid-tile>
   </mat-grid-list>
 </div>

@@ -5,7 +5,8 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'stacks',
-  templateUrl: './stacks.component.html'
+  templateUrl: './stacks.component.html',
+  styleUrls: ['./stacks.component.css']
 })
 export class StacksComponent implements OnInit {
   stacks: Stack[];
