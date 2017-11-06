@@ -16,8 +16,7 @@ import { StackDetailComponent } from './stack-detail.component';
 import { StackService } from './stack.service';
 import { StackSearchComponent } from './stack-search.component';
 import { CardsComponent } from './cards.component';
-import { MatToolbarModule } from '@angular/material';
-import {MatGridListModule} from '@angular/material';
+import { MatToolbarModule, MatGridListModule, MatCardModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -35,7 +34,8 @@ import {MatGridListModule} from '@angular/material';
     HttpModule,
     InMemoryWebApiModule.forRoot(InMemoryDataService),
     MatToolbarModule,
-    MatGridListModule
+    MatGridListModule,
+    MatCardModule
   ],
   providers: [StackService],
   bootstrap: [AppComponent]

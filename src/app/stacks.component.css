@@ -1,4 +1,17 @@
-.stack {
-  background-color: white;
-  border-radius: 10px;
+.container {
+  height: 400px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+
+.item {
+  text-align: center;
+  width: 100px;
+  height: 100px;
+  margin: auto;
+  flex-grow: 1;
+  flex-basis: 0;
+  margin: 5px;
+  background-color:lightseagreen;
 }
