@@ -1,7 +1,11 @@
 <div>
-  <h1 *ngIf="cards" (click)="onClick()">
-    {{cards[cardIndex]}}
-  </h1>
+  <div class="cards" *ngIf="cards" (click)="onClick()">
+    <mat-card class="card">
+      <div class="card-content">
+        {{cards[cardIndex]}}
+      </div>
+    </mat-card>
+  </div>
   <br>
   <button *ngIf="cards && cardIndex >= cards.length" (click)="goBack()" title="Back">
     <i class="material-icons md-light">arrow_back</i>

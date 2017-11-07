@@ -1,23 +1,27 @@
-<div class="container">
-  <mat-card class="stack item">
-    <mat-card-content align="center">
-      <button (click)="addStack()" title="Add">
-        <i class="material-icons md-light">add</i>
-      </button>
-    </mat-card-content>
-  </mat-card>
-  <mat-card *ngFor="let stack of stacks" class="stack item" (click)="onSelect(stack)" [style.background]="stack.color">
-    <mat-card-header>
-      <mat-card-title title="{{ stack.cards }}"><h3>{{stack.title}}</h3></mat-card-title>
-    </mat-card-header>
-    <mat-card-actions align="end">
-      <button mat-button class="edit" (click)="editStack(stack); $event.stopPropagation()" title="Edit">
-        <i class="material-icons">edit</i>
-      </button>
-      <!--button mat-button class="delete" (click)="deleteStack(stack); $event.stopPropagation()" title="Delete">
+<div class="container-background">
+  <div class="container">
+    <mat-card class="stack item" title="Add new stack">
+      <mat-card-content align="center">
+        <button (click)="addStack()">
+          <i class="material-icons md-light">add</i>
+        </button>
+      </mat-card-content>
+    </mat-card>
+    <mat-card *ngFor="let stack of stacks" class="stack item" (click)="onSelect(stack)" [style.background]="stack.color" title="{{ stack.cards }}">
+      <mat-card-header>
+        <mat-card-title>
+          <h3>{{stack.title}}</h3>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-actions align="end">
+        <button mat-button class="edit" (click)="editStack(stack); $event.stopPropagation()" title="Edit">
+          <i class="material-icons">edit</i>
+        </button>
+        <!--button mat-button class="delete" (click)="deleteStack(stack); $event.stopPropagation()" title="Delete">
         <i class="material-icons md-light">delete</i>
       </button-->
-    </mat-card-actions>
-  </mat-card>
+      </mat-card-actions>
+    </mat-card>
 
+  </div>
 </div>

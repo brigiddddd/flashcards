@@ -1,8 +1,13 @@
+.container-background {
+  background-color: black;
+  padding: 16px;
+}
 .container {
-  height: 400px;
+  min-height: 400px;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
+  margin: 0 auto;
 }
 
 .item {
@@ -13,5 +18,16 @@
   flex-grow: 1;
   flex-basis: 0;
   margin: 5px;
-  background-color:lightseagreen;
+}
+mat-card>mat-card-actions {
+  position: absolute;
+  bottom: 0;
+  right: 0px;
+}
+
+mat-card>mat-card-actions:last-child {
+  margin-bottom: inherit;
+  padding-bottom: inherit;
+  padding: 8px;
+  margin: 0;
 }

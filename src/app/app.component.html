@@ -1,19 +1,31 @@
-
-<mat-toolbar>
+<mat-toolbar color="primary">
+  <span>
   <button>
     <a routerLink='/stacks' title="Home">
       <i class="material-icons md-light">home</i>
     </a>
   </button>
   <button>
+    <a routerLink='/settings' title="Settings">
+      <i class="material-icons md-light">settings</i>
+    </a>
+  </button>
+</span>
+<span class="fill-remaining-space"></span>
+<span>
+  <div >
+    <h1>
+      {{title}}
+    </h1>
+  </div>
+</span>
+<span class="fill-remaining-space"></span>
+<span>
+  <button>
     <a routerLink='/search' title="Search">
       <i class="material-icons md-light">search</i>
     </a>
   </button>
-  <div style="text-align:center; width: 100%;">
-      <h1>
-        {{title}}
-      </h1>
-    </div>
+</span>
 </mat-toolbar>
 <router-outlet></router-outlet>

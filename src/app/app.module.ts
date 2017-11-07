@@ -16,7 +16,8 @@ import { StackDetailComponent } from './stack-detail.component';
 import { StackService } from './stack.service';
 import { StackSearchComponent } from './stack-search.component';
 import { CardsComponent } from './cards.component';
-import { MatToolbarModule, MatGridListModule, MatCardModule } from '@angular/material';
+import { MatToolbarModule, MatGridListModule, MatCardModule, MatButtonToggleModule } from '@angular/material';
+import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { MatToolbarModule, MatGridListModule, MatCardModule } from '@angular/mat
     StackDetailComponent,
     StacksComponent,
     StackSearchComponent,
-    CardsComponent
+    CardsComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +37,8 @@ import { MatToolbarModule, MatGridListModule, MatCardModule } from '@angular/mat
     InMemoryWebApiModule.forRoot(InMemoryDataService),
     MatToolbarModule,
     MatGridListModule,
-    MatCardModule
+    MatCardModule,
+    MatButtonToggleModule
   ],
   providers: [StackService],
   bootstrap: [AppComponent]
