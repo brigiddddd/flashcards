@@ -1,16 +1,17 @@
-<div>
+<div class="cards-view">
   <div class="cards" *ngIf="cards" (click)="onClick()">
-    <mat-card class="card">
+    <mat-card class="card" *ngIf="cardIndex < cards.length">
       <div class="card-content">
         {{cards[cardIndex]}}
       </div>
     </mat-card>
   </div>
-  <br>
-  <button *ngIf="cards && cardIndex >= cards.length" (click)="goBack()" title="Back">
-    <i class="material-icons md-light">arrow_back</i>
-  </button>
-  <button *ngIf="cards && cardIndex >= cards.length" (click)="replay()" title="Replay">
-    <i class="material-icons md-light">replay</i>
-  </button>
+  <div class="card-action-buttons" *ngIf="cards && cardIndex >= cards.length">
+    <button class="card-action-button" (click)="goBack()" title="Back">
+      <i class="card-action-icon material-icons md-light">arrow_back</i>
+    </button>
+    <button class="card-action-button" (click)="replay()" title="Replay">
+      <i class="card-action-icon material-icons md-light">replay</i>
+    </button>
+  </div>
 </div>

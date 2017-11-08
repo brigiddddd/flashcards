@@ -1,5 +1,5 @@
 <div id="search-component">
-    <h4>Stack Search</h4>
+    <h2>Stack Search</h2>
     <input #searchBox id="search-box" (keyup)="search(searchBox.value)" />
     <div>
       <div *ngFor="let stack of stacks | async"
