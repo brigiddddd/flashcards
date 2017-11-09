@@ -1,18 +1,13 @@
-.container-background {
-  border: solid 2px cyan;
-  width: 100%;
-  box-sizing: border-box;
-  height: 100%;
-}
-
 .container {
   border: solid 2px greenyellow;
   display: flex;
   flex-flow: row wrap;
-  justify-content: flex-start;
   align-items: center;
+  justify-content: flex-start;
   align-content: flex-start;
   margin: 0 auto;
+  max-height: 100%;
+  box-sizing: border-box;
 }
 
 .container > .item {
@@ -23,10 +18,13 @@
   text-align: center;
   margin: auto;
   margin: 5px;
+  align-self: stretch;
 }
 
-.add-stack {
-  align-self: stretch;
+.container > .item:before {
+  content:'';
+  float:left;
+  padding-top:100%;
 }
 
 mat-card > mat-card-actions {
