@@ -1,55 +1,80 @@
-.container-background {
-  display: flex;
-  justify-content: center;
-  border: 2px solid orange;
-}
-
-.container-sibling{
-  background-color: pink;
-  content: ' ';
-  flex: 3;
-  flex-basis: 10em;
-}
-
-.container {
-  border: solid 2px greenyellow;
-  display: flex;
-  flex-flow: row wrap;
-  align-items: center;
-  justify-content: flex-start;
-  align-content: flex-start;
-  margin: 0 auto;
-  max-height: 100%;
-}
-
 .container > .item {
-  border: solid 2px red;
-  flex-grow: 0;
-  flex-shrink: 0;
-  flex-basis: 10em;
-  text-align: center;
-  margin: auto;
-  margin: 5px;
-  align-self: flex-start;
-  box-shadow: 1px 1px 16px -2px rgba(255, 255, 255, 0.3);
-  padding:auto;
+
+  position: relative;
 }
+
 .container > .item:hover {
+  /*background-color: rgba(66, 66, 66, 0.5);*/
+  box-shadow: 1px 1px 16px -1px rgba(255, 255, 255, 0.212);
+}
+
+.container .play-button {
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  transition: all .2s ease-in-out 0s;
+}
+
+.play-button i, .add-button i{
+  font-size: 5em;
+}
+
+.container > .item:hover .play-button {
+  opacity: 1;
   background-color: rgba(66, 66, 66, 0.5);
-  box-shadow: none;
 }
 
-.container > .item::first-line {
-  flex-grow: 1;
-  align-self:stretch;
+.content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  text-align: center;
+  transform: translate(-50%,-50%);
 }
 
-.container > .item:before {
-  content:'';
-  float:left;
-  padding-top:100%;
+/* Flex items */
+.container {
+  display: flex;
+  flex-wrap: wrap;
 }
 
+.item {
+  display: flex;
+  padding: .5em;
+  width: 100%;
+  margin: 1%;
+}
+
+@media all and (min-width: 300px) {
+  .item {
+    width: 48%;
+    padding-bottom: 48%;
+  }
+}
+
+@media all and (min-width: 550px) {
+  .item {
+    width: 31.33%;
+    padding-bottom: 31.33%;
+  }
+}
+
+@media all and (min-width: 700px) {
+  .item {
+    width: 23%;
+    padding-bottom: 23%;
+  }
+}
+
+@media all and (min-width: 900px) {
+  .item {
+    width: 18%;
+    padding-bottom: 18%;
+
+  }
+}
 mat-card > mat-card-actions {
   position: absolute;
   bottom: 0;
