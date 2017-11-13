@@ -2,10 +2,13 @@
   flex: 1 1 auto;
 }
 
+.mat-toolbar-row {
+  justify-content: space-between;
+}
+
 .app-background {
   padding: 8px;
   height: 100%;
-  box-sizing: border-box;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -21,6 +24,13 @@
   color: white;
   padding: 16px;
   overflow: auto;
-  box-sizing: border-box;
   flex: 1;
+}
+
+.main-buttons {
+  margin-right: auto;
+}
+
+.search-button {
+margin-left: auto;
 }
