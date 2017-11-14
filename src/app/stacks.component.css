@@ -11,13 +11,16 @@
   margin: 1%;
 }
 
-
 .content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  text-align: center;
-  transform: translate(-50%,-50%);
+  position: absolute; /* this is absolute so that the .item will stay square */
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1 0 auto;
 }
 
 .item:hover .overlay {
@@ -32,11 +35,11 @@
   position: absolute;
   height: 100%;
   width: 100%;
-  left: 0;
   top: 0;
-  bottom: 0;
-  right: 0;
+  left: 0;
+
   opacity: 0;
+
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
@@ -45,10 +48,10 @@
 .overlay-button {
   cursor: pointer;
   text-align: center;
-  flex: 1 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex: 1 0 auto;
 }
 
 .overlay-button:hover {
