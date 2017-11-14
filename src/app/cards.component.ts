@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 import { StackService } from './stack.service';
 import { Stack } from './stack';
@@ -11,13 +12,15 @@ import { Stack } from './stack';
   styleUrls: ['./cards.component.css']
 })
 export class CardsComponent implements OnInit {
-  cards: string[];
+  shuffledCards: string[];
   cardIndex: number;
+  stack: Stack;
 
   constructor(
     private _stackService: StackService,
     private _route: ActivatedRoute,
-    private _location: Location
+    private _location: Location,
+    private _router: Router
   ) {
     this.cardIndex = 0;
   }
@@ -25,7 +28,10 @@ export class CardsComponent implements OnInit {
   ngOnInit(): void {
     this._route.paramMap
       .switchMap((params: ParamMap) => this._stackService.getStack(params.get('id')))
-      .subscribe(stack => this.cards = this.shuffle(stack.cards));
+      .subscribe(stack => {
+        this.shuffledCards = this.shuffle(stack.cards);
+        this.stack = stack;
+      });
   }
 
   shuffle(array: any[]): any[] {
@@ -54,11 +60,15 @@ export class CardsComponent implements OnInit {
 
   replay(): void {
     this.cardIndex = 0;
-    this.cards = this.shuffle(this.cards);
+    this.shuffledCards = this.shuffle(this.shuffledCards);
   }
 
   goBack(): void {
     this._location.back();
     // TODO: CanDeactivate guard (https://angular.io/api/router/CanDeactivate)
+  }
+
+  editStack(): void {
+    this._router.navigate(['/detail', this.stack.id]);
   }
 }
