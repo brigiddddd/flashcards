@@ -1,5 +1,11 @@
 .cards-view {
   padding: 16px;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1 0 auto;
 }
 
 .cards {
@@ -11,17 +17,16 @@
   margin: auto;
   font-size: 100px;
   font-size: 15vmax;
-  display: table;
-  box-sizing: border-box;
-  vertical-align: middle;
 }
 
 .card-content {
   margin: auto;
-  display: table-cell;
-  text-align: center;
-  vertical-align: middle;
   user-select: none;
+}
+
+.card-actions {
+  text-align: center;
+  font-size: 2vw;
 }
 
 .card-action-buttons {
@@ -36,4 +41,9 @@
 .card-action-buttons button {
   margin: 20px;
   cursor: pointer;
+}
+
+.card-action-button:hover {
+  background-color: #7b1fa2;
+  border-color: #7b1fa2;
 }
