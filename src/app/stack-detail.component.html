@@ -1,34 +1,35 @@
-<div *ngIf='stack'>
-  <h2>
-    {{ stack.title }}
-    <button (click)="play()" title="Play">
+<div *ngIf='unsavedStack'>
+  <div class="title">
+    <h2 *ngIf="!isEdit" (click)="editTitle();">{{ unsavedStack.title }}</h2>
+    <div *ngIf="isEdit" (keydown.enter)="updateTitle();">
+      <input [(ngModel)]="unsavedStack.title" placeholder="Title" (blur)="updateTitle()">
+    </div>
+  </div>
+  <div class="cards">
+    <ul class="cards-list">
+      <li class="card" *ngFor="let card of unsavedStack.cards" (click)="onSelect(card)">
+        {{ card }}
+        <button class="action-button" (click)="deleteCard(card); $event.stopPropagation()" title="Delete card">
+          <i class="material-icons md-light">delete</i>
+        </button>
+      </li>
+      <li class="card">
+        <input id="cardContent" #cardContent (keydown.enter)="addCard(cardContent.value);" (blur)="addCard(cardContent.value);"/>
+      </li>
+    </ul>
+  </div>
+  <div class="action-buttons">
+    <button class="action-button" (click)="goBack()" title="Back">
+      <i class="material-icons md-light">arrow_back</i>
+    </button>
+    <button class="action-button" [disabled]="!isDirty" (click)="save(true)" title="Save">
+      <i class="material-icons md-light">save</i>
+    </button>
+    <button class="action-button" (click)="deleteStack(); $event.stopPropagation()" title="Delete stack">
+      <i class="material-icons md-light">delete</i>
+    </button>
+    <button class="action-button" (click)="play()" title="Play">
       <i class="material-icons md-light">play_circle_outline</i>
     </button>
-  </h2>
-
-  <div>
-    <label>Title: </label>
-    <input [(ngModel)]="stack.title" placeholder="Title">
   </div>
-
-  <ul class="cards">
-    <li *ngFor="let card of stack.cards" (click)="onSelect(card)">
-      {{ card }}
-      <button class="delete" (click)="deleteCard(card); $event.stopPropagation()" title="Delete">
-        <i class="material-icons md-light">delete</i>
-      </button>
-    </li>
-    <li>
-      <input #cardContent />
-      <button (click)="addCard(cardContent.value); cardContent.value=''" title="Add">
-        <i class="material-icons md-light">add_circle_outline</i>
-      </button>
-    </li>
-  </ul>
-  <button (click)="goBack()" title="Back">
-    <i class="material-icons md-light">arrow_back</i>
-  </button>
-  <button (click)="save(true)" title="Save">
-    <i class="material-icons md-light">save</i>
-  </button>
 </div>

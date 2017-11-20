@@ -8,10 +8,15 @@ import { Stack } from './stack';
 
 @Component({
   selector: 'stack-detail',
-  templateUrl: './stack-detail.component.html'
+  templateUrl: './stack-detail.component.html',
+  styleUrls: ['./stack-detail.component.css']
 })
 export class StackDetailComponent implements OnInit {
-  @Input() stack: Stack;
+  //@Input() stack: Stack;
+  savedStack: Stack;
+  @Input() unsavedStack: Stack;
+  isEdit = false;
+  isDirty = false;
 
   constructor(
     private _stackService: StackService,
@@ -23,12 +28,28 @@ export class StackDetailComponent implements OnInit {
   ngOnInit(): void {
     this._route.paramMap
       .switchMap((params: ParamMap) => this._stackService.getStack(params.get('id')))
-      .subscribe(stack => this.stack = stack);
+      .subscribe(stack => {
+        this.savedStack = stack;
+        this.unsavedStack = Object.assign({}, stack);
+      });
   }
 
   goBack(): void {
+  // TODO: PROMPT FOR SAVE
     this._location.back();
     // TODO: CanDeactivate guard (https://angular.io/api/router/CanDeactivate)
+  }
+
+  editTitle(): void {
+    this.isEdit = true;
+    // TODO: LOOK INTO DIRECTIVES. https://stackoverflow.com/questions/41873893/angular2-autofocus-input-element
+  }
+
+  updateTitle(): void {
+    if (this.unsavedStack.title !== this.savedStack.title) {
+      this.isDirty = true;
+    }
+    this.isEdit = false;
   }
 
   onSelect(card: string): void {
@@ -38,32 +59,50 @@ export class StackDetailComponent implements OnInit {
 
   editCard(card: string): void {
     // TODO: figure out how to edit
+
+    this.isDirty = true;
   }
 
   deleteCard(card: string): void {
-    const index = this.stack.cards.indexOf(card);
-    if (index) {
-      this.stack.cards.splice(index, 1);
+    const index = this.unsavedStack.cards.indexOf(card);
+    if (index >= 0) {
+      this.unsavedStack.cards.splice(index, 1);
     }
+
+    this.isDirty = true;
   }
 
   addCard(cardContent: string): void {
     cardContent = cardContent.trim();
     if (!cardContent) { return; }
 
-    if (!this.stack.cards) {
-      this.stack.cards = [];
+    if (!this.unsavedStack.cards) {
+      this.unsavedStack.cards = [];
     }
-    this.stack.cards.push(cardContent);
+    this.unsavedStack.cards.push(cardContent);
+
+    (<HTMLInputElement>document.getElementById('cardContent')).value = '';
+
+    this.isDirty = true;
   }
 
   save(goBack): void {
-    this._stackService.update(this.stack)
-      .then(() => { if (goBack) { this.goBack(); } });
+    this._stackService.update(this.unsavedStack)
+      .then(() => {
+        if (goBack) { this.goBack(); }
+        //TODO: figure out saved/unsaved stacks
+        this.isDirty = false;
+      });
+  }
+
+  deleteStack(): void {
+    //TODO!
+    //TODO: warn that can't be undone.
   }
 
   play(): void {
+    //TODO: prompt for saving
     this.save(false);
-    this._router.navigate(['/cards', this.stack.id]);
+    this._router.navigate(['/cards', this.savedStack.id]);
   }
 }
