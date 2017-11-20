@@ -1,9 +1,7 @@
 <div *ngIf='unsavedStack'>
   <div class="title">
     <h2 *ngIf="!isEdit" (click)="editTitle();">{{ unsavedStack.title }}</h2>
-    <div *ngIf="isEdit" (keydown.enter)="updateTitle();">
-      <input [(ngModel)]="unsavedStack.title" placeholder="Title" (blur)="updateTitle()">
-    </div>
+    <input *ngIf="isEdit" [(ngModel)]="unsavedStack.title" placeholder="Title" (blur)="updateTitle()" (keydown.enter)="updateTitle();" appAutofocus>
   </div>
   <div class="cards">
     <ul class="cards-list">
@@ -14,7 +12,7 @@
         </button>
       </li>
       <li class="card">
-        <input id="cardContent" #cardContent (keydown.enter)="addCard(cardContent.value);" (blur)="addCard(cardContent.value);"/>
+        <input id="cardContent" #cardContent (keydown.enter)="addCard(cardContent.value);" (blur)="addCard(cardContent.value);" />
       </li>
     </ul>
   </div>

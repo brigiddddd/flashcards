@@ -18,6 +18,7 @@ import { StackSearchComponent } from './stack-search.component';
 import { CardsComponent } from './cards.component';
 import { MatToolbarModule, MatGridListModule, MatCardModule, MatButtonToggleModule } from '@angular/material';
 import { SettingsComponent } from './settings/settings.component';
+import { AutofocusDirective } from './autofocus.directive';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { SettingsComponent } from './settings/settings.component';
     StacksComponent,
     StackSearchComponent,
     CardsComponent,
-    SettingsComponent
+    SettingsComponent,
+    AutofocusDirective
   ],
   imports: [
     BrowserModule,
