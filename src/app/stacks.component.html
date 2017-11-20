@@ -11,7 +11,7 @@
 
 
   </mat-card>
-  <mat-card *ngFor="let stack of stacks" class="stack item" [style.order]="stack.order" [style.background]="stack.color" title="{{ stack.cards }}">
+  <mat-card *ngFor="let stack of stacks; trackBy: trackByStack" class="stack item" [style.order]="stack.order" [style.background]="stack.color" title="{{ stack.cards }}">
     <div class="content title">{{stack.title}}</div>
     <div class="overlay">
       <div class="overlay-button" (click)="onSelect(stack)">

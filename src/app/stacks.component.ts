@@ -54,4 +54,8 @@ export class StacksComponent implements OnInit {
         this.stacks = this.stacks.filter(s => s !== stack);
       });
   }
+
+  trackByStack(index: number, stack: Stack): number{
+    return stack.id;
+  }
 }
