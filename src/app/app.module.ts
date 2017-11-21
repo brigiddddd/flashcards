@@ -16,9 +16,14 @@ import { StackDetailComponent } from './stack-detail.component';
 import { StackService } from './stack.service';
 import { StackSearchComponent } from './stack-search.component';
 import { CardsComponent } from './cards.component';
-import { MatToolbarModule, MatGridListModule, MatCardModule, MatButtonToggleModule } from '@angular/material';
+import {
+  MatToolbarModule, MatGridListModule, MatCardModule, MatButtonToggleModule, MatDialogModule,
+  MatProgressSpinnerModule
+} from '@angular/material';
 import { SettingsComponent } from './settings/settings.component';
 import { AutofocusDirective } from './autofocus.directive';
+import { AddStackDialogComponent } from './add-stack-dialog/add-stack-dialog.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -29,7 +34,8 @@ import { AutofocusDirective } from './autofocus.directive';
     StackSearchComponent,
     CardsComponent,
     SettingsComponent,
-    AutofocusDirective
+    AutofocusDirective,
+    AddStackDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -40,9 +46,13 @@ import { AutofocusDirective } from './autofocus.directive';
     MatToolbarModule,
     MatGridListModule,
     MatCardModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatDialogModule,
+    BrowserAnimationsModule,
+    MatProgressSpinnerModule
   ],
   providers: [StackService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [AddStackDialogComponent]
 })
 export class AppModule { }

@@ -1,0 +1,12 @@
+
+.mat-dialog-content {
+  margin-bottom: 20px;
+}
+
+.action-button {
+  cursor: pointer;
+}
+
+.action-button:hover {
+  color: #7b1fa2;
+}

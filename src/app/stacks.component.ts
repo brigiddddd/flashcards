@@ -2,6 +2,8 @@ import { StackService } from './stack.service';
 import { Component, OnInit } from '@angular/core';
 import { Stack } from './stack';
 import { Router } from '@angular/router';
+import { MatDialog, MatDialogRef } from '@angular/material';
+import { AddStackDialogComponent } from './add-stack-dialog/add-stack-dialog.component';
 
 @Component({
   selector: 'stacks',
@@ -10,13 +12,11 @@ import { Router } from '@angular/router';
 })
 export class StacksComponent implements OnInit {
   stacks: Stack[];
-  isAdding: boolean;
 
-  constructor(private _stackService: StackService, private _router: Router) { }
+  constructor(private _stackService: StackService, private _router: Router, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getStacks();
-    this.isAdding = false;
   }
 
   getStacks(): void {
@@ -29,21 +29,21 @@ export class StacksComponent implements OnInit {
   }
 
   addStack(): void {
-    this.isAdding = true;
+    const dialogRef = this.dialog.open(AddStackDialogComponent, {
+      width: '250px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.createStack(result);
+    });
   }
 
   createStack(title: string): void {
-    console.log('CREATE STACK');
-    console.log(title);
-    console.log(typeof(title));
-    title = title.trim();
     if (!title) {
-      // TODO: Handle with error message?
-      this.isAdding = false;
       return;
     }
     this._stackService.create(title).then(stack => {
-      this.isAdding = false;
       this._router.navigate(['/detail', stack.id]);
     });
   }

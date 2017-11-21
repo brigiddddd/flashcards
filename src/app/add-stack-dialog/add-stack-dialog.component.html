@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>New Stack</h1>
+
+<div class="mat-dialog-content">
+  Title:
+  <input [(ngModel)]="title" placeholder="New Stack">
+</div>
+<div class="mat-dialog-actions">
+  <button class="action-button" (click)="onClickOkay()">
+    <i class="material-icons md-light">check_circle</i>
+  </button>
+  <button mat-dialog-close class="action-button">
+    <i class="material-icons md-light">cancel</i>
+  </button>
+</div>

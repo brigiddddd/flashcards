@@ -74,19 +74,8 @@
   margin: 14px;
 }
 
-.new-stack {
-  position: fixed;
-  top: 50%;
-  background-color:#7b1fa2;
-  font-size: 1em;
-}
-
 .overlay-button i, .add-button i{
   font-size: 5em;
-}
-
-.add-stack-button {
-  cursor: pointer;
 }
 
 

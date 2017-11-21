@@ -22,10 +22,4 @@
       </div>
     </div>
   </mat-card>
-
-  <div class="new-stack" *ngIf="isAdding">
-    <input type="text" placeholder="New Stack" #newStackTitle>
-    <i class="add-stack-button material-icons dp48" (click)="createStack(newStackTitle.value)">check_circle</i>
-    <i class="add-stack-button material-icons dp48" (click)="isAdding=false;">cancel</i>
-  </div>
 </div>
