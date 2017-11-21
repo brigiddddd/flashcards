@@ -15,7 +15,7 @@ export class StackDetailComponent implements OnInit {
   //@Input() stack: Stack;
   savedStack: Stack;
   @Input() unsavedStack: Stack;
-  isEdit = false;
+  isEditingTitle = false;
   isDirty = false;
 
   constructor(
@@ -41,7 +41,7 @@ export class StackDetailComponent implements OnInit {
   }
 
   editTitle(): void {
-    this.isEdit = true;
+    this.isEditingTitle = true;
     // TODO: LOOK INTO DIRECTIVES. https://stackoverflow.com/questions/41873893/angular2-autofocus-input-element
   }
 
@@ -49,7 +49,7 @@ export class StackDetailComponent implements OnInit {
     if (this.unsavedStack.title !== this.savedStack.title) {
       this.isDirty = true;
     }
-    this.isEdit = false;
+    this.isEditingTitle = false;
   }
 
   onSelect(card: string): void {
@@ -58,8 +58,7 @@ export class StackDetailComponent implements OnInit {
   }
 
   editCard(card: string): void {
-    // TODO: figure out how to edit
-
+    console.log('editing card', card);
     this.isDirty = true;
   }
 
@@ -81,7 +80,7 @@ export class StackDetailComponent implements OnInit {
     }
     this.unsavedStack.cards.push(cardContent);
 
-    (<HTMLInputElement>document.getElementById('cardContent')).value = '';
+    (<HTMLInputElement>document.getElementById('newCardContent')).value = '';
 
     this.isDirty = true;
   }
@@ -104,5 +103,9 @@ export class StackDetailComponent implements OnInit {
     //TODO: prompt for saving
     this.save(false);
     this._router.navigate(['/cards', this.savedStack.id]);
+  }
+
+  trackByIndex(index: number, obj: any): number {
+    return index;
   }
 }

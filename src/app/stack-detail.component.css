@@ -1,9 +1,8 @@
 
-.title {
-  border: 2px solid steelblue;
 
-  margin: 16px;
-  font-size: 2.5em;
+.title {
+  font-size: 2em;
+  padding: 8px;
 }
 
 .title:hover {
@@ -14,34 +13,32 @@
   font-size: 1em;
 }
 
-.cards {
-  border: 2px solid rosybrown;
-
-  margin: 16px;
-  font-size: 1.5em;
-}
-
 .cards input{
-  font-size: 1em;
-}
-
-.cards-list {
-  list-style-type: square;
+  font-size: 1.5em;
 }
 
 .card {
   padding: 8px;
-
 }
 
 .action-buttons {
-  border: 2px solid khaki;
-
-  margin: 16px;
+  background-color: black;
 }
 
-.action-button:hover {
+.action-buttons > .action-button {
+  margin: 8px;
+}
+
+.action-button > i {
+  vertical-align: text-bottom;
+}
+
+.action-button:hover:enabled, span.action-button:hover {
   cursor: pointer;
-  background-color: #7b1fa2;
-  border-color: #7b1fa2;
+  color: #7b1fa2;
 }
+
+.action-icon {
+  font-size: 3em;
+}
+

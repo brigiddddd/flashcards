@@ -19,7 +19,7 @@
   flex-direction: column;
 }
 
-.app-body{
+.app-body {
   background-color: black;
   color: white;
   padding: 16px;
@@ -32,5 +32,5 @@
 }
 
 .search-button {
-margin-left: auto;
+  margin-left: auto;
 }

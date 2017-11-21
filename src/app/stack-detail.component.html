@@ -1,33 +1,42 @@
-<div *ngIf='unsavedStack'>
-  <div class="title">
-    <h2 *ngIf="!isEdit" (click)="editTitle();">{{ unsavedStack.title }}</h2>
-    <input *ngIf="isEdit" [(ngModel)]="unsavedStack.title" placeholder="Title" (blur)="updateTitle()" (keydown.enter)="updateTitle();" appAutofocus>
-  </div>
-  <div class="cards">
-    <ul class="cards-list">
-      <li class="card" *ngFor="let card of unsavedStack.cards" (click)="onSelect(card)">
-        {{ card }}
-        <button class="action-button" (click)="deleteCard(card); $event.stopPropagation()" title="Delete card">
-          <i class="material-icons md-light">delete</i>
-        </button>
-      </li>
-      <li class="card">
-        <input id="cardContent" #cardContent (keydown.enter)="addCard(cardContent.value);" (blur)="addCard(cardContent.value);" />
-      </li>
-    </ul>
-  </div>
+<div class="stackDetail" *ngIf='unsavedStack'>
   <div class="action-buttons">
     <button class="action-button" (click)="goBack()" title="Back">
-      <i class="material-icons md-light">arrow_back</i>
+      <i class="action-icon material-icons md-light">arrow_back</i>
     </button>
-    <button class="action-button" [disabled]="!isDirty" (click)="save(true)" title="Save">
-      <i class="material-icons md-light">save</i>
+    <button class="action-button" [disabled]="!isDirty" (click)="save(false)" title="Save">
+      <i class="action-icon material-icons md-light">save</i>
     </button>
     <button class="action-button" (click)="deleteStack(); $event.stopPropagation()" title="Delete stack">
-      <i class="material-icons md-light">delete</i>
+      <i class="action-icon material-icons md-light">delete</i>
     </button>
     <button class="action-button" (click)="play()" title="Play">
-      <i class="material-icons md-light">play_circle_outline</i>
+      <i class="action-icon material-icons md-light">play_circle_outline</i>
     </button>
+  </div>
+
+  <div class="stackContent">
+    <div class="title" title="Edit stack title">
+      <h2 *ngIf="!isEditingTitle" (click)="editTitle();">{{ unsavedStack.title }}</h2>
+      <input *ngIf="isEditingTitle" [(ngModel)]="unsavedStack.title" placeholder="Title" (blur)="updateTitle()" (keydown.enter)="updateTitle();"
+        (input)="isDirty=true;" appAutofocus>
+    </div>
+
+    <div class="cards">
+      <ol class="cards-list">
+        <li class="card" *ngFor="let card of unsavedStack.cards; let i=index; trackBy: trackByIndex">
+          <input [(ngModel)]="unsavedStack.cards[i]" placeholder="card" (input)="editCard(card)">
+          <span class="action-button" (click)="deleteCard(card); $event.stopPropagation()" title="Remove word">
+            <i class="material-icons md-light">delete</i>
+          </span>
+        </li>
+        <li class="card">
+          <input id="newCardContent" #newCardContent (keydown.enter)="addCard(newCardContent.value);" (blur)="addCard(newCardContent.value);"
+          />
+          <span class="action-button" (click)="addCard(newCardContent.value);">
+            <i class="material-icons md-light">add</i>
+          </span>
+        </li>
+      </ol>
+    </div>
   </div>
 </div>

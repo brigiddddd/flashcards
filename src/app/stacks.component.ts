@@ -10,11 +10,13 @@ import { Router } from '@angular/router';
 })
 export class StacksComponent implements OnInit {
   stacks: Stack[];
+  isAdding: boolean;
 
   constructor(private _stackService: StackService, private _router: Router) { }
 
   ngOnInit(): void {
     this.getStacks();
+    this.isAdding = false;
   }
 
   getStacks(): void {
@@ -27,22 +29,24 @@ export class StacksComponent implements OnInit {
   }
 
   addStack(): void {
-    this._stackService.create('New Stack').then(stack => {
+    this.isAdding = true;
+  }
+
+  createStack(title: string): void {
+    console.log('CREATE STACK');
+    console.log(title);
+    console.log(typeof(title));
+    title = title.trim();
+    if (!title) {
+      // TODO: Handle with error message?
+      this.isAdding = false;
+      return;
+    }
+    this._stackService.create(title).then(stack => {
+      this.isAdding = false;
       this._router.navigate(['/detail', stack.id]);
     });
   }
-
-  /*
-  addStack(title: string): void {
-    title = title.trim();
-    if (!title) { return; }
-    this._stackService.create(title)
-      .then(stack => {
-        this.stacks.push(stack);
-        this._router.navigate(['/detail', stack.id]);
-      });
-  }
-  */
 
   editStack(stack: Stack): void {
     this._router.navigate(['/detail', stack.id]);
@@ -55,7 +59,7 @@ export class StacksComponent implements OnInit {
       });
   }
 
-  trackByStack(index: number, stack: Stack): number{
+  trackByStack(index: number, stack: Stack): number {
     return stack.id;
   }
 }

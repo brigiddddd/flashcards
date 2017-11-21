@@ -4,22 +4,28 @@
       <i class="material-icons md-light">add</i>
     </div>
     <div class="overlay">
-      <div class="overlay-button">
+      <div class="overlay-button add-button">
         <i class="material-icons">add</i>
       </div>
     </div>
-
-
   </mat-card>
-  <mat-card *ngFor="let stack of stacks; trackBy: trackByStack" class="stack item" [style.order]="stack.order" [style.background]="stack.color" title="{{ stack.cards }}">
+
+  <mat-card *ngFor="let stack of stacks; trackBy: trackByStack" class="stack item" [style.order]="stack.order" [style.background]="stack.color"
+    title="{{ stack.cards }}">
     <div class="content title">{{stack.title}}</div>
     <div class="overlay">
-      <div class="overlay-button" (click)="onSelect(stack)">
+      <div class="overlay-button play-button" (click)="onSelect(stack)">
         <i class="material-icons dp48">play_circle_outline</i>
       </div>
-      <div class="overlay-button" (click)="editStack(stack)">
+      <div class="overlay-button edit-button" (click)="editStack(stack)">
         <i class="material-icons dp48">edit</i>
       </div>
     </div>
   </mat-card>
+
+  <div class="new-stack" *ngIf="isAdding">
+    <input type="text" placeholder="New Stack" #newStackTitle>
+    <i class="add-stack-button material-icons dp48" (click)="createStack(newStackTitle.value)">check_circle</i>
+    <i class="add-stack-button material-icons dp48" (click)="isAdding=false;">cancel</i>
+  </div>
 </div>
