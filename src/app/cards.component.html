@@ -1,5 +1,5 @@
-<div class="cards-view" (click)="onClick()">
-  <div class="cards" *ngIf="shuffledCards && cardIndex < shuffledCards.length">
+<div class="cards-view">
+  <div class="cards" *ngIf="shuffledCards && cardIndex < shuffledCards.length" (click)="onClick()">
     <mat-card class="card">
       <div class="card-content">
         {{shuffledCards[cardIndex]}}
