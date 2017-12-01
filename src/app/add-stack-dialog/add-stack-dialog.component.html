@@ -2,10 +2,10 @@
 
 <div class="mat-dialog-content">
   <h3>Title:</h3>
-  <input [(ngModel)]="title" placeholder="New Stack" (keydown.enter)="onClickOkay()">
+  <input [(ngModel)]="name" placeholder="New Stack" (keydown.enter)="onClickOkay()">
 </div>
 <div class="mat-dialog-actions">
-  <button class="action-button" (click)="onClickOkay()" [disabled]="!title">
+  <button class="action-button" (click)="onClickOkay()" [disabled]="!name">
     <i class="material-icons md-light">add_circle</i>
   </button>
   <button mat-dialog-close class="action-button">

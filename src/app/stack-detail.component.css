@@ -1,15 +1,15 @@
 
 
-.title {
+.name {
   font-size: 2em;
   padding: 8px;
 }
 
-.title:hover {
+.name:hover {
   color: #7b1fa2;
 }
 
-.title input{
+.name input{
   font-size: 1em;
 }
 

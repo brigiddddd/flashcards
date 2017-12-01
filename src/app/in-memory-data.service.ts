@@ -1,33 +1,67 @@
+import { Stack } from './stack';
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 
 export class InMemoryDataService implements InMemoryDbService {
   createDb() {
     const stacks = [
       {
-        id: 1,
-        title: 'conjunctions',
-        cards: ['for', 'and', 'nor', 'but', 'or', 'yet', 'so'],
-        categoryId: 0
-      },
-      {
-        id: 2,
-        title: 'helping verbs 1',
-        cards: ['am', 'are', 'be', 'being', 'been', 'can', 'could'],
+        id: 5,
+        name: 'Week 1',
+        cards: ['I', 'like', 'do', 'to', 'you', 'he', 'can', 'go', 'a', 'has'],
         categoryId: 1
       },
       {
-        id: 3,
-        title: 'helping verbs 2',
-        cards: ['do', 'does', 'did', 'has', 'have', 'had', 'is', 'may', 'might', 'must', 'shall', 'should'],
-        categoryId: 2
+        id: 6,
+        name: 'Week 2',
+        cards: ['this', 'is', 'my', 'look', 'little', 'where', 'here', 'play', 'the', 'we'],
+        categoryId: 1
       },
       {
-        id: 4,
-        title: 'helping verbs 3',
-        cards: ['was', 'were', 'will', 'would'],
+        id: 7,
+        name: 'Week 3',
+        cards: ['are', 'me', 'she', 'with', 'for', 'and', 'have', 'see', 'said', 'was'],
+        categoryId: 1
+      },
+      {
+        id: 8,
+        name: 'Week 1',
+        cards: ['does', 'not', 'school', 'what'],
+        categoryId: 2
+      }, {
+        id: 9,
+        name: 'Week 2',
+        cards: ['down', 'out', 'up', 'very'],
+        categoryId: 2
+      }, {
+        id: 10,
+        name: 'Week 3',
+        cards: ['be', 'come', 'good', 'pull'],
+        categoryId: 2
+      }, {
+        id: 11,
+        name: 'Week 4',
+        cards: ['fun', 'make', 'they', 'too'],
+        categoryId: 2
+      }, {
+        id: 12,
+        name: 'Week 5',
+        cards: ['jump', 'move', 'run', 'two'],
         categoryId: 2
       }
     ];
-    return { stacks };
+    const categories = [
+      {
+        id: 1,
+        name: 'Start Smart',
+        color: 'red'
+      },
+      {
+        id: 2,
+        name: 'Unit 1',
+        color: 'orange'
+      }
+    ];
+
+    return { stacks, categories };
   }
 }

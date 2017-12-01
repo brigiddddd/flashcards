@@ -15,7 +15,7 @@ export class StackDetailComponent implements OnInit {
   //@Input() stack: Stack;
   savedStack: Stack;
   @Input() unsavedStack: Stack;
-  isEditingTitle = false;
+  isEditingName = false;
   isDirty = false;
 
   constructor(
@@ -40,16 +40,16 @@ export class StackDetailComponent implements OnInit {
     // TODO: CanDeactivate guard (https://angular.io/api/router/CanDeactivate)
   }
 
-  editTitle(): void {
-    this.isEditingTitle = true;
+  editName(): void {
+    this.isEditingName = true;
     // TODO: LOOK INTO DIRECTIVES. https://stackoverflow.com/questions/41873893/angular2-autofocus-input-element
   }
 
-  updateTitle(): void {
-    if (this.unsavedStack.title !== this.savedStack.title) {
+  updateName(): void {
+    if (this.unsavedStack.name !== this.savedStack.name) {
       this.isDirty = true;
     }
-    this.isEditingTitle = false;
+    this.isEditingName = false;
   }
 
   onSelect(card: string): void {

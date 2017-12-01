@@ -38,11 +38,11 @@ export class StacksComponent implements OnInit {
     });
   }
 
-  createStack(title: string): void {
-    if (!title) {
+  createStack(name: string): void {
+    if (!name) {
       return;
     }
-    this._stackService.create(title).then(stack => {
+    this._stackService.create(name).then(stack => {
       this._router.navigate(['/detail', stack.id]);
     });
   }

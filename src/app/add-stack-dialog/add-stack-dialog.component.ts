@@ -7,7 +7,7 @@ import { MatDialogRef } from '@angular/material';
   styleUrls: ['./add-stack-dialog.component.css']
 })
 export class AddStackDialogComponent {
-  title: string;
+  name: string;
 
   constructor(public dialogRef: MatDialogRef<AddStackDialogComponent>) { }
 
@@ -16,12 +16,12 @@ export class AddStackDialogComponent {
   }
 
   onClickOkay(): void {
-    this.title = this.title ? this.title.trim() : '';
-    if (!this.title) {
+    this.name = this.name ? this.name.trim() : '';
+    if (!this.name) {
       // TODO: Handle with error message?
       return;
     }
-    this.dialogRef.close(this.title);
+    this.dialogRef.close(this.name);
   }
 
 }

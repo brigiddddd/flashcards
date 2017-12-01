@@ -13,7 +13,7 @@ export class StackSearchService {
 
   search(term: string): Observable<Stack[]> {
     return this._http
-               .get(`api/stacks/?title=${term}`)
+               .get(`api/stacks/?name=${term}`)
                .map(response => response.json() as Stack[]);
   }
 }

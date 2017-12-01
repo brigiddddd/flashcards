@@ -4,7 +4,7 @@
     <div>
       <div *ngFor="let stack of stacks | async"
            (click)="gotoDetail(stack)" class="search-result" >
-        {{stack.title}}
+        {{stack.name}}
       </div>
     </div>
   </div>

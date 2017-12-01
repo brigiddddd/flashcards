@@ -1,7 +1,7 @@
 
 export class Stack {
     id: number;
-    title: string;
+    name: string;
     cards: string[];
     categoryId: number;
   }

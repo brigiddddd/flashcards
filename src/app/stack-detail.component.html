@@ -15,9 +15,9 @@
   </div>
 
   <div class="stackContent">
-    <div class="title" title="Edit stack title">
-      <h2 *ngIf="!isEditingTitle" (click)="editTitle();">{{ unsavedStack.title }}</h2>
-      <input *ngIf="isEditingTitle" [(ngModel)]="unsavedStack.title" placeholder="Title" (blur)="updateTitle()" (keydown.enter)="updateTitle();"
+    <div class="name" title="Edit stack name">
+      <h2 *ngIf="!isEditingName" (click)="editName();">{{ unsavedStack.name }}</h2>
+      <input *ngIf="isEditingName" [(ngModel)]="unsavedStack.name" placeholder="Name" (blur)="updateName()" (keydown.enter)="updateName();"
         (input)="isDirty=true;" appAutofocus>
     </div>
 
