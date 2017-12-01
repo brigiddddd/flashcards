@@ -17,7 +17,7 @@ export class StacksComponent implements OnInit {
 
   constructor(private _stackService: StackService, private _router: Router, public dialog: MatDialog
     , private _categoryService: CategoryService //TODO: RETHINK THIS?
-  ) { }
+  ) {  }
 
   ngOnInit(): void {
     this.getStacks();
@@ -33,8 +33,13 @@ export class StacksComponent implements OnInit {
       //.then(category => stack.category = category); //TODO
   }
 
-  onSelect(stack: Stack): void {
-    console.log(stack.cards);
+  onSelect(stack: Stack, event): void {
+    stack.selected = !stack.selected;
+    //event.currentTarget.className += 'selected';
+    // TODO:Change style on select
+  }
+
+  onPlay(stack: Stack): void {
     this._router.navigate(['/cards', stack.id]);
   }
 

@@ -10,8 +10,10 @@
     </div>
   </mat-card-->
 
-  <mat-card *ngFor="let stack of stacks; trackBy: trackByStack" class="stack item" [style.order]="stack.order" [style.background]="stack.color"
-    title="{{ stack.cards }}">{{stack.category}}
+  <mat-card *ngFor="let stack of stacks; trackBy: trackByStack" class="stack item" title="{{ stack.cards }}"
+    (dblclick)="onPlay(stack)" (click)="onSelect(stack, $event);"
+    [style.order]="stack.order" [style.background]="stack.color">
+    <div class="content category">{{stack.categoryId}}</div>
     <div class="content name">{{stack.name}}</div>
     <!--div class="overlay">
       <div class="overlay-button play-button" (click)="onSelect(stack)">
@@ -22,4 +24,11 @@
       </div>
     </div-->
   </mat-card>
+
 </div>
+
+<span *ngFor="let stack of stacks">
+  <span *ngIf="stack.selected">
+    {{stack.categoryId}}.{{stack.name}},
+  </span>
+</span>
