@@ -1,3 +1,4 @@
+import { Stack } from './../models/stack';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -12,8 +13,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 
-import { StackSearchService } from './stack-search.service';
-import { Stack } from './stack';
+import { StackSearchService } from './../services/stack-search.service';
 
 
 @Component({

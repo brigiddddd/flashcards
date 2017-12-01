@@ -3,8 +3,8 @@ import { Http } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import { Stack } from '../models/stack';
 
-import { Stack } from './stack';
 
 @Injectable()
 export class StackSearchService {

@@ -1,5 +1,4 @@
-import { Color } from './../color';
-import { Stack } from './../stack';
+import { Color } from './color';
 
 export class Category {
   id: number;

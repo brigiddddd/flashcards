@@ -1,11 +1,9 @@
-import { Stack } from './stack';
-
-// import { STACKS } from './mock-stacks';
-
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
+import { Stack } from '../models/stack';
 
 import 'rxjs/add/operator/toPromise';
+
 
 @Injectable()
 export class StackService {

@@ -1,10 +1,9 @@
+import { StackService } from './../services/stack.service';
+import { Stack } from './../models/stack';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
-
-import { StackService } from './stack.service';
-import { Stack } from './stack';
 
 @Component({
   selector: 'cards',

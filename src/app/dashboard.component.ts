@@ -1,6 +1,7 @@
-import { StackService } from './stack.service';
-import { Stack } from './stack';
+import { Stack } from './models/stack';
+import { StackService } from './services/stack.service';
 import { Component, OnInit } from '@angular/core';
+
 
 @Component({
     selector: 'dashboard',

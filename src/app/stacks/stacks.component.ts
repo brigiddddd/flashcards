@@ -1,9 +1,11 @@
-import { StackService } from './stack.service';
+
 import { Component, OnInit } from '@angular/core';
-import { Stack } from './stack';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material';
-import { AddStackDialogComponent } from './add-stack-dialog/add-stack-dialog.component';
+import { AddStackDialogComponent } from './../add-stack-dialog/add-stack-dialog.component';
+import { StackService } from '../services/stack.service';
+import { Stack } from '../models/stack';
+import { CategoryService } from './../services/category.service';
 
 @Component({
   selector: 'stacks',
@@ -13,7 +15,9 @@ import { AddStackDialogComponent } from './add-stack-dialog/add-stack-dialog.com
 export class StacksComponent implements OnInit {
   stacks: Stack[];
 
-  constructor(private _stackService: StackService, private _router: Router, public dialog: MatDialog) { }
+  constructor(private _stackService: StackService, private _router: Router, public dialog: MatDialog
+    , private _categoryService: CategoryService //TODO: RETHINK THIS?
+  ) { }
 
   ngOnInit(): void {
     this.getStacks();
@@ -21,6 +25,12 @@ export class StacksComponent implements OnInit {
 
   getStacks(): void {
     this._stackService.getStacks().then(x => this.stacks = x);
+  }
+
+  getCategoryForStack(stack: Stack) {
+    //TODO: SHOULD WE IMPORT CATEGORY SERVICE IN STACK SERVICE?
+    this._categoryService.getCategory(stack.categoryId.toString());
+      //.then(category => stack.category = category); //TODO
   }
 
   onSelect(stack: Stack): void {

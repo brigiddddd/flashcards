@@ -1,6 +1,4 @@
-import { Category } from './category';
-
-
+import { Category } from './../models/category';
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 

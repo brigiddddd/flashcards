@@ -1,10 +1,10 @@
+import { Stack } from './../models/stack';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import 'rxjs/add/operator/switchMap';
+import { StackService } from '../services/stack.service';
 
-import { StackService } from './stack.service';
-import { Stack } from './stack';
+import 'rxjs/add/operator/switchMap';
 
 @Component({
   selector: 'stack-detail',

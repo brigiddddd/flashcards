@@ -1,12 +1,12 @@
+import { CardsComponent } from './cards/cards.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { DashboardComponent } from './dashboard.component';
-import { StacksComponent } from './stacks.component';
-import { StackDetailComponent } from './stack-detail.component';
-import { StackSearchComponent } from './stack-search.component';
-import { CardsComponent } from './cards.component';
 import { SettingsComponent } from './settings/settings.component';
+import { StackDetailComponent } from './stacks/stack-detail.component';
+import { StacksComponent } from './stacks/stacks.component';
+import { StackSearchComponent } from './stacks/stack-search.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/stacks', pathMatch: 'full' },
