@@ -1,0 +1,14 @@
+<ul class="categories">
+  <li *ngFor="let category of categories">
+    <h3 [style.background-color]="category.color">{{category.title}}
+      <button mat-button class="edit" (click)="editCategory(category); $event.stopPropagation();" title="Edit">
+        <i class="material-icons">color_lens</i>
+      </button>
+    </h3>
+  </li>
+<li>
+  <button class="add" (click)="addCategory(); $event.stopPropagation();">
+    <i class="material-icons">add</i>
+  </button>
+</li>
+</ul>

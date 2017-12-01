@@ -24,6 +24,8 @@ import { SettingsComponent } from './settings/settings.component';
 import { AutofocusDirective } from './autofocus.directive';
 import { AddStackDialogComponent } from './add-stack-dialog/add-stack-dialog.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CategoriesComponent } from './categories/categories.component';
+import { CategoryService } from './categories/category.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CardsComponent,
     SettingsComponent,
     AutofocusDirective,
-    AddStackDialogComponent
+    AddStackDialogComponent,
+    CategoriesComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +54,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
     MatProgressSpinnerModule
   ],
-  providers: [StackService],
+  providers: [StackService, CategoryService],
   bootstrap: [AppComponent],
   entryComponents: [AddStackDialogComponent]
 })

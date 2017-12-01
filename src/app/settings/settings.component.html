@@ -2,15 +2,7 @@
 todo: use expansion panels
 <div>
   <h2> Categories </h2>
-  <ul class="categories">
-    <li *ngFor="let category of categories">
-      <h3 [style.background-color]="category.color">{{category.name}}
-        <button mat-button class="edit" (click)="editCategory(category); $event.stopPropagation()" title="Edit">
-          <i class="material-icons">color_lens</i>
-        </button>
-      </h3>
-    </li>
-  </ul>
+  <categories></categories>
 </div>
 <div>
 <h2>Cards</h2>
