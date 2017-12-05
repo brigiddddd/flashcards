@@ -50,14 +50,42 @@ export class InMemoryDataService implements InMemoryDbService {
     ];
     const categories = [
       {
-        id: 1,
+        id: 0,
         name: 'Start Smart',
         color: 'red'
       },
       {
-        id: 2,
+        id: 1,
         name: 'Unit 1',
         color: 'orange'
+      },
+      {
+        id: 2,
+        name: 'Unit 2',
+        color: 'yellow',
+        stacks: [
+          {
+            id: 13,
+            name: 'Week 1',
+            cards: ['again', 'help', 'new', 'there', 'use']
+          }, {
+            id: 14,
+            name: 'Week 2',
+            cards: ['could', 'live', 'one', 'then', 'three']
+          }, {
+            id: 15,
+            name: 'Week 3',
+            cards: ['eat', 'no', 'of', 'under', 'who']
+          }, {
+            id: 16,
+            name: 'Week 4',
+            cards: ['all', 'call', 'day', 'her', 'want']
+          }, {
+            id: 17,
+            name: 'Week 5',
+            cards: ['around', 'by', 'many', 'place', 'walk']
+          }
+        ]
       }
     ];
 

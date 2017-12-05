@@ -1,0 +1,40 @@
+<div class="categoryDetail" *ngIf='unsavedCategory'>
+  <div class="action-buttons">
+    <button class="action-button" (click)="goBack()" title="Back">
+      <i class="action-icon material-icons md-light">arrow_back</i>
+    </button>
+    <button class="action-button" [disabled]="!isDirty" (click)="save(false)" title="Save">
+      <i class="action-icon material-icons md-light">save</i>
+    </button>
+  </div>
+
+  <div class="categoryContent">
+    <div class="name" title="Edit category name">
+      <h2 *ngIf="!isEditingName" (click)="editName();">{{ unsavedCategory.name }}</h2>
+      <input *ngIf="isEditingName" [(ngModel)]="unsavedCategory.name" placeholder="Name" (blur)="updateName()" (keydown.enter)="updateName();"
+        (input)="isDirty=true;" appAutofocus>
+    </div>
+    <div class="color">
+      <select name="color-dropdown" [style.background-color]="savedCategory.color" [(ngModel)]="colorKey" (change)="selectColor($event);" >
+        <option *ngFor="let key of colorKeys" [value]="key" [style.background-color]="colors[key]">
+          {{colors[key]}}
+        </option>
+      </select>
+    </div>
+
+    <!--div class="stacks">
+      <ol class="stacks-list">
+        <li class="stack" *ngFor="let stack of unsavedCategory.stacks; let i=index; trackBy: trackByIndex">
+          stack
+        </li>
+        <li class="stack">
+          <input id="newCardContent" #newCardContent (keydown.enter)="addCard(newCardContent.value);" (blur)="addCard(newCardContent.value);"
+          />
+          <span class="action-button" (click)="addCard(newCardContent.value);">
+            <i class="material-icons md-light">add</i>
+          </span>
+        </li>
+      </ol>
+    </div -->
+  </div>
+</div>

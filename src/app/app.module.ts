@@ -1,3 +1,4 @@
+import { CategoryDetailComponent } from './categories/category-detail.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -38,7 +39,8 @@ import { StackService } from './services/stack.service';
     SettingsComponent,
     AutofocusDirective,
     AddStackDialogComponent,
-    CategoriesComponent
+    CategoriesComponent,
+    CategoryDetailComponent
   ],
   imports: [
     BrowserModule,

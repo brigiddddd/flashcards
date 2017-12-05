@@ -1,6 +1,7 @@
 import { CategoryService } from './../services/category.service';
 import { Category } from './../models/category';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'categories',
@@ -11,7 +12,7 @@ export class CategoriesComponent implements OnInit {
 
   categories: Category[];
 
-  constructor(private _categoryService: CategoryService) { }
+  constructor(private _categoryService: CategoryService, private _router: Router) { }
 
   ngOnInit() {
     this.getCategories();
@@ -23,11 +24,16 @@ export class CategoriesComponent implements OnInit {
 
   addCategory(name: string) {
     if (!name) {
+      console.log('No category name has been set');
       return;
     }
     this._categoryService.create(name).then(category => {
-      //TODO
+      this._router.navigate(['/category', category.id]);
     });
+  }
+
+  editCategory(category: Category): void {
+    this._router.navigate(['/category', category.id]);
   }
 
 }

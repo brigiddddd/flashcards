@@ -6,9 +6,10 @@
       </button>
     </h3>
   </li>
-<li>
-  <button class="add" (click)="addCategory(); $event.stopPropagation();">
-    <i class="material-icons">add</i>
-  </button>
-</li>
+  <li class="category">
+    <input id="newCategory" #newCategory (keydown.enter)="addCategory(newCategory.value);" (blur)="addCategory(newCategory.value);"/>
+    <button class="action-button add" (click)="addCategory(newCategory.value);">
+      <i class="material-icons md-light">add</i>
+    </button>
+  </li>
 </ul>
