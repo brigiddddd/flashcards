@@ -15,7 +15,7 @@
         (input)="isDirty=true;" appAutofocus>
     </div>
     <div class="color">
-      <select name="color-dropdown" [style.background-color]="savedCategory.color" [(ngModel)]="colorKey" (change)="selectColor($event);" >
+      <select name="color-dropdown" [style.background-color]="savedCategory.backgroundColor" [(ngModel)]="colorKey" (change)="selectColor($event);" >
         <option *ngFor="let key of colorKeys" [value]="key" [style.background-color]="colors[key]">
           {{colors[key]}}
         </option>

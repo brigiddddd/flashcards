@@ -11,7 +11,6 @@ import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './services/in-memory-data.service';
 
 import { AppComponent } from './app.component';
-import { DashboardComponent } from './dashboard.component';
 import { StacksComponent } from './stacks/stacks.component';
 import { StackDetailComponent } from './stacks/stack-detail.component';
 import { StackSearchComponent } from './stacks/stack-search.component';
@@ -26,12 +25,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CategoriesComponent } from './categories/categories.component';
 import { CategoryService } from './services/category.service';
 import { AutofocusDirective } from './directives/autofocus.directive';
-import { StackService } from './services/stack.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent,
     StackDetailComponent,
     StacksComponent,
     StackSearchComponent,
@@ -56,7 +53,7 @@ import { StackService } from './services/stack.service';
     BrowserAnimationsModule,
     MatProgressSpinnerModule
   ],
-  providers: [StackService, CategoryService],
+  providers: [CategoryService],
   bootstrap: [AppComponent],
   entryComponents: [AddStackDialogComponent]
 })

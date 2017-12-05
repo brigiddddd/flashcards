@@ -38,7 +38,7 @@ export class CategoryDetailComponent implements OnInit {
       .subscribe(category => {
         this.savedCategory = category;
         this.unsavedCategory = Object.assign({}, category);
-        this.colorKey = this.colors[this.savedCategory.color];
+        this.colorKey = this.colors[this.savedCategory.backgroundColor];
         console.log(this.colorKey);
       });
   }
@@ -63,7 +63,7 @@ export class CategoryDetailComponent implements OnInit {
 
   selectColor(event): void {
     event.currentTarget.style.backgroundColor = Color[this.colorKey];
-    this.unsavedCategory.color = Color[this.colorKey];
+    this.unsavedCategory.backgroundColor = Color[this.colorKey];
     this.isDirty = true;
   }
 

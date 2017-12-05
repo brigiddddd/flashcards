@@ -1,9 +1,9 @@
-import { StackService } from './../services/stack.service';
 import { Stack } from './../models/stack';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
+import { CategoryService } from '../services/category.service';
 
 @Component({
   selector: 'cards',
@@ -13,10 +13,11 @@ import { Router } from '@angular/router';
 export class CardsComponent implements OnInit {
   shuffledCards: string[];
   cardIndex: number;
+  categoryId: string;
   stack: Stack;
 
   constructor(
-    private _stackService: StackService,
+    private _categoryService: CategoryService,
     private _route: ActivatedRoute,
     private _location: Location,
     private _router: Router
@@ -26,7 +27,10 @@ export class CardsComponent implements OnInit {
 
   ngOnInit(): void {
     this._route.paramMap
-      .switchMap((params: ParamMap) => this._stackService.getStack(params.get('id')))
+      .switchMap((params: ParamMap) => {
+        this.categoryId = params.get('categoryId');
+        return this._categoryService.getStack(this.categoryId, params.get('stackId'));
+      })
       .subscribe(stack => {
         this.shuffledCards = this.shuffle(stack.cards);
         this.stack = stack;
@@ -68,6 +72,7 @@ export class CardsComponent implements OnInit {
   }
 
   editStack(): void {
-    this._router.navigate(['/detail', this.stack.id]);
+    console.log(this.categoryId);
+    this._router.navigate(['/detail', this.categoryId, this.stack.id]);
   }
 }

@@ -1,8 +1,10 @@
 import { Category } from './../models/category';
+import { Stack } from '../models/stack';
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
+
 
 @Injectable()
 export class CategoryService {
@@ -29,6 +31,13 @@ export class CategoryService {
       .toPromise()
       .then(response => response.json() as Category[])
       .catch(this._handleError);
+  }
+
+  getStack(categoryId: string, stackId: string): Promise<Stack> {
+    return this.getCategory(categoryId).then(category => {
+      const stacks = category.stacks;
+      return stacks.find(x => x.id.toString() === stackId);
+    });
   }
 
   update(category: Category): Promise<Category> {

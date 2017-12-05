@@ -1,30 +1,11 @@
-<div class="container">
-  <!--mat-card class="stack item add-stack" title="Add new stack" (click)="addStack()">
-    <div class="content add-button">
-      <i class="material-icons md-light">add</i>
-    </div>
-    <div class="overlay">
-    <div class="overlay-button add-button">
-        <i class="material-icons">add</i>
-      </div>
-    </div>
-  </mat-card-->
-
-  <mat-card *ngFor="let stack of stacks; trackBy: trackByStack" class="stack item" title="{{ stack.cards }}"
-    (dblclick)="onPlay(stack)" (click)="onSelect(stack, $event);"
-    [style.order]="stack.order" [style.background]="stack.color">
-    <div class="content category">{{stack.categoryId}}</div>
-    <div class="content name">{{stack.name}}</div>
-    <!--div class="overlay">
-      <div class="overlay-button play-button" (click)="onSelect(stack)">
-        <i class="material-icons dp48">play_circle_outline</i>
-      </div>
-      <div class="overlay-button edit-button" (click)="editStack(stack)">
-        <i class="material-icons dp48">edit</i>
-      </div>
-    </div-->
-  </mat-card>
-
+<div *ngFor="let category of categories">
+  <span *ngIf="category.stacks" class="container">
+    <mat-card *ngFor="let stack of category.stacks" class="stack item" title="{{ stack.cards }}" (dblclick)="onPlay(category, stack)" (click)="onSelect(stack, $event);"
+      [style.order]="stack.order" [style.background]="category.backgroundColor">
+      <div class="content category">{{category.name}}</div>
+      <div class="content name">{{stack.name}}</div>
+    </mat-card>
+  </span>
 </div>
 
 <span *ngFor="let stack of stacks">

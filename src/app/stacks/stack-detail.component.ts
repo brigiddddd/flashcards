@@ -1,10 +1,11 @@
+import { CategoryService } from './../services/category.service';
 import { Stack } from './../models/stack';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { StackService } from '../services/stack.service';
 
 import 'rxjs/add/operator/switchMap';
+import { Category } from '../models/category';
 
 @Component({
   selector: 'stack-detail',
@@ -17,9 +18,11 @@ export class StackDetailComponent implements OnInit {
   @Input() unsavedStack: Stack;
   isEditingName = false;
   isDirty = false;
+  categoryId: string;
+  unsavedCategory: Category;
 
   constructor(
-    private _stackService: StackService,
+    private _categoryService: CategoryService,
     private _route: ActivatedRoute,
     private _router: Router,
     private _location: Location
@@ -27,7 +30,10 @@ export class StackDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this._route.paramMap
-      .switchMap((params: ParamMap) => this._stackService.getStack(params.get('id')))
+      .switchMap((params: ParamMap) => {
+        this.categoryId = params.get('categoryId');
+        return this._categoryService.getStack(this.categoryId, params.get('stackId'));
+      })
       .subscribe(stack => {
         this.savedStack = stack;
         this.unsavedStack = Object.assign({}, stack);
@@ -35,7 +41,7 @@ export class StackDetailComponent implements OnInit {
   }
 
   goBack(): void {
-  // TODO: PROMPT FOR SAVE
+    // TODO: PROMPT FOR SAVE
     this._location.back();
     // TODO: CanDeactivate guard (https://angular.io/api/router/CanDeactivate)
   }
@@ -86,7 +92,17 @@ export class StackDetailComponent implements OnInit {
   }
 
   save(goBack): void {
-    this._stackService.update(this.unsavedStack)
+    this._categoryService.getCategory(this.categoryId)
+      .then(category => {
+        this.unsavedCategory = Object.assign({}, category);
+        const index = category.stacks.findIndex(stack => this.unsavedStack.id === stack.id);
+        this.unsavedCategory.stacks[index] = this.unsavedStack;
+      })
+      .then(() => {
+        if (this.unsavedCategory) {
+          this._categoryService.update(this.unsavedCategory);
+        }
+      })
       .then(() => {
         if (goBack) { this.goBack(); }
         //TODO: figure out saved/unsaved stacks
@@ -102,7 +118,7 @@ export class StackDetailComponent implements OnInit {
   play(): void {
     //TODO: prompt for saving
     this.save(false);
-    this._router.navigate(['/cards', this.savedStack.id]);
+    this._router.navigate(['/cards', this.categoryId, this.savedStack.id]);
   }
 
   trackByIndex(index: number, obj: any): number {
