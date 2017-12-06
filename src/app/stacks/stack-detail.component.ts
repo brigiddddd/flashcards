@@ -20,19 +20,25 @@ export class StackDetailComponent implements OnInit {
   isDirty = false;
   categoryId: string;
   unsavedCategory: Category;
+  category: Category; // TODO: Categories!!!
 
   constructor(
     private _categoryService: CategoryService,
     private _route: ActivatedRoute,
     private _router: Router,
     private _location: Location
-  ) { }
+  ) {
+    this.category = new Category();
+  } // TODO: THIS IS GARBAGE
 
   ngOnInit(): void {
     this._route.paramMap
       .switchMap((params: ParamMap) => {
         this.categoryId = params.get('categoryId');
-        return this._categoryService.getStack(this.categoryId, params.get('stackId'));
+        return this._categoryService.getStack(
+          this.categoryId,
+          params.get('stackId')
+        );
       })
       .subscribe(stack => {
         this.savedStack = stack;
@@ -79,7 +85,9 @@ export class StackDetailComponent implements OnInit {
 
   addCard(cardContent: string): void {
     cardContent = cardContent.trim();
-    if (!cardContent) { return; }
+    if (!cardContent) {
+      return;
+    }
 
     if (!this.unsavedStack.cards) {
       this.unsavedStack.cards = [];
@@ -92,11 +100,15 @@ export class StackDetailComponent implements OnInit {
   }
 
   save(goBack): void {
-    this._categoryService.getCategory(this.categoryId)
+    this._categoryService
+      .getCategory(this.categoryId)
       .then(category => {
         this.unsavedCategory = Object.assign({}, category);
-        const index = category.stacks.findIndex(stack => this.unsavedStack.id === stack.id);
+        const index = category.stacks.findIndex(
+          stack => this.unsavedStack.id === stack.id
+        );
         this.unsavedCategory.stacks[index] = this.unsavedStack;
+        console.log(this.unsavedStack);
       })
       .then(() => {
         if (this.unsavedCategory) {
@@ -104,7 +116,9 @@ export class StackDetailComponent implements OnInit {
         }
       })
       .then(() => {
-        if (goBack) { this.goBack(); }
+        if (goBack) {
+          this.goBack();
+        }
         //TODO: figure out saved/unsaved stacks
         this.isDirty = false;
       });

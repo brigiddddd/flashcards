@@ -26,6 +26,9 @@ import { CategoriesComponent } from './categories/categories.component';
 import { CategoryService } from './services/category.service';
 import { AutofocusDirective } from './directives/autofocus.directive';
 
+import 'hammerjs';
+import { ColorPickerModule } from 'ngx-color-picker';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,7 +54,8 @@ import { AutofocusDirective } from './directives/autofocus.directive';
     MatButtonToggleModule,
     MatDialogModule,
     BrowserAnimationsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    ColorPickerModule
   ],
   providers: [CategoryService],
   bootstrap: [AppComponent],

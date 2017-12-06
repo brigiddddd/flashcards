@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material';
@@ -16,18 +15,22 @@ export class StacksComponent implements OnInit {
   stacks: Stack[];
   categories: Category[];
 
-  constructor(private _router: Router, public dialog: MatDialog, private _categoryService: CategoryService
-  ) { }
+  constructor(
+    private _router: Router,
+    public dialog: MatDialog,
+    private _categoryService: CategoryService
+  ) {}
 
   ngOnInit(): void {
     this.stacks = [];
-    this.getCategories();
+    //this.getCategories();
     this.getStacks();
   }
 
   getCategories(): void {
-    console.log('getting categories');
-    this._categoryService.getCategories().then(categories => this.categories = categories);
+    this._categoryService
+      .getCategories()
+      .then(categories => (this.categories = categories));
   }
 
   getStacks(): void {
@@ -41,8 +44,12 @@ export class StacksComponent implements OnInit {
             const currentStack = currentStacks[j];
             currentStack.categoryId = currentCategory.id;
             currentStack.categoryName = currentCategory.name;
-            if (!currentStack.backgroundColor) {currentStack.backgroundColor = currentCategory.backgroundColor;}
-            if (!currentStack.fontColor) {currentStack.fontColor = currentCategory.fontColor;}
+            if (!currentStack.backgroundColor) {
+              currentStack.backgroundColor = currentCategory.backgroundColor;
+            }
+            if (!currentStack.fontColor) {
+              currentStack.fontColor = currentCategory.fontColor;
+            }
           }
           this.stacks = this.stacks.concat(currentStacks);
         }

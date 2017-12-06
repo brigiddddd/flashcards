@@ -16,21 +16,11 @@
     </div>
     <div class="color">
       Background Color:
-      <select name="background-color-dropdown" [style.background-color]="savedCategory.backgroundColor" [(ngModel)]="backgroundColorKey"
-        (change)="selectBackgroundColor($event);">
-        <option *ngFor="let key of colorKeys" [value]="key" [style.background-color]="colors[key]">
-          {{colors[key]}}
-        </option>
-      </select>
+      <input [(colorPicker)]="unsavedCategory.backgroundColor" [style.background]="unsavedCategory.backgroundColor" (colorPickerChange)="isDirty=true;">
     </div>
     <div class="color">
       Font Color:
-      <select name="font-color-dropdown" [style.color]="savedCategory.fontColor" [style.background-color]="unsavedCategory.backgroundColor"
-        [(ngModel)]="fontColorKey" (change)="selectFontColor($event);">
-        <option *ngFor="let key of colorKeys" [value]="key" [style.color]="colors[key]" [style.background-color]="unsavedCategory.backgroundColor">
-          {{colors[key]}}
-        </option>
-      </select>
+      <input [(colorPicker)]="unsavedCategory.fontColor" [style.background]="unsavedCategory.fontColor" (colorPickerChange)="isDirty=true;">
     </div>
   </div>
   <div class="sample">

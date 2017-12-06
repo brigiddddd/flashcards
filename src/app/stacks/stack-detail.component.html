@@ -38,5 +38,31 @@
         </li>
       </ol>
     </div>
+
+    <div class="category">
+      <h2>Category</h2>
+      Current Category:
+      <div [style.color]="category.fontColor" [style.backgroundColor]="category.backgroundColor">{{unsavedStack.categoryName}}</div>
+      <!--
+      <select name="category-dropdown" [style.color]="category.fontColor" [style.background-color]="category.backgroundColor"
+      [(ngModel)]="category" (change)="selectCategory($event);">
+      <option *ngFor="let category of categories" [value]="category" [style.color]="category.fontColor" [style.background-color]="category.backgroundColor">
+        {{category}}
+      </option>
+    </select>
+     -->
+    </div>
+
+    <div class="colors" style="background-color: gray; padding: 12px;">
+      Background Color:
+      <div>
+        <input [(colorPicker)]="unsavedStack.backgroundColor" [style.background]="unsavedStack.backgroundColor" (colorPickerChange)="isDirty=true;">
+      </div>
+      Font Color:
+      <div>
+        <input [(colorPicker)]="unsavedStack.fontColor" [style.background]="unsavedStack.fontColor" (colorPickerChange)="isDirty=true;">
+      </div>
+      <div>Checkbox: Use category colors TODO!!</div>
+    </div>
   </div>
 </div>
