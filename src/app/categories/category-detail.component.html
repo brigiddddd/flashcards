@@ -15,26 +15,32 @@
         (input)="isDirty=true;" appAutofocus>
     </div>
     <div class="color">
-      <select name="color-dropdown" [style.background-color]="savedCategory.backgroundColor" [(ngModel)]="colorKey" (change)="selectColor($event);" >
+      Background Color:
+      <select name="background-color-dropdown" [style.background-color]="savedCategory.backgroundColor" [(ngModel)]="backgroundColorKey"
+        (change)="selectBackgroundColor($event);">
         <option *ngFor="let key of colorKeys" [value]="key" [style.background-color]="colors[key]">
           {{colors[key]}}
         </option>
       </select>
     </div>
-
-    <!--div class="stacks">
-      <ol class="stacks-list">
-        <li class="stack" *ngFor="let stack of unsavedCategory.stacks; let i=index; trackBy: trackByIndex">
-          stack
-        </li>
-        <li class="stack">
-          <input id="newCardContent" #newCardContent (keydown.enter)="addCard(newCardContent.value);" (blur)="addCard(newCardContent.value);"
-          />
-          <span class="action-button" (click)="addCard(newCardContent.value);">
-            <i class="material-icons md-light">add</i>
-          </span>
-        </li>
-      </ol>
-    </div -->
+    <div class="color">
+      Font Color:
+      <select name="font-color-dropdown" [style.color]="savedCategory.fontColor" [style.background-color]="unsavedCategory.backgroundColor"
+        [(ngModel)]="fontColorKey" (change)="selectFontColor($event);">
+        <option *ngFor="let key of colorKeys" [value]="key" [style.color]="colors[key]" [style.background-color]="unsavedCategory.backgroundColor">
+          {{colors[key]}}
+        </option>
+      </select>
+    </div>
   </div>
+  <div class="sample">
+    <div class="stack">
+      <!-- TODO: ADD SAMPLE STACK -->
+    </div>
+  </div>
+  <div class="">
+      <div class="stack">
+        <!-- TODO: ADD SAMPLE STACK -->
+      </div>
+    </div>
 </div>

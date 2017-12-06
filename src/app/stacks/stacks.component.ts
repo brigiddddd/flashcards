@@ -22,6 +22,7 @@ export class StacksComponent implements OnInit {
   ngOnInit(): void {
     this.stacks = [];
     this.getCategories();
+    this.getStacks();
   }
 
   getCategories(): void {
@@ -30,12 +31,20 @@ export class StacksComponent implements OnInit {
   }
 
   getStacks(): void {
-    //this._stackService.getStacks().then(x => this.stacks = x);
     this._categoryService.getCategories().then(categories => {
       this.categories = categories;
       for (let i = 0; i < this.categories.length; i++) {
-        if (this.categories[i].stacks) {
-          this.stacks = this.stacks.concat(this.categories[i].stacks);
+        const currentCategory = this.categories[i];
+        const currentStacks = currentCategory.stacks;
+        if (currentStacks) {
+          for (let j = 0; j < currentStacks.length; j++) {
+            const currentStack = currentStacks[j];
+            currentStack.categoryId = currentCategory.id;
+            currentStack.categoryName = currentCategory.name;
+            if (!currentStack.backgroundColor) {currentStack.backgroundColor = currentCategory.backgroundColor;}
+            if (!currentStack.fontColor) {currentStack.fontColor = currentCategory.fontColor;}
+          }
+          this.stacks = this.stacks.concat(currentStacks);
         }
       }
     });
@@ -53,8 +62,8 @@ export class StacksComponent implements OnInit {
     // TODO:Change style on select
   }
 
-  onPlay(category: Category, stack: Stack): void {
-    this._router.navigate(['/cards', category.id, stack.id]);
+  onPlay(categoryId: number, stackId: number): void {
+    this._router.navigate(['/cards', categoryId, stackId]);
   }
 
   addStack(): void {
@@ -94,7 +103,10 @@ export class StacksComponent implements OnInit {
   }
 
   trackByStack(index: number, stack: Stack): number {
-    //TODO: WHY DID I IMPLEMENT THIS?
+    // Angular uses object identity to track insertions and deletions within the iterator of an ngForOf.
+    // It is possible for the identities of elements to change while the data does not.
+    // The Angular may tear down the entire DOM and rebuild it. (expensive)
+    // If trackBy is given, Angular tracks changes by the return value of the function.
     return stack.id;
   }
 }

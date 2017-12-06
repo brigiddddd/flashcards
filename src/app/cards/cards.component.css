@@ -32,6 +32,7 @@
 .card-action-buttons {
   margin: 36px;
   text-align: center;
+  user-select: none;
 }
 
 .card-action-icon {

@@ -4,5 +4,8 @@ export class Stack {
   name: string;
   cards: string[];
   categoryId: number;
-  selected: boolean = false;
+  selected = false;
+  categoryName: string;
+  backgroundColor: string;
+  fontColor: string;
 }

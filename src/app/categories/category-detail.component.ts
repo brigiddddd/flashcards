@@ -19,7 +19,8 @@ export class CategoryDetailComponent implements OnInit {
   isEditingName = false;
   isDirty = false;
   colorKeys: string[];
-  colorKey: number;
+  backgroundColorKey: number;
+  fontColorKey: number;
   colors = Color;
 
   constructor(
@@ -38,8 +39,8 @@ export class CategoryDetailComponent implements OnInit {
       .subscribe(category => {
         this.savedCategory = category;
         this.unsavedCategory = Object.assign({}, category);
-        this.colorKey = this.colors[this.savedCategory.backgroundColor];
-        console.log(this.colorKey);
+        this.backgroundColorKey = this.colors[this.savedCategory.backgroundColor];
+        this.fontColorKey = this.colors[this.savedCategory.fontColor];
       });
   }
 
@@ -61,9 +62,15 @@ export class CategoryDetailComponent implements OnInit {
     this.isEditingName = false;
   }
 
-  selectColor(event): void {
-    event.currentTarget.style.backgroundColor = Color[this.colorKey];
-    this.unsavedCategory.backgroundColor = Color[this.colorKey];
+  selectBackgroundColor(event): void {
+    event.currentTarget.style.backgroundColor = Color[this.backgroundColorKey];
+    this.unsavedCategory.backgroundColor = Color[this.backgroundColorKey];
+    this.isDirty = true;
+  }
+
+  selectFontColor(event): void {
+    event.currentTarget.style.color = Color[this.fontColorKey];
+    this.unsavedCategory.fontColor = Color[this.fontColorKey];
     this.isDirty = true;
   }
 

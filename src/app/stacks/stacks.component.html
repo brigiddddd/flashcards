@@ -1,11 +1,21 @@
-<div *ngFor="let category of categories">
+<!--
+<span *ngFor="let category of categories">
   <span *ngIf="category.stacks" class="container">
-    <mat-card *ngFor="let stack of category.stacks" class="stack item" title="{{ stack.cards }}" (dblclick)="onPlay(category, stack)" (click)="onSelect(stack, $event);"
-      [style.order]="stack.order" [style.background]="category.backgroundColor">
+    <mat-card *ngFor="let stack of category.stacks" class="stack item" title="{{ stack.cards }}" (dblclick)="onPlay(category.id, stack.id)"
+      (click)="onSelect(stack, $event);" [style.order]="stack.order" [style.background]="category.backgroundColor" [style.font]="category.fontColor">
       <div class="content category">{{category.name}}</div>
       <div class="content name">{{stack.name}}</div>
     </mat-card>
   </span>
+</span>
+-->
+
+<div class="container">
+  <mat-card *ngFor="let stack of stacks" class="stack item" title="{{ stack.cards }}" (dblclick)="onPlay(stack.categoryId, stack.id)"
+    (click)="onSelect(stack, $event);" [style.order]="stack.order" [style.background]="stack.backgroundColor" [style.color]="stack.fontColor">
+    <div class="content category">{{stack.categoryName}}</div>
+    <div class="content name">{{stack.name}}</div>
+  </mat-card>
 </div>
 
 <span *ngFor="let stack of stacks">

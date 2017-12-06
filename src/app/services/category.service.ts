@@ -36,7 +36,12 @@ export class CategoryService {
   getStack(categoryId: string, stackId: string): Promise<Stack> {
     return this.getCategory(categoryId).then(category => {
       const stacks = category.stacks;
-      return stacks.find(x => x.id.toString() === stackId);
+      const stack = stacks.find(x => x.id.toString() === stackId);
+      stack.categoryId = category.id;
+      stack.categoryName = category.name;
+      if (!stack.backgroundColor) { stack.backgroundColor = category.backgroundColor; }
+      if (!stack.fontColor) { stack.fontColor = category.fontColor; }
+      return stack;
     });
   }
 

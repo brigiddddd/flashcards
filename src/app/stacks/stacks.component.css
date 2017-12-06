@@ -32,7 +32,6 @@ mat-card.selected{
 }
 
 .content.category {
-  color: greenyellow;
   text-align: left;
   height: fit-content;
   max-height: 100%;
