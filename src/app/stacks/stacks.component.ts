@@ -7,7 +7,7 @@ import { CategoryService } from './../services/category.service';
 import { Category } from '../models/category';
 
 @Component({
-  selector: 'stacks',
+  selector: 'app-stacks',
   templateUrl: './stacks.component.html',
   styleUrls: ['./stacks.component.css']
 })

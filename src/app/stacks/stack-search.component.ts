@@ -17,7 +17,7 @@ import { StackSearchService } from './../services/stack-search.service';
 
 
 @Component({
-    selector: 'stack-search',
+    selector: 'app-stack-search',
     templateUrl: './stack-search.component.html',
     providers: [StackSearchService]
 })

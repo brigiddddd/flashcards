@@ -9,6 +9,7 @@ import { Category } from '../models/category';
 
 @Component({
   selector: 'stack-detail',
+  selector: 'app-stack-detail',
   templateUrl: './stack-detail.component.html',
   styleUrls: ['./stack-detail.component.css']
 })

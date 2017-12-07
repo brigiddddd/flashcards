@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { CategoryService } from '../services/category.service';
 
 @Component({
-  selector: 'cards',
+  selector: 'app-cards',
   templateUrl: './cards.component.html',
   styleUrls: ['./cards.component.css']
 })

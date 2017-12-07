@@ -7,7 +7,7 @@ import { Location } from '@angular/common';
 import 'rxjs/add/operator/switchMap';
 
 @Component({
-  selector: 'category-detail',
+  selector: 'app-category-detail',
   templateUrl: './category-detail.component.html',
   styleUrls: ['./category-detail.component.css']
 })
