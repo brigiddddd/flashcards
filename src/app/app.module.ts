@@ -16,8 +16,13 @@ import { StackDetailComponent } from './stacks/stack-detail.component';
 import { StackSearchComponent } from './stacks/stack-search.component';
 import { CardsComponent } from './cards/cards.component';
 import {
-  MatToolbarModule, MatGridListModule, MatCardModule, MatButtonToggleModule, MatDialogModule,
-  MatProgressSpinnerModule
+  MatToolbarModule,
+  MatGridListModule,
+  MatCardModule,
+  MatButtonToggleModule,
+  MatDialogModule,
+  MatProgressSpinnerModule,
+  MatSlideToggleModule
 } from '@angular/material';
 import { SettingsComponent } from './settings/settings.component';
 import { AddStackDialogComponent } from './add-stack-dialog/add-stack-dialog.component';
@@ -28,6 +33,8 @@ import { AutofocusDirective } from './directives/autofocus.directive';
 
 import 'hammerjs';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { ColorPickerWrapperComponent } from './color-picker-wrapper/color-picker-wrapper.component';
+import { StackDisplayColorsComponent } from './stack-display-colors/stack-display-colors.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +47,9 @@ import { ColorPickerModule } from 'ngx-color-picker';
     AutofocusDirective,
     AddStackDialogComponent,
     CategoriesComponent,
-    CategoryDetailComponent
+    CategoryDetailComponent,
+    ColorPickerWrapperComponent,
+    StackDisplayColorsComponent
   ],
   imports: [
     BrowserModule,
@@ -55,10 +64,11 @@ import { ColorPickerModule } from 'ngx-color-picker';
     MatDialogModule,
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
-    ColorPickerModule
+    ColorPickerModule,
+    MatSlideToggleModule
   ],
   providers: [CategoryService],
   bootstrap: [AppComponent],
   entryComponents: [AddStackDialogComponent]
 })
-export class AppModule { }
+export class AppModule {}

@@ -52,17 +52,15 @@
     </select>
      -->
     </div>
-
     <div class="colors" style="background-color: gray; padding: 12px;">
-      Background Color:
+      <app-stack-display-colors [(backgroundColor)]="unsavedStack.backgroundColor" [(fontColor)]="unsavedStack.fontColor" (isDirty)="isDirty = true;"></app-stack-display-colors>
+      <br>
       <div>
-        <input [(colorPicker)]="unsavedStack.backgroundColor" [style.background]="unsavedStack.backgroundColor" (colorPickerChange)="isDirty=true;">
+        <mat-slide-toggle [(ngModel)]="useCategoryColors">
+          Use category colors
+        </mat-slide-toggle>
       </div>
-      Font Color:
-      <div>
-        <input [(colorPicker)]="unsavedStack.fontColor" [style.background]="unsavedStack.fontColor" (colorPickerChange)="isDirty=true;">
-      </div>
-      <div>Checkbox: Use category colors TODO!!</div>
+
     </div>
   </div>
 </div>

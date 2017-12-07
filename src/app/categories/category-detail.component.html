@@ -14,23 +14,8 @@
       <input *ngIf="isEditingName" [(ngModel)]="unsavedCategory.name" placeholder="Name" (blur)="updateName()" (keydown.enter)="updateName();"
         (input)="isDirty=true;" appAutofocus>
     </div>
-    <div class="color">
-      Background Color:
-      <input [(colorPicker)]="unsavedCategory.backgroundColor" [style.background]="unsavedCategory.backgroundColor" (colorPickerChange)="isDirty=true;">
-    </div>
-    <div class="color">
-      Font Color:
-      <input [(colorPicker)]="unsavedCategory.fontColor" [style.background]="unsavedCategory.fontColor" (colorPickerChange)="isDirty=true;">
+    <div>
+      <app-stack-display-colors [(backgroundColor)]="unsavedCategory.backgroundColor" [(fontColor)]="unsavedCategory.fontColor"
+        (isDirty)="isDirty = true;"></app-stack-display-colors>
     </div>
   </div>
-  <div class="sample">
-    <div class="stack">
-      <!-- TODO: ADD SAMPLE STACK -->
-    </div>
-  </div>
-  <div class="">
-      <div class="stack">
-        <!-- TODO: ADD SAMPLE STACK -->
-      </div>
-    </div>
-</div>

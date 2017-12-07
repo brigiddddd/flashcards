@@ -1,0 +1,11 @@
+<div class="colors">
+  <app-color-picker *ngIf="backgroundColor" [label]="'Background Color'" [(color)]="backgroundColor"></app-color-picker>
+  <app-color-picker *ngIf="fontColor" [label]="'Font Color'" [(color)]="fontColor"></app-color-picker>
+</div>
+
+<br>
+<div class="sample">
+  <div class="stack">
+    <div [style.backgroundColor]="backgroundColor" [style.color]="fontColor"> TODO: STYLE LIKE STACK</div>
+  </div>
+</div>
