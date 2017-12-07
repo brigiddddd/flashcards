@@ -6,7 +6,7 @@ export class InMemoryDataService implements InMemoryDbService {
       {
         id: 0,
         name: 'Start Smart',
-        backgroundColor: '#BB3E5C',
+        backgroundColor: '#FFBF29',
         fontColor: '#000',
         stacks: [
           {
@@ -29,7 +29,7 @@ export class InMemoryDataService implements InMemoryDbService {
       }, {
         id: 1,
         name: 'Unit 1',
-        backgroundColor: '#453EBB',
+        backgroundColor: '#FFED29',
         fontColor: '#000',
         stacks: [
           {
@@ -56,14 +56,14 @@ export class InMemoryDataService implements InMemoryDbService {
             id: 12,
             name: 'Week 5',
             cards: ['jump', 'move', 'run', 'two'],
-            fontColor: 'white',
-            backgroundColor: '#000'
+            fontColor: '#950226',
+            backgroundColor: '#FF42AA'
           }
         ]
       }, {
         id: 2,
         name: 'Unit 2',
-        backgroundColor: '#ACA439',
+        backgroundColor: '#6FFF47',
         fontColor: '#000',
         stacks: [
           {
@@ -91,7 +91,7 @@ export class InMemoryDataService implements InMemoryDbService {
       }, {
         id: 3,
         name: 'Unit 3',
-        backgroundColor: '#74A136',
+        backgroundColor: '#42FFD9',
         fontColor: '#000',
         stacks: [
           {
@@ -119,7 +119,7 @@ export class InMemoryDataService implements InMemoryDbService {
       }, {
         id: 4,
         name: 'Unit 4',
-        backgroundColor: '#53A3C6',
+        backgroundColor: '#3D6EFF',
         fontColor: '#000',
         stacks: [
           {
@@ -140,7 +140,13 @@ export class InMemoryDataService implements InMemoryDbService {
             cards: ['caught', 'flew', 'know', 'laugh', 'listen', 'were']
           }
         ]
-      }];
+      }, {
+        id: 5,
+        name: 'Unit 5',
+        backgroundColor: '#C23DFF',
+        fontColor: '#000'
+      }
+    ];
 
     return { categories };
   }

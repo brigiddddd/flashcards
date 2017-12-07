@@ -70,7 +70,7 @@ export class StacksComponent implements OnInit {
   }
 
   onPlay(categoryId: number, stackId: number): void {
-    this._router.navigate(['/cards', categoryId, stackId]);
+    this._router.navigate(['/play', categoryId, stackId]);
   }
 
   addStack(): void {
@@ -96,7 +96,7 @@ export class StacksComponent implements OnInit {
   }
 
   editStack(category: Category, stack: Stack): void {
-    this._router.navigate(['/detail', category.id, stack.id]);
+    this._router.navigate(['/details', category.id, stack.id]);
   }
 
   deleteStack(stack: Stack): void {

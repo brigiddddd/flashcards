@@ -10,16 +10,16 @@ import { CategoryDetailComponent } from './categories/category-detail.component'
 
 const routes: Routes = [
   { path: '', redirectTo: '/stacks', pathMatch: 'full' },
-  { path: 'detail/:categoryId/:stackId', component: StackDetailComponent },
-  { path: 'detail/:id', component: CategoryDetailComponent },
   { path: 'stacks', component: StacksComponent },
+  { path: 'details/:id', component: CategoryDetailComponent },
+  { path: 'details/:categoryId/:stackId', component: StackDetailComponent },
+  { path: 'play/:categoryId/:stackId', component: CardsComponent },
   { path: 'search', component: StackSearchComponent },
-  { path: 'settings', component: SettingsComponent },
-  { path: 'cards/:categoryId/:stackId', component: CardsComponent }
+  { path: 'settings', component: SettingsComponent }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

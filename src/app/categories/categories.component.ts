@@ -28,12 +28,12 @@ export class CategoriesComponent implements OnInit {
       return;
     }
     this._categoryService.create(name).then(category => {
-      this._router.navigate(['/detail', category.id]);
+      this._router.navigate(['/details', category.id]);
     });
   }
 
   editCategory(category: Category): void {
-    this._router.navigate(['/detail', category.id]);
+    this._router.navigate(['/details', category.id]);
   }
 
 }
