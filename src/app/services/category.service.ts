@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
+import { catchError, map, tap } from 'rxjs/operators';
 
 import { MessageService } from './message.service';
 
@@ -22,7 +23,7 @@ export class CategoryService {
     private _http: HttpClient,
     private _messageService: MessageService
   ) {
-    // TODO: MAKE SETTING?
+    // TODO: MAKE THIS A SETTING?
     this.defaultBackgroundColor = '#fff';
     this.defaultFontColor = '#000';
   }
@@ -38,23 +39,26 @@ export class CategoryService {
     };
   }
 
-  getCategory(id: string): Promise<Category> {
+  getCategory(id: string): Observable<Category> {
     const url = `${this._categoriesUrl}/${id}`;
     return this._http
-      .get(url)
-      .toPromise()
-      .then(response => response.json() as Category)
-      .catch(this._handleError);
+      .get<Category>(url)
+      .pipe(
+        tap(_ => this.log(`fetched category id = ${id}`)),
+        catchError(this._handleError<Category>(`getCategory id = ${id}`))
+      );
   }
 
-  getCategories(): Promise<Category[]> {
+  getCategories(): Observable<Category[]> {
     return this._http
-      .get(this._categoriesUrl)
-      .toPromise()
-      .then(response => response.json() as Category[])
-      .catch(this._handleError);
+      .get<Category[]>(this._categoriesUrl)
+      .pipe(
+        tap(heroes => this.log(`fetched categories`)),
+        catchError(this._handleError('getCategories', []))
+      );
   }
 
+  // TODO!!! RE THINK THIS LOGIC
   getStack(categoryId: string, stackId: string): Promise<Stack> {
     return this.getCategory(categoryId).then(category => {
       const stacks = category.stacks;
@@ -71,16 +75,29 @@ export class CategoryService {
     });
   }
 
-  update(category: Category): Promise<Category> {
+  updateCategory(category: Category): Observable<any> {
     const url = `${this._categoriesUrl}/${category.id}`;
     return this._http
-      .put(url, JSON.stringify(category), { headers: this._headers })
-      .toPromise()
-      .then(() => category)
-      .catch(this._handleError);
+      .put(url, category, httpOptions)
+      .pipe(
+        tap(_ => this.log(`updated category id = ${category.id}`)),
+        catchError(this._handleError<any>('updateCategory'))
+      );
   }
 
-  create(name: string): Promise<Category> {
+  addCategory(category: Category): Observable<Category> {
+    return this._http
+      .post<Category>(this._categoriesUrl, category, httpOptions)
+      .pipe(
+        tap((newCategory: Category) =>
+          this.log(`added category with id = ${newCategory.id}`)
+        ),
+        catchError(this._handleError<Category>('addCategory'))
+      );
+  }
+  //TODO: SHOULD WE HAVE CREATE??
+  /*
+  createCategory(name: string): Observable<Category> {
     return this._http
       .post(
         this._categoriesUrl,
@@ -96,13 +113,16 @@ export class CategoryService {
       .then(result => result.json() as Category)
       .catch(this._handleError);
   }
+  */
 
-  delete(id: number): Promise<void> {
+  deleteCategory(category: Category | number): Observable<Category> {
+    const id = typeof category === 'number' ? category : category.id;
     const url = `${this._categoriesUrl}/${id}`;
     return this._http
-      .delete(url, { headers: this._headers })
-      .toPromise()
-      .then(() => null)
-      .catch(this._handleError);
+      .delete<Category>(url, httpOptions)
+      .pipe(
+        tap(_ => this.log(`deleted category with id = ${id}`)),
+        catchError(this._handleError<Category>('deleteCategory'))
+      );
   }
 }

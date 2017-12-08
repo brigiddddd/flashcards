@@ -27,7 +27,7 @@ export class CategoriesComponent implements OnInit {
       console.log('No category name has been set');
       return;
     }
-    this._categoryService.create(name).then(category => {
+    this._categoryService.createCategory(name).then(category => {
       this._router.navigate(['/details', category.id]);
     });
   }

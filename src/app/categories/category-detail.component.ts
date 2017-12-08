@@ -37,7 +37,7 @@ export class CategoryDetailComponent implements OnInit {
 
   goBack(): void {
     // TODO: PROMPT FOR SAVE
-    this._location.back();
+    this._location.back(); // TODO: THIS DOES NOT WORK CORRECTLY AFTER CREATE
     // TODO: CanDeactivate guard (https://angular.io/api/router/CanDeactivate)
   }
 
@@ -54,7 +54,7 @@ export class CategoryDetailComponent implements OnInit {
   }
 
   save(goBack): void {
-    this._categoryService.update(this.unsavedCategory).then(() => {
+    this._categoryService.updateCategory(this.unsavedCategory).then(() => {
       if (goBack) {
         this.goBack();
       }

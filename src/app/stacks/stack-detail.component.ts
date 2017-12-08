@@ -8,7 +8,6 @@ import 'rxjs/add/operator/switchMap';
 import { Category } from '../models/category';
 
 @Component({
-  selector: 'stack-detail',
   selector: 'app-stack-detail',
   templateUrl: './stack-detail.component.html',
   styleUrls: ['./stack-detail.component.css']
@@ -22,6 +21,7 @@ export class StackDetailComponent implements OnInit {
   categoryId: string;
   unsavedCategory: Category;
   category: Category; // TODO: Categories!!!
+  useCategoryColors: boolean;
 
   constructor(
     private _categoryService: CategoryService,
@@ -113,7 +113,7 @@ export class StackDetailComponent implements OnInit {
       })
       .then(() => {
         if (this.unsavedCategory) {
-          this._categoryService.update(this.unsavedCategory);
+          this._categoryService.updateCategory(this.unsavedCategory);
         }
       })
       .then(() => {
