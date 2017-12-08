@@ -41,7 +41,8 @@ export class StackDetailComponent implements OnInit {
           params.get('stackId')
         );
       })
-      .subscribe(stack => {
+      .subscribe((stack: Stack) => {
+        console.log(stack.name);
         this.savedStack = stack;
         this.unsavedStack = Object.assign({}, stack);
       });
@@ -139,3 +140,7 @@ export class StackDetailComponent implements OnInit {
     return index;
   }
 }
+// NOTE: IF YOU CHANGE THE CATEGORY, YOUR CURRENT URL WILL BE INCORRECT. SO YOU WOULD HAVE TO RE-ROUTE
+// AND THEN SOMEHOW REMOVE THE 'BACK' FUNCTIONALITY. NEED TO REDO STACK URLS TO NOT CONTAIN CATEGORY URLS.
+
+// TODO: USE MESSAGE SERVICE

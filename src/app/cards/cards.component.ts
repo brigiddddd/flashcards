@@ -31,7 +31,7 @@ export class CardsComponent implements OnInit {
         this.categoryId = params.get('categoryId');
         return this._categoryService.getStack(this.categoryId, params.get('stackId'));
       })
-      .subscribe(stack => {
+      .subscribe((stack: Stack) => {
         this.shuffledCards = this.shuffle(stack.cards);
         this.stack = stack;
       });

@@ -25,6 +25,7 @@ export class CategoryService {
   private log(message: string) {
     this._messageService.add('CategoryService: ' + message);
   }
+
   private _handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);
@@ -53,6 +54,7 @@ export class CategoryService {
   }
 
   // TODO!!! RE THINK THIS LOGIC
+  // TODO: THIS IS NOT DOING THE RIGHT THING... NOT SURE HOW TO DO IT RIGHT
   getStack(categoryId: string, stackId: string): Observable<Stack> {
     return Observable.create(observer => {
       this.getCategory(categoryId).subscribe(category => {
@@ -70,7 +72,9 @@ export class CategoryService {
         }
         observer.next(stack);
       });
-    });
+    }).pipe(
+      tap((stack: Stack) => this.log(`fetched stack with id = ${stack.id}`),
+        catchError(this._handleError<Stack>(`getStack with id ${stackId}`))));
   }
 
   updateCategory(category: Category): Observable<any> {
