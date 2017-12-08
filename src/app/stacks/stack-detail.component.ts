@@ -103,25 +103,24 @@ export class StackDetailComponent implements OnInit {
   save(goBack): void {
     this._categoryService
       .getCategory(this.categoryId)
-      .then(category => {
+      .subscribe(category => {
         this.unsavedCategory = Object.assign({}, category);
         const index = category.stacks.findIndex(
           stack => this.unsavedStack.id === stack.id
         );
         this.unsavedCategory.stacks[index] = this.unsavedStack;
         console.log(this.unsavedStack);
-      })
-      .then(() => {
+        // TODO
         if (this.unsavedCategory) {
           this._categoryService.updateCategory(this.unsavedCategory);
         }
-      })
-      .then(() => {
+
         if (goBack) {
           this.goBack();
         }
         //TODO: figure out saved/unsaved stacks
         this.isDirty = false;
+
       });
   }
 

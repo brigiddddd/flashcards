@@ -3,6 +3,10 @@ import { Category } from './../models/category';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+// TODO: MAKE THIS A SETTING?
+const defaultBackgroundColor = '#fff';
+const defaultFontColor = '#000';
+
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
@@ -19,7 +23,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   getCategories() {
-    this._categoryService.getCategories().then(x => this.categories = x);
+    this._categoryService.getCategories().subscribe(x => this.categories = x);
   }
 
   addCategory(name: string) {
@@ -27,7 +31,12 @@ export class CategoriesComponent implements OnInit {
       console.log('No category name has been set');
       return;
     }
-    this._categoryService.createCategory(name).then(category => {
+    let category = new Category();
+    category.name = name;
+    category.stacks = [];
+    category.backgroundColor = defaultBackgroundColor;
+    category.fontColor = defaultFontColor;
+    this._categoryService.addCategory(category).subscribe(category => {
       this._router.navigate(['/details', category.id]);
     });
   }

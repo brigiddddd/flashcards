@@ -16,16 +16,10 @@ const httpOptions = {
 export class CategoryService {
   private _categoriesUrl = 'api/categories'; // URL to web api
 
-  defaultBackgroundColor: string;
-  defaultFontColor: string;
-
   constructor(
     private _http: HttpClient,
     private _messageService: MessageService
   ) {
-    // TODO: MAKE THIS A SETTING?
-    this.defaultBackgroundColor = '#fff';
-    this.defaultFontColor = '#000';
   }
 
   private log(message: string) {
@@ -44,8 +38,8 @@ export class CategoryService {
     return this._http
       .get<Category>(url)
       .pipe(
-        tap(_ => this.log(`fetched category id = ${id}`)),
-        catchError(this._handleError<Category>(`getCategory id = ${id}`))
+      tap(_ => this.log(`fetched category id = ${id}`)),
+      catchError(this._handleError<Category>(`getCategory id = ${id}`))
       );
   }
 
@@ -53,25 +47,29 @@ export class CategoryService {
     return this._http
       .get<Category[]>(this._categoriesUrl)
       .pipe(
-        tap(heroes => this.log(`fetched categories`)),
-        catchError(this._handleError('getCategories', []))
+      tap(heroes => this.log(`fetched categories`)),
+      catchError(this._handleError('getCategories', []))
       );
   }
 
   // TODO!!! RE THINK THIS LOGIC
-  getStack(categoryId: string, stackId: string): Promise<Stack> {
-    return this.getCategory(categoryId).then(category => {
-      const stacks = category.stacks;
-      const stack = stacks.find(x => x.id.toString() === stackId);
-      stack.categoryId = category.id;
-      stack.categoryName = category.name;
-      if (!stack.backgroundColor) {
-        stack.backgroundColor = category.backgroundColor;
-      }
-      if (!stack.fontColor) {
-        stack.fontColor = category.fontColor;
-      }
-      return stack;
+  getStack(categoryId: string, stackId: string): Observable<Stack> {
+    return Observable.create(observer => {
+      this.getCategory(categoryId).subscribe(category => {
+        observer.next(category);
+
+        const stacks = category.stacks;
+        const stack = stacks.find(x => x.id.toString() === stackId);
+        stack.categoryId = category.id;
+        stack.categoryName = category.name;
+        if (!stack.backgroundColor) {
+          stack.backgroundColor = category.backgroundColor;
+        }
+        if (!stack.fontColor) {
+          stack.fontColor = category.fontColor;
+        }
+        observer.next(stack);
+      });
     });
   }
 
@@ -80,8 +78,8 @@ export class CategoryService {
     return this._http
       .put(url, category, httpOptions)
       .pipe(
-        tap(_ => this.log(`updated category id = ${category.id}`)),
-        catchError(this._handleError<any>('updateCategory'))
+      tap(_ => this.log(`updated category id = ${category.id}`)),
+      catchError(this._handleError<any>('updateCategory'))
       );
   }
 
@@ -89,31 +87,12 @@ export class CategoryService {
     return this._http
       .post<Category>(this._categoriesUrl, category, httpOptions)
       .pipe(
-        tap((newCategory: Category) =>
-          this.log(`added category with id = ${newCategory.id}`)
-        ),
-        catchError(this._handleError<Category>('addCategory'))
+      tap((newCategory: Category) =>
+        this.log(`added category with id = ${newCategory.id}`)
+      ),
+      catchError(this._handleError<Category>('addCategory'))
       );
   }
-  //TODO: SHOULD WE HAVE CREATE??
-  /*
-  createCategory(name: string): Observable<Category> {
-    return this._http
-      .post(
-        this._categoriesUrl,
-        JSON.stringify({
-          name: name,
-          cards: [],
-          backgroundColor: this.defaultBackgroundColor,
-          fontColor: this.defaultFontColor
-        }),
-        { headers: this._headers }
-      )
-      .toPromise()
-      .then(result => result.json() as Category)
-      .catch(this._handleError);
-  }
-  */
 
   deleteCategory(category: Category | number): Observable<Category> {
     const id = typeof category === 'number' ? category : category.id;
@@ -121,8 +100,8 @@ export class CategoryService {
     return this._http
       .delete<Category>(url, httpOptions)
       .pipe(
-        tap(_ => this.log(`deleted category with id = ${id}`)),
-        catchError(this._handleError<Category>('deleteCategory'))
+      tap(_ => this.log(`deleted category with id = ${id}`)),
+      catchError(this._handleError<Category>('deleteCategory'))
       );
   }
 }

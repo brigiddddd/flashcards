@@ -54,7 +54,7 @@ export class CategoryDetailComponent implements OnInit {
   }
 
   save(goBack): void {
-    this._categoryService.updateCategory(this.unsavedCategory).then(() => {
+    this._categoryService.updateCategory(this.unsavedCategory).subscribe(() => {
       if (goBack) {
         this.goBack();
       }

@@ -2,7 +2,7 @@ import { CategoryDetailComponent } from './categories/category-detail.component'
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -58,7 +58,7 @@ import { MessageService } from './services/message.service';
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    HttpModule,
+    HttpClientModule,
     InMemoryWebApiModule.forRoot(InMemoryDataService),
     MatToolbarModule,
     MatGridListModule,

@@ -30,11 +30,11 @@ export class StacksComponent implements OnInit {
   getCategories(): void {
     this._categoryService
       .getCategories()
-      .then(categories => (this.categories = categories));
+      .subscribe(categories => (this.categories = categories));
   }
 
   getStacks(): void {
-    this._categoryService.getCategories().then(categories => {
+    this._categoryService.getCategories().subscribe(categories => {
       this.categories = categories;
       for (let i = 0; i < this.categories.length; i++) {
         const currentCategory = this.categories[i];
