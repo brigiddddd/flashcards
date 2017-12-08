@@ -1,27 +1,41 @@
 import { Category } from './../models/category';
 import { Stack } from '../models/stack';
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
 
-import 'rxjs/add/operator/toPromise';
+import { MessageService } from './message.service';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable()
 export class CategoryService {
   private _categoriesUrl = 'api/categories'; // URL to web api
-  private _headers = new Headers({ 'Content-Type:': 'application/json' });
 
   defaultBackgroundColor: string;
   defaultFontColor: string;
 
-  constructor(private _http: Http) {
+  constructor(
+    private _http: HttpClient,
+    private _messageService: MessageService
+  ) {
     // TODO: MAKE SETTING?
     this.defaultBackgroundColor = '#fff';
     this.defaultFontColor = '#000';
   }
 
-  private _handleError(error: any): Promise<any> {
-    console.error('An error occurred', error); // for demo purposes only
-    return Promise.reject(error.message || error);
+  private log(message: string) {
+    this._messageService.add('CategoryService: ' + message);
+  }
+  private _handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(error);
+      this.log(`${operation} failed: ${error.message}`);
+      return of(result as T);
+    };
   }
 
   getCategory(id: string): Promise<Category> {

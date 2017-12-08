@@ -35,6 +35,8 @@ import 'hammerjs';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { ColorPickerWrapperComponent } from './color-picker-wrapper/color-picker-wrapper.component';
 import { StackDisplayColorsComponent } from './stack-display-colors/stack-display-colors.component';
+import { MessagesComponent } from './messages/messages.component';
+import { MessageService } from './services/message.service';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,8 @@ import { StackDisplayColorsComponent } from './stack-display-colors/stack-displa
     CategoriesComponent,
     CategoryDetailComponent,
     ColorPickerWrapperComponent,
-    StackDisplayColorsComponent
+    StackDisplayColorsComponent,
+    MessagesComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +70,7 @@ import { StackDisplayColorsComponent } from './stack-display-colors/stack-displa
     ColorPickerModule,
     MatSlideToggleModule
   ],
-  providers: [CategoryService],
+  providers: [CategoryService, MessageService],
   bootstrap: [AppComponent],
   entryComponents: [AddStackDialogComponent]
 })
