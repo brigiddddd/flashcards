@@ -11,7 +11,7 @@ import { CategoryDetailComponent } from './categories/category-detail.component'
 const routes: Routes = [
   { path: '', redirectTo: '/stacks', pathMatch: 'full' },
   { path: 'stacks', component: StacksComponent },
-  { path: 'details/:id', component: CategoryDetailComponent },
+  { path: 'details/:categoryId', component: CategoryDetailComponent },
   { path: 'details/:categoryId/:stackId', component: StackDetailComponent },
   { path: 'play/:categoryId/:stackId', component: CardsComponent },
   { path: 'search', component: StackSearchComponent },

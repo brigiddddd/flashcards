@@ -27,9 +27,9 @@ export class CategoryDetailComponent implements OnInit {
   ngOnInit(): void {
     this._route.paramMap
       .switchMap((params: ParamMap) =>
-        this._categoryService.getCategory(params.get('id'))
+        this._categoryService.getCategory(params.get('categoryId'))
       )
-      .subscribe(category => {
+      .subscribe((category: Category) => {
         this.savedCategory = category;
         this.unsavedCategory = Object.assign({}, category);
       });
@@ -37,7 +37,7 @@ export class CategoryDetailComponent implements OnInit {
 
   goBack(): void {
     // TODO: PROMPT FOR SAVE
-    this._location.back(); // TODO: THIS DOES NOT WORK CORRECTLY AFTER CREATE
+    this._location.back();
     // TODO: CanDeactivate guard (https://angular.io/api/router/CanDeactivate)
   }
 

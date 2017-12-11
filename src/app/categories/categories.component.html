@@ -7,7 +7,7 @@
     </h3>
   </li>
   <li class="category">
-    <input id="newCategory" #newCategory (keydown.enter)="addCategory(newCategory.value);" (blur)="addCategory(newCategory.value);"/>
+    <input id="newCategory" #newCategory (keydown.enter)="addCategory(newCategory.value); $event.stopPropagation();"/>
     <button class="action-button add" (click)="addCategory(newCategory.value);">
       <i class="material-icons md-light">add</i>
     </button>

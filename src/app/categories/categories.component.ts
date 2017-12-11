@@ -13,17 +13,21 @@ const defaultFontColor = '#000';
   styleUrls: ['./categories.component.css']
 })
 export class CategoriesComponent implements OnInit {
-
   categories: Category[];
 
-  constructor(private _categoryService: CategoryService, private _router: Router) { }
+  constructor(
+    private _categoryService: CategoryService,
+    private _router: Router
+  ) {}
 
   ngOnInit() {
     this.getCategories();
   }
 
   getCategories() {
-    this._categoryService.getCategories().subscribe(x => this.categories = x);
+    this._categoryService
+      .getCategories()
+      .subscribe((x: Category[]) => (this.categories = x));
   }
 
   addCategory(name: string) {
@@ -31,18 +35,19 @@ export class CategoriesComponent implements OnInit {
       console.log('No category name has been set');
       return;
     }
-    let category = new Category();
+    const category = new Category();
     category.name = name;
     category.stacks = [];
     category.backgroundColor = defaultBackgroundColor;
     category.fontColor = defaultFontColor;
-    this._categoryService.addCategory(category).subscribe(category => {
-      this._router.navigate(['/details', category.id]);
-    });
+    this._categoryService
+      .addCategory(category)
+      .subscribe((newCategory: Category) => {
+        this._router.navigate(['/details', newCategory.id]);
+      });
   }
 
   editCategory(category: Category): void {
     this._router.navigate(['/details', category.id]);
   }
-
 }
