@@ -20,7 +20,7 @@
       <input *ngIf="isEditingName" [(ngModel)]="unsavedStack.name" placeholder="Name" (blur)="updateName()" (keydown.enter)="updateName();"
         (input)="isDirty=true;" appAutofocus>
     </div>
-
+<!--
     <div class="cards">
       <ol class="cards-list">
         <li class="card" *ngFor="let card of unsavedStack.cards; let i=index; trackBy: trackByIndex">
@@ -38,11 +38,11 @@
         </li>
       </ol>
     </div>
-
+ -->
     <div class="category">
       <h2>Category</h2>
-      Current Category:
-      <div [style.color]="category.fontColor" [style.backgroundColor]="category.backgroundColor">{{unsavedStack.categoryName}}</div>
+      Current Category: (TODO: Change to dropdown selector)
+      <div [style.color]="savedCategory.fontColor" [style.backgroundColor]="savedCategory.backgroundColor">{{unsavedStack.categoryName}}</div>
       <!--
       <select name="category-dropdown" [style.color]="category.fontColor" [style.background-color]="category.backgroundColor"
       [(ngModel)]="category" (change)="selectCategory($event);">
@@ -52,15 +52,16 @@
     </select>
      -->
     </div>
+    <br>
     <div class="colors" style="background-color: gray; padding: 12px;">
-      <app-stack-display-colors [(backgroundColor)]="unsavedStack.backgroundColor" [(fontColor)]="unsavedStack.fontColor" (isDirty)="isDirty = true;"></app-stack-display-colors>
-      <br>
       <div>
-        <mat-slide-toggle [(ngModel)]="useCategoryColors">
+        <mat-slide-toggle [(ngModel)]="useCategoryColors" (change)="onChangeUseCategoryColors();">
           Use category colors
         </mat-slide-toggle>
       </div>
-
+      <br>
+      <app-stack-display-colors [(backgroundColor)]="unsavedStack.backgroundColor" [(fontColor)]="unsavedStack.fontColor"
+        (eitherColorChange)="onChangeColor();"></app-stack-display-colors>
     </div>
   </div>
 </div>

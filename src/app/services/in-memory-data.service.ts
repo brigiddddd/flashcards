@@ -7,7 +7,7 @@ export class InMemoryDataService implements InMemoryDbService {
         id: 0,
         name: 'Start Smart',
         backgroundColor: '#FFBF29',
-        fontColor: '#000',
+        fontColor: '#000000',
         stacks: [
           {
             id: 5,
@@ -30,7 +30,7 @@ export class InMemoryDataService implements InMemoryDbService {
         id: 1,
         name: 'Unit 1',
         backgroundColor: '#FFED29',
-        fontColor: '#000',
+        fontColor: '#000000',
         stacks: [
           {
             id: 8,
@@ -64,7 +64,7 @@ export class InMemoryDataService implements InMemoryDbService {
         id: 2,
         name: 'Unit 2',
         backgroundColor: '#6FFF47',
-        fontColor: '#000',
+        fontColor: '#000000',
         stacks: [
           {
             id: 13,
@@ -92,7 +92,7 @@ export class InMemoryDataService implements InMemoryDbService {
         id: 3,
         name: 'Unit 3',
         backgroundColor: '#42FFD9',
-        fontColor: '#000',
+        fontColor: '#000000',
         stacks: [
           {
             id: 18,
@@ -120,7 +120,7 @@ export class InMemoryDataService implements InMemoryDbService {
         id: 4,
         name: 'Unit 4',
         backgroundColor: '#3D6EFF',
-        fontColor: '#000',
+        fontColor: '#000000',
         stacks: [
           {
             id: 23,
@@ -144,7 +144,7 @@ export class InMemoryDataService implements InMemoryDbService {
         id: 5,
         name: 'Unit 5',
         backgroundColor: '#C23DFF',
-        fontColor: '#000'
+        fontColor: '#000000'
       }
     ];
 

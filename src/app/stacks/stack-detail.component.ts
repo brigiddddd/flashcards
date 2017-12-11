@@ -6,6 +6,7 @@ import { Location } from '@angular/common';
 
 import 'rxjs/add/operator/switchMap';
 import { Category } from '../models/category';
+import { CategoriesComponent } from '../categories/categories.component';
 
 @Component({
   selector: 'app-stack-detail',
@@ -13,14 +14,16 @@ import { Category } from '../models/category';
   styleUrls: ['./stack-detail.component.css']
 })
 export class StackDetailComponent implements OnInit {
-  //@Input() stack: Stack;
-  savedStack: Stack;
   @Input() unsavedStack: Stack;
+  savedStack: Stack;
+  stackId: string;
+
+  unsavedCategory: Category;
+  savedCategory: Category;
+  categoryId: string;
+
   isEditingName = false;
   isDirty = false;
-  categoryId: string;
-  unsavedCategory: Category;
-  category: Category; // TODO: Categories!!!
   useCategoryColors: boolean;
 
   constructor(
@@ -28,9 +31,7 @@ export class StackDetailComponent implements OnInit {
     private _route: ActivatedRoute,
     private _router: Router,
     private _location: Location
-  ) {
-    this.category = new Category();
-  } // TODO: THIS IS GARBAGE
+  ) {}
 
   ngOnInit(): void {
     this._route.paramMap
@@ -67,12 +68,10 @@ export class StackDetailComponent implements OnInit {
   }
 
   onSelect(card: string): void {
-    console.log(card); // TODO: remove this line.
     this.editCard(card);
   }
 
   editCard(card: string): void {
-    console.log('editing card', card);
     this.isDirty = true;
   }
 
@@ -104,16 +103,17 @@ export class StackDetailComponent implements OnInit {
   save(goBack): void {
     this._categoryService
       .getCategory(this.categoryId)
-      .subscribe(category => {
-        this.unsavedCategory = Object.assign({}, category);
+      .subscribe((category: Category) => {
         const index = category.stacks.findIndex(
           stack => this.unsavedStack.id === stack.id
         );
+        //TODO: Verify
         this.unsavedCategory.stacks[index] = this.unsavedStack;
-        console.log(this.unsavedStack);
         // TODO
         if (this.unsavedCategory) {
-          this._categoryService.updateCategory(this.unsavedCategory);
+          this._categoryService
+            .updateCategory(this.unsavedCategory)
+            .subscribe();
         }
 
         if (goBack) {
@@ -121,7 +121,6 @@ export class StackDetailComponent implements OnInit {
         }
         //TODO: figure out saved/unsaved stacks
         this.isDirty = false;
-
       });
   }
 
@@ -139,8 +138,27 @@ export class StackDetailComponent implements OnInit {
   trackByIndex(index: number, obj: any): number {
     return index;
   }
+
+  onChangeColor(): void {
+    this.isDirty = true;
+
+    if (
+      this.unsavedStack.fontColor !== this.savedCategory.fontColor ||
+      this.unsavedStack.backgroundColor !== this.savedCategory.backgroundColor
+    ) {
+      this.useCategoryColors = false;
+    }
+  }
+
+  onChangeUseCategoryColors(): void {
+    if (this.useCategoryColors) {
+      this.unsavedStack.fontColor = this.savedCategory.fontColor;
+      this.unsavedStack.backgroundColor = this.savedCategory.backgroundColor;
+    }
+  }
 }
+
 // NOTE: IF YOU CHANGE THE CATEGORY, YOUR CURRENT URL WILL BE INCORRECT. SO YOU WOULD HAVE TO RE-ROUTE
-// AND THEN SOMEHOW REMOVE THE 'BACK' FUNCTIONALITY. NEED TO REDO STACK URLS TO NOT CONTAIN CATEGORY URLS.
+// AND THEN SOMEHOW REMOVE THE 'BACK' FUNCTIONALITY. DO WE NEED TO REDO STACK URLS TO NOT CONTAIN CATEGORY URLS.
 
 // TODO: USE MESSAGE SERVICE

@@ -11,7 +11,7 @@ export class StackDisplayColorsComponent implements OnInit {
 
   @Output() backgroundColorChange = new EventEmitter<string>();
   @Output() fontColorChange = new EventEmitter<string>();
-  @Output() isDirty = new EventEmitter<boolean>();
+  @Output() eitherColorChange = new EventEmitter<boolean>();
   constructor() {}
 
   ngOnInit() {}
@@ -27,20 +27,24 @@ export class StackDisplayColorsComponent implements OnInit {
   }
 
   set backgroundColor(color: string) {
-    if (this.backgroundColorValue && this.backgroundColorValue !== color) {
-      this.isDirty.emit(true);
-    }
+    const originalColorValue = this.backgroundColorValue;
 
     this.backgroundColorValue = color;
     this.backgroundColorChange.emit(this.backgroundColorValue);
+
+    if (originalColorValue && originalColorValue !== color) {
+      this.eitherColorChange.emit(true);
+    }
   }
 
   set fontColor(color: string) {
-    if (this.fontColorValue && this.fontColorValue !== color) {
-      this.isDirty.emit(true);
-    }
+    const originalColorValue = this.fontColorValue;
 
     this.fontColorValue = color;
     this.fontColorChange.emit(this.fontColorValue);
+
+    if (originalColorValue && originalColorValue !== color) {
+      this.eitherColorChange.emit(true);
+    }
   }
 }
