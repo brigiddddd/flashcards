@@ -15,6 +15,21 @@ export class StacksComponent implements OnInit {
   stacks: Stack[];
   categories: Category[];
 
+  // TODO: SHOULD THIS LIVE SOMEWHERE ELSE?
+  static getStackFromCategory(category: Category, stackId: string): Stack {
+    const stack: Stack = category.stacks.find(x => x.id.toString() === stackId);
+    if (stack === undefined) {
+      console.log(
+        `no stack with id = ${stackId} was found in
+         category with id = ${category.id}`
+      );
+      return;
+    }
+    stack.categoryId = category.id;
+    stack.categoryName = category.name;
+    return stack;
+  }
+
   constructor(
     private _router: Router,
     public dialog: MatDialog,
@@ -30,37 +45,35 @@ export class StacksComponent implements OnInit {
   getCategories(): void {
     this._categoryService
       .getCategories()
-      .subscribe(categories => (this.categories = categories));
+      .subscribe((categories: Category[]) => {
+        this.categories = categories;
+      });
   }
 
   getStacks(): void {
-    this._categoryService.getCategories().subscribe(categories => {
-      this.categories = categories;
-      for (let i = 0; i < this.categories.length; i++) {
-        const currentCategory = this.categories[i];
-        const currentStacks = currentCategory.stacks;
-        if (currentStacks) {
-          for (let j = 0; j < currentStacks.length; j++) {
-            const currentStack = currentStacks[j];
-            currentStack.categoryId = currentCategory.id;
-            currentStack.categoryName = currentCategory.name;
-            if (!currentStack.backgroundColor) {
-              currentStack.backgroundColor = currentCategory.backgroundColor;
+    this._categoryService
+      .getCategories()
+      .subscribe((categories: Category[]) => {
+        this.categories = categories;
+        for (let i = 0; i < this.categories.length; i++) {
+          const currentCategory = this.categories[i];
+          const currentStacks = currentCategory.stacks;
+          if (currentStacks) {
+            for (let j = 0; j < currentStacks.length; j++) {
+              const currentStack = currentStacks[j];
+              currentStack.categoryId = currentCategory.id;
+              currentStack.categoryName = currentCategory.name;
+              if (!currentStack.backgroundColor) {
+                currentStack.backgroundColor = currentCategory.backgroundColor;
+              }
+              if (!currentStack.fontColor) {
+                currentStack.fontColor = currentCategory.fontColor;
+              }
             }
-            if (!currentStack.fontColor) {
-              currentStack.fontColor = currentCategory.fontColor;
-            }
+            this.stacks = this.stacks.concat(currentStacks);
           }
-          this.stacks = this.stacks.concat(currentStacks);
         }
-      }
-    });
-  }
-
-  getCategoryForStack(stack: Stack) {
-    //TODO: SHOULD WE IMPORT CATEGORY SERVICE IN STACK SERVICE?
-    this._categoryService.getCategory(stack.categoryId.toString());
-    //.then(category => stack.category = category); //TODO
+      });
   }
 
   onSelect(stack: Stack, event): void {
@@ -87,10 +100,10 @@ export class StacksComponent implements OnInit {
     if (!name) {
       return;
     }
-    // TODO: REDO WITH CATEGORY SERVICE
+    // TODO: REDO WITH CATEGORY(?) SERVICE
     /*
     this._stackService.create(name).then(stack => {
-      this._router.navigate(['/detail', stack.id]);
+      this._router.navigate(['/details', category.id, stack.id]);
     });
     */
   }

@@ -4,6 +4,8 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { CategoryService } from '../services/category.service';
+import { Category } from '../models/category';
+import { StacksComponent } from '../stacks/stacks.component';
 
 @Component({
   selector: 'app-cards',
@@ -14,7 +16,9 @@ export class CardsComponent implements OnInit {
   shuffledCards: string[];
   cardIndex: number;
   categoryId: string;
+  stackId: string;
   stack: Stack;
+  category: Category;
 
   constructor(
     private _categoryService: CategoryService,
@@ -29,16 +33,24 @@ export class CardsComponent implements OnInit {
     this._route.paramMap
       .switchMap((params: ParamMap) => {
         this.categoryId = params.get('categoryId');
-        return this._categoryService.getStack(this.categoryId, params.get('stackId'));
+        this.stackId = params.get('stackId');
+        return this._categoryService.getCategory(this.categoryId);
       })
-      .subscribe((stack: Stack) => {
+      .subscribe((category: Category) => {
+        this.category = category;
+        const stack = StacksComponent.getStackFromCategory(
+          this.category,
+          this.stackId
+        );
         this.shuffledCards = this.shuffle(stack.cards);
         this.stack = stack;
       });
   }
 
   shuffle(array: any[]): any[] {
-    if (!array) { return []; }
+    if (!array) {
+      return [];
+    }
     let currentIndex = array.length;
     let temporaryValue: any;
     let randomIndex: number;
@@ -73,6 +85,6 @@ export class CardsComponent implements OnInit {
 
   editStack(): void {
     console.log(this.categoryId);
-    this._router.navigate(['/details', this.categoryId, this.stack.id]);
+    this._router.navigate(['/details', this.categoryId, this.stackId]);
   }
 }

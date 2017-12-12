@@ -7,6 +7,7 @@ import { Location } from '@angular/common';
 import 'rxjs/add/operator/switchMap';
 import { Category } from '../models/category';
 import { CategoriesComponent } from '../categories/categories.component';
+import { StacksComponent } from './stacks.component';
 
 @Component({
   selector: 'app-stack-detail',
@@ -36,16 +37,26 @@ export class StackDetailComponent implements OnInit {
   ngOnInit(): void {
     this._route.paramMap
       .switchMap((params: ParamMap) => {
+        this.stackId = params.get('stackId');
         this.categoryId = params.get('categoryId');
-        return this._categoryService.getStack(
-          this.categoryId,
-          params.get('stackId')
-        );
+        return this._categoryService.getCategory(params.get('categoryId'));
       })
-      .subscribe((stack: Stack) => {
-        console.log(stack.name);
-        this.savedStack = stack;
-        this.unsavedStack = Object.assign({}, stack);
+      .subscribe((category: Category) => {
+        this.savedCategory = category;
+        this.unsavedCategory = Object.assign({}, this.savedCategory);
+        this.savedStack = StacksComponent.getStackFromCategory(
+          category,
+          this.stackId
+        );
+        this.unsavedStack = Object.assign({}, this.savedStack);
+        if (
+          this.unsavedStack.fontColor === undefined &&
+          this.unsavedStack.backgroundColor === undefined
+        ) {
+          this.useCategoryColors = true;
+          this.unsavedStack.backgroundColor = this.unsavedCategory.backgroundColor;
+          this.unsavedStack.fontColor = this.unsavedCategory.fontColor;
+        }
       });
   }
 
