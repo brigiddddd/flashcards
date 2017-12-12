@@ -84,7 +84,6 @@ export class CardsComponent implements OnInit {
   }
 
   editStack(): void {
-    console.log(this.categoryId);
     this._router.navigate(['/details', this.categoryId, this.stackId]);
   }
 }

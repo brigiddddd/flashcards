@@ -60,8 +60,7 @@
         </mat-slide-toggle>
       </div>
       <br>
-      <app-stack-display-colors [(backgroundColor)]="unsavedStack.backgroundColor" [(fontColor)]="unsavedStack.fontColor"
-        (eitherColorChange)="onChangeColor();"></app-stack-display-colors>
+      <app-stack-display-colors [(backgroundColor)]="backgroundColor" [(fontColor)]="fontColor" (eitherColorChange)="onChangeColor();"></app-stack-display-colors>
     </div>
   </div>
 </div>

@@ -27,6 +27,9 @@ export class StackDetailComponent implements OnInit {
   isDirty = false;
   useCategoryColors: boolean;
 
+  backgroundColor: string;
+  fontColor: string;
+
   constructor(
     private _categoryService: CategoryService,
     private _route: ActivatedRoute,
@@ -112,27 +115,30 @@ export class StackDetailComponent implements OnInit {
   }
 
   save(goBack): void {
-    this._categoryService
-      .getCategory(this.categoryId)
-      .subscribe((category: Category) => {
-        const index = category.stacks.findIndex(
-          stack => this.unsavedStack.id === stack.id
-        );
-        //TODO: Verify
-        this.unsavedCategory.stacks[index] = this.unsavedStack;
-        // TODO
-        if (this.unsavedCategory) {
-          this._categoryService
-            .updateCategory(this.unsavedCategory)
-            .subscribe();
-        }
+    if (this.unsavedCategory) {
+      if (this.useCategoryColors) {
+        delete this.unsavedStack.backgroundColor;
+        delete this.unsavedStack.fontColor;
+      } else {
+        this.unsavedStack.backgroundColor = this.backgroundColor;
+        this.unsavedStack.fontColor = this.fontColor;
+      }
+      const index = this.savedCategory.stacks.findIndex(
+        stack => this.unsavedStack.id === stack.id
+      );
+      this.unsavedCategory.stacks[index] = this.unsavedStack;
+      console.log(this.unsavedCategory.stacks[index]);
 
-        if (goBack) {
-          this.goBack();
-        }
-        //TODO: figure out saved/unsaved stacks
-        this.isDirty = false;
-      });
+      this._categoryService
+        .updateCategory(this.unsavedCategory)
+        .subscribe(() => {
+          if (goBack) {
+            this.goBack();
+          }
+          //TODO: figure out saved/unsaved stacks and categories.
+          this.isDirty = false;
+        });
+    }
   }
 
   deleteStack(): void {
@@ -143,7 +149,7 @@ export class StackDetailComponent implements OnInit {
   play(): void {
     //TODO: prompt for saving
     this.save(false);
-    this._router.navigate(['/cards', this.categoryId, this.savedStack.id]);
+    this._router.navigate(['/play', this.categoryId, this.savedStack.id]);
   }
 
   trackByIndex(index: number, obj: any): number {
@@ -154,8 +160,8 @@ export class StackDetailComponent implements OnInit {
     this.isDirty = true;
 
     if (
-      this.unsavedStack.fontColor !== this.savedCategory.fontColor ||
-      this.unsavedStack.backgroundColor !== this.savedCategory.backgroundColor
+      this.fontColor !== this.unsavedCategory.fontColor ||
+      this.backgroundColor !== this.unsavedCategory.backgroundColor
     ) {
       this.useCategoryColors = false;
     }
@@ -163,8 +169,8 @@ export class StackDetailComponent implements OnInit {
 
   onChangeUseCategoryColors(): void {
     if (this.useCategoryColors) {
-      this.unsavedStack.fontColor = this.savedCategory.fontColor;
-      this.unsavedStack.backgroundColor = this.savedCategory.backgroundColor;
+      this.fontColor = this.unsavedCategory.fontColor;
+      this.backgroundColor = this.unsavedCategory.backgroundColor;
     }
   }
 }

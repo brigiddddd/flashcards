@@ -46,12 +46,14 @@ export class InMemoryDataService implements InMemoryDbService {
             id: 10,
             name: 'Week 3',
             cards: ['be', 'come', 'good', 'pull'],
-            categoryId: 2
+            categoryId: 2,
+            fontColor: '#029AB7'
           }, {
             id: 11,
             name: 'Week 4',
             cards: ['fun', 'make', 'they', 'too'],
-            categoryId: 2
+            categoryId: 2,
+            backgroundColor: '#F0B3C4'
           }, {
             id: 12,
             name: 'Week 5',
