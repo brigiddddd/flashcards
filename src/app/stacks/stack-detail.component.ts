@@ -1,10 +1,12 @@
 import { CategoryService } from './../services/category.service';
 import { Stack } from './../models/stack';
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
-import 'rxjs/add/operator/switchMap';
+import { Observable } from 'rxjs/Observable';
+import { forkJoin } from 'rxjs/observable/forkJoin';
+
 import { Category } from '../models/category';
 import { CategoriesComponent } from '../categories/categories.component';
 import { StacksComponent } from './stacks.component';
@@ -19,9 +21,11 @@ export class StackDetailComponent implements OnInit {
   savedStack: Stack;
   stackId: string;
 
-  unsavedCategory: Category;
-  savedCategory: Category;
+  newlySelectedCategory: Category;
+  originalCategory: Category;
   categoryId: string;
+
+  categories: Category[];
 
   isEditingName = false;
   isDirty = false;
@@ -29,6 +33,8 @@ export class StackDetailComponent implements OnInit {
 
   backgroundColor: string;
   fontColor: string;
+
+  selectedCategoryId: string;
 
   constructor(
     private _categoryService: CategoryService,
@@ -38,29 +44,38 @@ export class StackDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this._route.paramMap
-      .switchMap((params: ParamMap) => {
-        this.stackId = params.get('stackId');
-        this.categoryId = params.get('categoryId');
-        return this._categoryService.getCategory(params.get('categoryId'));
-      })
-      .subscribe((category: Category) => {
-        this.savedCategory = category;
-        this.unsavedCategory = Object.assign({}, this.savedCategory);
-        this.savedStack = StacksComponent.getStackFromCategory(
-          category,
-          this.stackId
-        );
-        this.unsavedStack = Object.assign({}, this.savedStack);
-        if (
-          this.unsavedStack.fontColor === undefined &&
-          this.unsavedStack.backgroundColor === undefined
-        ) {
-          this.useCategoryColors = true;
-          this.unsavedStack.backgroundColor = this.unsavedCategory.backgroundColor;
-          this.unsavedStack.fontColor = this.unsavedCategory.fontColor;
-        }
-      });
+    this._route.params.subscribe((params: Params) => {
+      this.stackId = params['stackId'];
+      this.categoryId = params['categoryId'];
+    });
+
+    forkJoin(
+      this._categoryService.getCategories(),
+      this._categoryService.getCategory(this.categoryId)
+    ).subscribe(([categories, category]) => {
+      this.categories = categories;
+      this.originalCategory = category;
+      this.savedStack = StacksComponent.getStackFromCategory(
+        category,
+        this.stackId
+      );
+      this.unsavedStack = Object.assign({}, this.savedStack);
+
+      this.backgroundColor =
+        this.unsavedStack.backgroundColor ||
+        this.originalCategory.backgroundColor;
+      this.fontColor =
+        this.unsavedStack.fontColor || this.originalCategory.fontColor;
+
+      if (
+        this.backgroundColor === this.originalCategory.backgroundColor &&
+        this.fontColor === this.originalCategory.fontColor
+      ) {
+        this.useCategoryColors = true;
+      }
+
+      this.selectedCategoryId = this.originalCategory.id.toString(); //TODO: Maybe this should change or not be necessary.
+    });
   }
 
   goBack(): void {
@@ -114,31 +129,79 @@ export class StackDetailComponent implements OnInit {
     this.isDirty = true;
   }
 
-  save(goBack): void {
-    if (this.unsavedCategory) {
-      if (this.useCategoryColors) {
-        delete this.unsavedStack.backgroundColor;
-        delete this.unsavedStack.fontColor;
-      } else {
-        this.unsavedStack.backgroundColor = this.backgroundColor;
-        this.unsavedStack.fontColor = this.fontColor;
-      }
-      const index = this.savedCategory.stacks.findIndex(
-        stack => this.unsavedStack.id === stack.id
-      );
-      this.unsavedCategory.stacks[index] = this.unsavedStack;
-      console.log(this.unsavedCategory.stacks[index]);
+  removeStackFromCategory(stack: Stack, category: Category): Observable<any> {
+    console.log('StackDetailComponent: removeStackFromCategory');
+    const index = category.stacks.findIndex(s => stack.id === s.id);
 
-      this._categoryService
-        .updateCategory(this.unsavedCategory)
-        .subscribe(() => {
-          if (goBack) {
-            this.goBack();
-          }
-          //TODO: figure out saved/unsaved stacks and categories.
-          this.isDirty = false;
-        });
+    if (index > -1) {
+      category.stacks.splice(index, 1);
+
+      return this._categoryService.updateCategory(category);
+    } else {
+      //TODO: Handle this better
+      console.log(
+        `stack with ${stack.id} not found in category with id ${category.id}`
+      );
     }
+  }
+
+  addStackToCategory(stack: Stack, category: Category): Observable<any> {
+    console.log('StackDetailComponent: addStackToCategory');
+    //TODO: Stack will be saved with categoryName and categoryId
+    if (!category.stacks) {
+      category.stacks = [];
+    }
+    category.stacks.push(stack);
+
+    return this._categoryService.updateCategory(category);
+  }
+
+  replaceStackInCategory(stack: Stack, category: Category): Observable<any> {
+    console.log('StackDetailComponent: replaceStackInCategory');
+    //TODO: Stack will be saved with categoryName and categoryId
+
+    console.log('StackDetailComponent: removeStackFromCategory');
+    const index = category.stacks.findIndex(s => stack.id === s.id);
+
+    if (index > -1) {
+      category.stacks[index] = stack;
+
+      return this._categoryService.updateCategory(category);
+    } else {
+      //TODO: Handle this better
+      console.log(
+        `stack with ${stack.id} not found in category with id ${category.id}`
+      );
+    }
+  }
+
+  save(goBack): void {
+    const observables: Observable<any>[] = [];
+    if (this.newlySelectedCategory) {
+      observables.push(
+        this.addStackToCategory(this.unsavedStack, this.newlySelectedCategory)
+      );
+      observables.push(
+        this.removeStackFromCategory(this.unsavedStack, this.originalCategory)
+      );
+    } else {
+      observables.push(
+        this.replaceStackInCategory(this.unsavedStack, this.originalCategory)
+      );
+    }
+
+    forkJoin(observables).subscribe(() => {
+      if (goBack) {
+        this.goBack();
+      }
+      this.isDirty = false;
+      if (this.newlySelectedCategory) {
+        this.originalCategory = Object.assign({}, this.newlySelectedCategory);
+        delete this.newlySelectedCategory;
+      }
+
+      this.savedStack = Object.assign({}, this.unsavedStack);
+    });
   }
 
   deleteStack(): void {
@@ -157,20 +220,51 @@ export class StackDetailComponent implements OnInit {
   }
 
   onChangeColor(): void {
+    console.log('StackDetailComponent: onChangeColor');
     this.isDirty = true;
+    const category = this.newlySelectedCategory || this.originalCategory;
 
     if (
-      this.fontColor !== this.unsavedCategory.fontColor ||
-      this.backgroundColor !== this.unsavedCategory.backgroundColor
+      this.fontColor !== category.fontColor ||
+      this.backgroundColor !== category.backgroundColor
     ) {
       this.useCategoryColors = false;
+      this.unsavedStack.backgroundColor = this.backgroundColor;
+      this.unsavedStack.fontColor = this.fontColor;
+    } else {
+      delete this.unsavedStack.backgroundColor;
+      delete this.unsavedStack.fontColor;
     }
   }
 
   onChangeUseCategoryColors(): void {
+    console.log('StackDetailComponent: onChangeUseCategoryColors');
+    const category = this.newlySelectedCategory || this.originalCategory;
+
     if (this.useCategoryColors) {
-      this.fontColor = this.unsavedCategory.fontColor;
-      this.backgroundColor = this.unsavedCategory.backgroundColor;
+      this.fontColor = category.fontColor;
+      this.backgroundColor = category.backgroundColor;
+    }
+  }
+
+  onSelectCategory(): void {
+    console.log('StackDetailComponent: onSelectCategory');
+    this.newlySelectedCategory = this.categories.find((category: Category) => {
+      return this.selectedCategoryId === category.id.toString();
+    });
+
+    this.unsavedStack.categoryId = this.newlySelectedCategory.id;
+    this.unsavedStack.categoryName = this.newlySelectedCategory.name;
+
+    if (this.newlySelectedCategory.id === this.originalCategory.id) {
+      delete this.newlySelectedCategory;
+    } else {
+      this.isDirty = true;
+    }
+    if (this.useCategoryColors) {
+      const category = this.newlySelectedCategory || this.originalCategory;
+      this.backgroundColor = category.backgroundColor;
+      this.fontColor = category.fontColor;
     }
   }
 }

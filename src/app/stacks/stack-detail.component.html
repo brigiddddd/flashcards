@@ -1,4 +1,5 @@
 <div class="stackDetail" *ngIf='unsavedStack'>
+  <!-- TODO: MOVE TO HEADER? -->
   <div class="action-buttons">
     <button class="action-button" (click)="goBack()" title="Back">
       <i class="action-icon material-icons md-light">arrow_back</i>
@@ -20,7 +21,6 @@
       <input *ngIf="isEditingName" [(ngModel)]="unsavedStack.name" placeholder="Name" (blur)="updateName()" (keydown.enter)="updateName();"
         (input)="isDirty=true;" appAutofocus>
     </div>
-<!--
     <div class="cards">
       <ol class="cards-list">
         <li class="card" *ngFor="let card of unsavedStack.cards; let i=index; trackBy: trackByIndex">
@@ -38,28 +38,23 @@
         </li>
       </ol>
     </div>
- -->
     <div class="category">
       <h2>Category</h2>
-      Current Category: (TODO: Change to dropdown selector)
-      <div [style.color]="savedCategory.fontColor" [style.backgroundColor]="savedCategory.backgroundColor">{{unsavedStack.categoryName}}</div>
-      <!--
-      <select name="category-dropdown" [style.color]="category.fontColor" [style.background-color]="category.backgroundColor"
-      [(ngModel)]="category" (change)="selectCategory($event);">
-      <option *ngFor="let category of categories" [value]="category" [style.color]="category.fontColor" [style.background-color]="category.backgroundColor">
-        {{category}}
-      </option>
-    </select>
-     -->
+      <select name="category-dropdown" [style.color]="newlySelectedCategory ? newlySelectedCategory.fontColor : originalCategory.fontColor"
+        [style.background-color]="newlySelectedCategory ? newlySelectedCategory.backgroundColor : originalCategory.backgroundColor"
+        [(ngModel)]="selectedCategoryId" (change)="onSelectCategory($event);">
+        <option *ngFor="let category of categories" [value]="category.id" [style.color]="category.fontColor" [style.background-color]="category.backgroundColor">
+          {{category.name}}
+        </option>
+      </select>
     </div>
-    <br>
-    <div class="colors" style="background-color: gray; padding: 12px;">
+    <div class="colors">
+      <h2>Colors</h2>
       <div>
         <mat-slide-toggle [(ngModel)]="useCategoryColors" (change)="onChangeUseCategoryColors();">
           Use category colors
         </mat-slide-toggle>
       </div>
-      <br>
       <app-stack-display-colors [(backgroundColor)]="backgroundColor" [(fontColor)]="fontColor" (eitherColorChange)="onChangeColor();"></app-stack-display-colors>
     </div>
   </div>
