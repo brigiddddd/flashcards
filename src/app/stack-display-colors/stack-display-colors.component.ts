@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Stack } from './../models/stack';
 
 @Component({
   selector: 'app-stack-display-colors',
@@ -9,12 +10,24 @@ export class StackDisplayColorsComponent implements OnInit {
   backgroundColorValue: string;
   fontColorValue: string;
 
+  mockStack: Stack;
+
   @Output() backgroundColorChange = new EventEmitter<string>();
   @Output() fontColorChange = new EventEmitter<string>();
   @Output() eitherColorChange = new EventEmitter<boolean>();
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.createMockStack();
+  }
+
+  createMockStack() {
+    this.mockStack = new Stack();
+    this.mockStack.backgroundColor = this.backgroundColor;
+    this.mockStack.fontColor = this.fontColor;
+    this.mockStack.name = 'Sample Stack';
+    this.mockStack.cards = ['card', 'data', 'will', 'show', 'up', 'here'];
+  }
 
   @Input()
   get backgroundColor(): string {
@@ -35,6 +48,10 @@ export class StackDisplayColorsComponent implements OnInit {
     if (originalColorValue && originalColorValue !== color) {
       this.eitherColorChange.emit(true);
     }
+
+    if (this.mockStack) {
+      this.mockStack.backgroundColor = this.backgroundColor;
+    }
   }
 
   set fontColor(color: string) {
@@ -45,6 +62,10 @@ export class StackDisplayColorsComponent implements OnInit {
 
     if (originalColorValue && originalColorValue !== color) {
       this.eitherColorChange.emit(true);
+    }
+
+    if (this.mockStack) {
+      this.mockStack.fontColor = this.fontColor;
     }
   }
 }

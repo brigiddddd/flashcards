@@ -15,7 +15,7 @@ export class StacksComponent implements OnInit {
   stacks: Stack[];
   categories: Category[];
 
-  areThereSelectedStacks;
+  areThereSelectedStacks: boolean;
 
   // TODO: SHOULD THIS LIVE SOMEWHERE ELSE?
   static getStackFromCategory(category: Category, stackId: string): Stack {

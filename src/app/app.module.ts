@@ -37,6 +37,7 @@ import { ColorPickerWrapperComponent } from './color-picker-wrapper/color-picker
 import { StackDisplayColorsComponent } from './stack-display-colors/stack-display-colors.component';
 import { MessagesComponent } from './messages/messages.component';
 import { MessageService } from './services/message.service';
+import { StackViewComponent } from './stacks/stack-view.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { MessageService } from './services/message.service';
     CategoryDetailComponent,
     ColorPickerWrapperComponent,
     StackDisplayColorsComponent,
-    MessagesComponent
+    MessagesComponent,
+    StackViewComponent
   ],
   imports: [
     BrowserModule,
