@@ -9,7 +9,12 @@
   </span>
 </span>
 -->
-
+<!-- TODO: MOVE THIS FUNCTIONALITY TO HEADER -->
+<div class="action-buttons">
+  <button *ngIf="areThereSelectedStacks" (click)="onPlayMultiple()">
+    <i class="material-icons">play_circle_outline</i>
+  </button>
+</div>
 <div class="container">
   <mat-card *ngFor="let stack of stacks" class="stack item" title="{{ stack.cards }}" (dblclick)="onPlay(stack.categoryId, stack.id)"
     (click)="onSelect(stack, $event);" [style.order]="stack.order" [style.background]="stack.backgroundColor" [style.color]="stack.fontColor"
@@ -18,9 +23,3 @@
     <div class="content name">{{stack.name}}</div>
   </mat-card>
 </div>
-
-<span *ngFor="let stack of stacks">
-  <span *ngIf="stack.selected">
-    {{stack.categoryId}}.{{stack.name}},
-  </span>
-</span>

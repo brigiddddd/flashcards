@@ -50,4 +50,8 @@ export class CategoriesComponent implements OnInit {
   editCategory(category: Category): void {
     this._router.navigate(['/details', category.id]);
   }
+
+  deleteCategory(category: Category): void {
+    this._categoryService.deleteCategory(category).subscribe();
+  }
 }

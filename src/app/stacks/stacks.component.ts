@@ -15,6 +15,8 @@ export class StacksComponent implements OnInit {
   stacks: Stack[];
   categories: Category[];
 
+  areThereSelectedStacks;
+
   // TODO: SHOULD THIS LIVE SOMEWHERE ELSE?
   static getStackFromCategory(category: Category, stackId: string): Stack {
     const stack: Stack = category.stacks.find(x => x.id.toString() === stackId);
@@ -78,12 +80,44 @@ export class StacksComponent implements OnInit {
 
   onSelect(stack: Stack, event): void {
     stack.selected = !stack.selected;
-    //event.currentTarget.className += 'selected';
-    // TODO:Change style on select
+    this.areThereSelectedStacks = this.stacks.some((x: Stack) => x.selected);
   }
 
   onPlay(categoryId: number, stackId: number): void {
     this._router.navigate(['/play', categoryId, stackId]);
+  }
+
+  onPlayMultiple() {
+    const numSelected = document.getElementsByClassName('selected').length;
+    if (numSelected === 1) {
+      const selectedStack = this.stacks.find(x => x.selected);
+      this._router.navigate([
+        '/play',
+        selectedStack.categoryId,
+        selectedStack.id
+      ]);
+    } else {
+      const newCat = new Category();
+      const newStack = new Stack();
+      newStack.id = 10000;
+
+      this.stacks.forEach(x => {
+        if (x.selected === true) {
+          newStack.cards = newStack.cards.concat(x.cards);
+        }
+      });
+
+      newCat.stacks.push(newStack);
+      console.log(newCat);
+
+      this._categoryService
+        .addCategory(newCat)
+        .subscribe((category: Category) => {
+          console.log(category.id);
+          console.log(category.stacks[0]);
+          this._router.navigate(['/play', category.id, category.stacks[0].id]);
+        });
+    }
   }
 
   addStack(): void {

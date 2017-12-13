@@ -20,7 +20,7 @@
       <button class="card-action-button" (click)="replay()" title="Replay">
         <i class="card-action-icon material-icons md-light">replay</i>
       </button>
-      <button class="card-action-button" (click)="editStack()" title="Edit">
+      <button *ngIf="stack.name" class="card-action-button" (click)="editStack()" title="Edit">
         <i class="card-action-icon material-icons md-light">edit</i>
       </button>
     </div>

@@ -80,6 +80,8 @@ export class StackDetailComponent implements OnInit {
 
   goBack(): void {
     // TODO: PROMPT FOR SAVE
+    //TODO: IF CATEGORY HAS CHANGED, THIS IS BROKEN
+    console.log(this._location);
     this._location.back();
     // TODO: CanDeactivate guard (https://angular.io/api/router/CanDeactivate)
   }
@@ -129,6 +131,7 @@ export class StackDetailComponent implements OnInit {
     this.isDirty = true;
   }
 
+  //TODO: SHOULD THESE BE STATIC? OR IN SOME SORT OF CONTROLLER CLASS?
   removeStackFromCategory(stack: Stack, category: Category): Observable<any> {
     console.log('StackDetailComponent: removeStackFromCategory');
     const index = category.stacks.findIndex(s => stack.id === s.id);
@@ -159,8 +162,6 @@ export class StackDetailComponent implements OnInit {
   replaceStackInCategory(stack: Stack, category: Category): Observable<any> {
     console.log('StackDetailComponent: replaceStackInCategory');
     //TODO: Stack will be saved with categoryName and categoryId
-
-    console.log('StackDetailComponent: removeStackFromCategory');
     const index = category.stacks.findIndex(s => stack.id === s.id);
 
     if (index > -1) {

@@ -1,5 +1,5 @@
 import { Stack } from './../models/stack';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
@@ -12,7 +12,7 @@ import { StacksComponent } from '../stacks/stacks.component';
   templateUrl: './cards.component.html',
   styleUrls: ['./cards.component.css']
 })
-export class CardsComponent implements OnInit {
+export class CardsComponent implements OnInit, OnDestroy {
   shuffledCards: string[];
   cardIndex: number;
   categoryId: string;
@@ -45,6 +45,12 @@ export class CardsComponent implements OnInit {
         this.shuffledCards = this.shuffle(stack.cards);
         this.stack = stack;
       });
+  }
+
+  ngOnDestroy() {
+    if (!this.category.name) {
+      this._categoryService.deleteCategory(this.category).subscribe();
+    }
   }
 
   shuffle(array: any[]): any[] {

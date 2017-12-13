@@ -5,5 +5,5 @@ export class Category {
   name: string;
   backgroundColor: string;
   fontColor: string;
-  stacks: Stack[];
+  stacks: Stack[] = [];
 }

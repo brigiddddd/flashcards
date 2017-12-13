@@ -2,7 +2,7 @@
 export class Stack {
   id: number;
   name: string;
-  cards: string[];
+  cards: string[] = [];
   categoryId: number;
   selected = false;
   categoryName: string;
