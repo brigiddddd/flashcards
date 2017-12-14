@@ -51,6 +51,14 @@ export class CategoriesComponent implements OnInit {
     this._router.navigate(['/details', category.id]);
   }
 
+  addStack(category: Category): void {
+    console.log(`add stack to category ${category.id}`);
+    // TODO
+    // this._stackService.create(name).then(stack => {
+    //   this._router.navigate(['/details', category.id, stack.id]);
+    // });
+  }
+
   deleteCategory(category: Category): void {
     this._categoryService.deleteCategory(category).subscribe();
   }

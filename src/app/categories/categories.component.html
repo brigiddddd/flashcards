@@ -4,6 +4,9 @@
       <button mat-button class="edit" (click)="editCategory(category); $event.stopPropagation();" title="Edit">
         <i class="material-icons">color_lens</i>
       </button>
+      <button class="action-button add" (click)="addStack(category);" title="Add new stack">
+          <i class="material-icons md-light">add</i>
+        </button>
     </h3>
   </li>
   <li class="category">
