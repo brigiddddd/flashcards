@@ -55,7 +55,7 @@
           Use category colors
         </mat-slide-toggle>
       </div>
-      <app-stack-display-colors [(backgroundColor)]="backgroundColor" [(fontColor)]="fontColor" (eitherColorChange)="onChangeColor();"></app-stack-display-colors>
+      <app-stack-display-colors [categoryName]="unsavedStack.categoryName" [(backgroundColor)]="backgroundColor" [(fontColor)]="fontColor" (eitherColorChange)="onChangeColor();"></app-stack-display-colors>
     </div>
   </div>
 </div>

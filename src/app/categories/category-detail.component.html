@@ -15,7 +15,7 @@
         (input)="isDirty=true;" appAutofocus>
     </div>
     <div>
-      <app-stack-display-colors [(backgroundColor)]="unsavedCategory.backgroundColor" [(fontColor)]="unsavedCategory.fontColor"
+      <app-stack-display-colors [categoryName]="unsavedCategory.name" [(backgroundColor)]="unsavedCategory.backgroundColor" [(fontColor)]="unsavedCategory.fontColor"
         (eitherColorChange)="isDirty = true;"></app-stack-display-colors>
     </div>
   </div>

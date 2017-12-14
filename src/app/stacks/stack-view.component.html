@@ -1,4 +1,5 @@
-<mat-card class="stack item" title="{{ stack.cards }}" [style.background]="stack.backgroundColor" [style.color]="stack.fontColor">
-  <div class="content category">{{stack.categoryName}}</div>
+<mat-card class="stack" title="{{ stack.cards }}" [style.background]="stack.backgroundColor" [style.color]="stack.fontColor"
+  [class.selected]="stack.selected">
+  <div class="content category">{{categoryName}}</div>
   <div class="content name">{{stack.name}}</div>
 </mat-card>

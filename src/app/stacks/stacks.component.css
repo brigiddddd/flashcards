@@ -1,141 +1,16 @@
 /* Flex items */
-.container {
+.stack-view-container {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 1em auto;
 }
 
-.item {
-  padding: 0.5em;
-  width: 100%;
-  margin: 1%;
+.stack-view-container:after {
+  content: '';
+  flex: auto;
+}
+
+app-stack-view  {
   cursor: pointer;
-}
-
-.content {
-  position: absolute; /* this is absolute so that the .item will stay square */
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  padding: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex: 1 0 auto;
-  text-align: center;
-  user-select: none;
-}
-
-mat-card.selected {
-  box-shadow: 0px 0px 10px 4px darkgrey, inset 0px 0px 15px darkgrey;
-}
-
-.content.category {
-  text-align: left;
-  height: fit-content;
-  max-height: 100%;
-  width: fit-content;
-  max-width: 100%;
-}
-
-.item:hover .overlay {
-  /*display: none; TODO!*/
-
-  opacity: 1;
-}
-
-.overlay {
-  -webkit-transition: all 0.2s ease-in-out;
-  -o-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
-  background: rgba(0, 0, 0, 0.5);
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-
-  opacity: 0;
-
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-}
-
-.overlay-button {
-  cursor: pointer;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex: 1 0 auto;
-}
-
-.overlay-button:hover {
-  color: #7b1fa2;
-  background: rgba(0, 0, 0, 0.5);
-}
-
-.overlay-button.play-button {
-  margin: 14px 14px 0px 14px;
-}
-.overlay-button.edit-button {
-  margin: 0 14px 14px;
-}
-
-.overlay-button.add-button {
-  margin: 14px;
-}
-
-.overlay-button i,
-.add-button i {
-  font-size: 5em;
-}
-
-@media all and (min-width: 300px) {
-  /* phone-portrait */
-  .item {
-    width: 48%;
-    padding-bottom: 48%;
-  }
-
-  .name {
-    font-size: 6vw;
-  }
-}
-
-@media all and (min-width: 550px) {
-  /* phone-landscape */
-  .item {
-    width: 31.33%;
-    padding-bottom: 31.33%;
-  }
-
-  .name {
-    font-size: 4vw;
-  }
-}
-
-@media all and (min-width: 700px) {
-  /* phone-landscape, tablet-portrait */
-  .item {
-    width: 23%;
-    padding-bottom: 23%;
-  }
-
-  .name {
-    font-size: 3vw;
-  }
-}
-
-@media all and (min-width: 900px) {
-  /* tablet-landscape, browser */
-  .item {
-    width: 18%;
-    padding-bottom: 18%;
-  }
-
-  .name {
-    font-size: 3vw;
-  }
 }

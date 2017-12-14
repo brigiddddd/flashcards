@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Stack } from './../models/stack';
+import { Category } from './../models/category';
 
 @Component({
   selector: 'app-stack-display-colors',
@@ -11,6 +12,7 @@ export class StackDisplayColorsComponent implements OnInit {
   fontColorValue: string;
 
   mockStack: Stack;
+  @Input() categoryName: string;
 
   @Output() backgroundColorChange = new EventEmitter<string>();
   @Output() fontColorChange = new EventEmitter<string>();

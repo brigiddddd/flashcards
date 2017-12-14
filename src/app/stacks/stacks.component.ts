@@ -88,7 +88,7 @@ export class StacksComponent implements OnInit {
   }
 
   onPlayMultiple() {
-    const numSelected = document.getElementsByClassName('selected').length;
+    const numSelected = document.getElementsByClassName('stack selected').length;
     if (numSelected === 1) {
       const selectedStack = this.stacks.find(x => x.selected);
       this._router.navigate([
@@ -108,7 +108,6 @@ export class StacksComponent implements OnInit {
       });
 
       newCat.stacks.push(newStack);
-      console.log(newCat);
 
       this._categoryService
         .addCategory(newCat)

@@ -15,11 +15,8 @@
     <i class="material-icons">play_circle_outline</i>
   </button>
 </div>
-<div class="container">
-  <mat-card *ngFor="let stack of stacks" class="stack item" title="{{ stack.cards }}" (dblclick)="onPlay(stack.categoryId, stack.id)"
-    (click)="onSelect(stack, $event);" [style.order]="stack.order" [style.background]="stack.backgroundColor" [style.color]="stack.fontColor"
-    [class.selected]="stack.selected">
-    <div class="content category">{{stack.categoryName}}</div>
-    <div class="content name">{{stack.name}}</div>
-  </mat-card>
+
+<div class="stack-view-container">
+  <app-stack-view class="item-wrapper" *ngFor="let stack of stacks" [stack]="stack" (dblclick)="onPlay(stack.categoryId, stack.id)"
+    (click)="onSelect(stack, $event);" [class.selected]="stack.selected"></app-stack-view>
 </div>
