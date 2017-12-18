@@ -3,6 +3,12 @@
 <div class="mat-dialog-content">
   <h3>Title:</h3>
   <input [(ngModel)]="name" placeholder="New Stack" (keydown.enter)="onClickOkay()">
+  <h3>Category:</h3>
+  <select name="category-dropdown" [(ngModel)]="selectedCategoryId" [style.color]="selectedCategory.fontColor" [style.background-color]="selectedCategory.backgroundColor" (change)="onSelect()">
+    <option *ngFor="let category of categories" [value]="category.id" [style.color]="category.fontColor" [style.background-color]="category.backgroundColor">
+      {{category.name}}
+    </option>
+  </select>
 </div>
 <div class="mat-dialog-actions">
   <button class="action-button" (click)="onClickOkay()" [disabled]="!name">

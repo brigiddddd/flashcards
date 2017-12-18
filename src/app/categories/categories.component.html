@@ -1,18 +1,19 @@
 <ul class="categories">
   <li *ngFor="let category of categories">
-    <h3 [style.background-color]="category.backgroundColor" [style.color]="category.fontColor">{{category.name}}
-      <button mat-button class="edit" (click)="editCategory(category); $event.stopPropagation();" title="Edit">
-        <i class="material-icons">color_lens</i>
-      </button>
-      <button class="action-button add" (click)="addStack(category);" title="Add new stack">
-          <i class="material-icons md-light">add</i>
-        </button>
-    </h3>
-  </li>
-  <li class="category">
-    <input id="newCategory" #newCategory (keydown.enter)="addCategory(newCategory.value); $event.stopPropagation();"/>
-    <button class="action-button add" (click)="addCategory(newCategory.value);">
+    <span class="category" [style.background-color]="category.backgroundColor" [style.color]="category.fontColor">
+      {{category.name}}
+    </span>
+    <span mat-button class="action-button edit" (click)="editCategory(category); $event.stopPropagation();" title="Edit">
+      <i class="material-icons">edit</i>
+    </span>
+    <span class="action-button add" (click)="addStack(category);" title="Add new stack">
       <i class="material-icons md-light">add</i>
-    </button>
+    </span>
+  </li>
+  <li>
+    <input class="newCategory category" #newCategory (keydown.enter)="addCategory(newCategory.value); $event.stopPropagation();" />
+    <span class="action-button add" (click)="addCategory(newCategory.value);">
+      <i class="material-icons md-light">add</i>
+    </span>
   </li>
 </ul>

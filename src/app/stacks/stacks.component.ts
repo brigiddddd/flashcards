@@ -15,7 +15,7 @@ export class StacksComponent implements OnInit {
   stacks: Stack[];
   categories: Category[];
 
-  areThereSelectedStacks: boolean;
+  numberSelectedStacks: number;
 
   // TODO: SHOULD THIS LIVE SOMEWHERE ELSE?
   static getStackFromCategory(category: Category, stackId: string): Stack {
@@ -80,51 +80,61 @@ export class StacksComponent implements OnInit {
 
   onSelect(stack: Stack, event): void {
     stack.selected = !stack.selected;
-    this.areThereSelectedStacks = this.stacks.some((x: Stack) => x.selected);
+    this.numberSelectedStacks = this.stacks.filter(
+      (x: Stack) => x.selected
+    ).length;
   }
 
   onPlay(categoryId: number, stackId: number): void {
-    this._router.navigate(['/play', categoryId, stackId]);
-  }
-
-  onPlayMultiple() {
-    const numSelected = document.getElementsByClassName('stack selected').length;
-    if (numSelected === 1) {
-      const selectedStack = this.stacks.find(x => x.selected);
-      this._router.navigate([
-        '/play',
-        selectedStack.categoryId,
-        selectedStack.id
-      ]);
+    if (this.numberSelectedStacks === 1) {
+      const stack = this.getSelectedStack();
+      this._router.navigate(['/play', stack.categoryId, stack.id]);
     } else {
-      const newCat = new Category();
-      const newStack = new Stack();
-      newStack.id = 10000;
-
-      this.stacks.forEach(x => {
-        if (x.selected === true) {
-          newStack.cards = newStack.cards.concat(x.cards);
-        }
-      });
-
-      newCat.stacks.push(newStack);
-
-      this._categoryService
-        .addCategory(newCat)
-        .subscribe((category: Category) => {
-          console.log(category.id);
-          console.log(category.stacks[0]);
-          this._router.navigate(['/play', category.id, category.stacks[0].id]);
-        });
+      this.onPlayMultiple();
     }
   }
 
+  onPlayMultiple() {
+    const newCat = new Category();
+    const newStack = new Stack();
+    newStack.id = 10000;
+
+    this.stacks.forEach(x => {
+      if (x.selected === true) {
+        newStack.cards = newStack.cards.concat(x.cards);
+      }
+    });
+
+    newCat.stacks.push(newStack);
+
+    this._categoryService
+      .addCategory(newCat)
+      .subscribe((category: Category) => {
+        console.log(category.id);
+        console.log(category.stacks[0]);
+        this._router.navigate(['/play', category.id, category.stacks[0].id]);
+      });
+  }
+
+  getSelectedStack(): Stack {
+    return this.stacks.find((x: Stack) => x.selected);
+  }
+
+  onEditSelected(): void {
+    const stack = this.getSelectedStack();
+    this._router.navigate(['/details', stack.categoryId, stack.id]);
+  }
+
   addStack(): void {
+    // TODO: ADD CATEGORY SELECTOR TO DIALOG
     const dialogRef = this.dialog.open(AddStackDialogComponent, {
       width: '250px'
     });
+    const instance = dialogRef.componentInstance;
+    instance.categories = this.categories;
 
     dialogRef.afterClosed().subscribe(result => {
+      console.log('after close');
       this.createStack(result);
     });
   }
@@ -133,16 +143,13 @@ export class StacksComponent implements OnInit {
     if (!name) {
       return;
     }
+    console.log('TODO: CREATE STACK');
     // TODO: REDO WITH CATEGORY(?) SERVICE
     /*
     this._stackService.create(name).then(stack => {
       this._router.navigate(['/details', category.id, stack.id]);
     });
     */
-  }
-
-  editStack(category: Category, stack: Stack): void {
-    this._router.navigate(['/details', category.id, stack.id]);
   }
 
   deleteStack(stack: Stack): void {

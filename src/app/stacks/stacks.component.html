@@ -11,8 +11,14 @@
 -->
 <!-- TODO: MOVE THIS FUNCTIONALITY TO HEADER -->
 <div class="action-buttons">
-  <button *ngIf="areThereSelectedStacks" (click)="onPlayMultiple()">
+  <button (click)="addStack()">
+    <i class="material-icons">add</i>
+  </button>
+  <button *ngIf="numberSelectedStacks >= 1" (click)="onPlay(numberSelectedStacks)">
     <i class="material-icons">play_circle_outline</i>
+  </button>
+  <button *ngIf="numberSelectedStacks === 1" (click)="onEditSelected()">
+    <i class="material-icons">edit</i>
   </button>
 </div>
 

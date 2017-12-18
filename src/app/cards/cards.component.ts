@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { CategoryService } from '../services/category.service';
 import { Category } from '../models/category';
 import { StacksComponent } from '../stacks/stacks.component';
+import 'rxjs/add/operator/switchMap';
 
 @Component({
   selector: 'app-cards',

@@ -1,4 +1,23 @@
-li {
+.categories {
   width: max-content;
-  height: 100%;
+}
+
+.category {
+  margin: 4px;
+  font-size: 2em;
+}
+
+.action-button > i {
+  vertical-align: text-bottom;
+}
+
+.action-button:hover:enabled, span.action-button:hover {
+  cursor: pointer;
+  color: #7b1fa2;
+}
+
+.newCategory {
+  font-family : inherit;
+  vertical-align: middle;
+  width: 45%;
 }
