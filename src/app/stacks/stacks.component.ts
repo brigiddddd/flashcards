@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { AddStackDialogComponent } from './../add-stack-dialog/add-stack-dialog.component';
-import { Stack } from '../models/stack';
+import { Stack, DisplayStack } from '../models/stack';
 import { CategoryService } from './../services/category.service';
 import { Category } from '../models/category';
+import { StackService } from '../services/stack.service';
+import { forkJoin } from 'rxjs/observable/forkJoin';
 
 @Component({
   selector: 'app-stacks',
@@ -12,36 +14,21 @@ import { Category } from '../models/category';
   styleUrls: ['./stacks.component.css']
 })
 export class StacksComponent implements OnInit {
-  stacks: Stack[];
+  displayStacks: DisplayStack[];
   categories: Category[];
 
   numberSelectedStacks: number;
 
-  // TODO: SHOULD THIS LIVE SOMEWHERE ELSE?
-  static getStackFromCategory(category: Category, stackId: string): Stack {
-    const stack: Stack = category.stacks.find(x => x.id.toString() === stackId);
-    if (stack === undefined) {
-      console.log(
-        `no stack with id = ${stackId} was found in
-         category with id = ${category.id}`
-      );
-      return;
-    }
-    stack.categoryId = category.id;
-    stack.categoryName = category.name;
-    return stack;
-  }
-
   constructor(
     private _router: Router,
     public dialog: MatDialog,
-    private _categoryService: CategoryService
+    private _categoryService: CategoryService,
+    private _stackService: StackService
   ) {}
 
   ngOnInit(): void {
-    this.stacks = [];
-    //this.getCategories();
-    this.getStacks();
+    this.displayStacks = [];
+    this.getDisplayStacks();
   }
 
   getCategories(): void {
@@ -52,77 +39,79 @@ export class StacksComponent implements OnInit {
       });
   }
 
-  getStacks(): void {
-    this._categoryService
-      .getCategories()
-      .subscribe((categories: Category[]) => {
-        this.categories = categories;
-        for (let i = 0; i < this.categories.length; i++) {
-          const currentCategory = this.categories[i];
-          const currentStacks = currentCategory.stacks;
-          if (currentStacks) {
-            for (let j = 0; j < currentStacks.length; j++) {
-              const currentStack = currentStacks[j];
-              currentStack.categoryId = currentCategory.id;
-              currentStack.categoryName = currentCategory.name;
-              if (!currentStack.backgroundColor) {
-                currentStack.backgroundColor = currentCategory.backgroundColor;
-              }
-              if (!currentStack.fontColor) {
-                currentStack.fontColor = currentCategory.fontColor;
-              }
-            }
-            this.stacks = this.stacks.concat(currentStacks);
-          }
-        }
-      });
+  getDisplayStacks(): void {
+    forkJoin(
+      this._stackService.getStacks(),
+      this._categoryService.getCategories()
+    ).subscribe(([stacks, categories]) => {
+      for (const stack of stacks) {
+        const category = categories.find(
+          (x: Category) => x.id === stack.categoryId
+        );
+
+        const displayStack = new DisplayStack({
+          id: stack.id,
+          name: stack.name,
+          categoryId: stack.categoryId,
+          cards: stack.cards, // TODO: DEEP COPY?
+          backgroundColor:
+            stack.backgroundColor || category.defaultBackgroundColor,
+          fontColor: stack.fontColor || category.defaultFontColor,
+          categoryName: category.name
+        });
+
+        this.displayStacks.push(displayStack);
+      }
+    });
   }
 
-  onSelect(stack: Stack, event): void {
+  onSelect(stack: DisplayStack, event): void {
     stack.selected = !stack.selected;
-    this.numberSelectedStacks = this.stacks.filter(
-      (x: Stack) => x.selected
+    this.numberSelectedStacks = this.displayStacks.filter(
+      (x: DisplayStack) => x.selected
     ).length;
   }
 
-  onPlay(categoryId: number, stackId: number): void {
-    if (this.numberSelectedStacks === 1) {
-      const stack = this.getSelectedStack();
-      this._router.navigate(['/play', stack.categoryId, stack.id]);
-    } else {
+  onPlay(): void {
+    console.log(`numberSelectedStacks: ${this.numberSelectedStacks}`);
+    if (this.numberSelectedStacks > 1) {
+      console.log(`playing multiple`);
       this.onPlayMultiple();
+    } else {
+      this.playStackId(this.getSelectedStack().id);
     }
   }
 
   onPlayMultiple() {
-    const newCat = new Category();
-    const newStack = new Stack();
-    newStack.id = 10000;
+    const newStack = new DisplayStack({
+      cards: [],
+      name: 'Stacks: '
+    });
 
-    this.stacks.forEach(x => {
+    this.displayStacks.forEach(x => {
       if (x.selected === true) {
+        newStack.name += `${x.name} `;
         newStack.cards = newStack.cards.concat(x.cards);
       }
     });
 
-    newCat.stacks.push(newStack);
-
-    this._categoryService
-      .addCategory(newCat)
-      .subscribe((category: Category) => {
-        console.log(category.id);
-        console.log(category.stacks[0]);
-        this._router.navigate(['/play', category.id, category.stacks[0].id]);
-      });
+    this._stackService.createStack(newStack).subscribe((stack: Stack) => {
+      console.log(stack.id);
+      this.playStackId(stack.id);
+    });
   }
 
-  getSelectedStack(): Stack {
-    return this.stacks.find((x: Stack) => x.selected);
+  playStackId(stackId: number) {
+    this._router.navigate(['/play', stackId]);
+  }
+
+  getSelectedStack(): DisplayStack {
+    return this.displayStacks.find((x: DisplayStack) => x.selected);
   }
 
   onEditSelected(): void {
     const stack = this.getSelectedStack();
-    this._router.navigate(['/details', stack.categoryId, stack.id]);
+    this._router.navigate(['/stackDetails', stack.id]);
   }
 
   addStack(): void {
@@ -135,32 +124,34 @@ export class StacksComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('after close');
-      this.createStack(result);
+      //TODO
+      this.createStack(result[0], result[1]);
     });
   }
 
-  createStack(name: string): void {
+  createStack(name: string, categoryId: number): void {
     if (!name) {
       return;
     }
-    console.log('TODO: CREATE STACK');
-    // TODO: REDO WITH CATEGORY(?) SERVICE
-    /*
-    this._stackService.create(name).then(stack => {
-      this._router.navigate(['/details', category.id, stack.id]);
+    const stack = new Stack({
+      name: name,
+      cards: [],
+      categoryId: categoryId,
+      id: 100000
     });
-    */
+    stack.name = name;
+    //TODO: GetCategoryID
+    this._stackService.createStack(stack).subscribe((newStack: Stack) => {
+      this._router.navigate(['/stackDetails', newStack.id]); // TODO: FIX ROUTER
+    });
   }
 
-  deleteStack(stack: Stack): void {
-    //TODO: REDO WITH CATEGORY SERVICE
-    /*
-    this._stackService.delete(stack.id)
-      .then(() => {
-        this.stacks = this.stacks.filter(s => s !== stack);
-      });
-      */
-  }
+  // TODO: DELETE STACK FROM STACK DETAIL PAGE
+  // deleteStack(stack: Stack): void {
+  //   this._stackService.deleteStack(stack.id).subscribe(() => {
+  //     this.stacks = this.stacks.filter(s => s !== stack);
+  //   });
+  // }
 
   trackByStack(index: number, stack: Stack): number {
     // Angular uses object identity to track insertions and deletions within the iterator of an ngForOf.

@@ -14,7 +14,7 @@
   <button (click)="addStack()">
     <i class="material-icons">add</i>
   </button>
-  <button *ngIf="numberSelectedStacks >= 1" (click)="onPlay(numberSelectedStacks)">
+  <button *ngIf="numberSelectedStacks >= 1" (click)="onPlay()">
     <i class="material-icons">play_circle_outline</i>
   </button>
   <button *ngIf="numberSelectedStacks === 1" (click)="onEditSelected()">
@@ -23,6 +23,6 @@
 </div>
 
 <div class="stack-view-container">
-  <app-stack-view class="item-wrapper" *ngFor="let stack of stacks" [stack]="stack" (dblclick)="onPlay(stack.categoryId, stack.id)"
+  <app-stack-view class="item-wrapper" *ngFor="let stack of displayStacks" [stack]="stack" (dblclick)="playStackId(stack.id)"
     (click)="onSelect(stack, $event);" [class.selected]="stack.selected"></app-stack-view>
 </div>

@@ -7,10 +7,10 @@
     </mat-card>
   </div>
   <div class="card-actions" *ngIf="shuffledCards && cardIndex >= shuffledCards.length">
-    <div [style.background-color]="category.backgroundColor" [style.color]="category.fontColor">
+    <div *ngIf="category" [style.background-color]="category.defaultBackgroundColor" [style.color]="category.defaultFontColor">
       <h1>{{category.name}}</h1>
     </div>
-    <div [style.background-color]="stack.backgroundColor || category.backgroundColor" [style.color]="stack.fontColor || category.fontColor">
+    <div *ngIf="stack.name" [style.background-color]="stack.backgroundColor || category.defaultBackgroundColor" [style.color]="stack.fontColor || category.defaultFontColor">
       <h1>{{stack.name}}</h1>
     </div>
     <div class="card-action-buttons">

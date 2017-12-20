@@ -1,10 +1,10 @@
-<div class="stackDetail" *ngIf='unsavedStack'>
+<div class="stackDetail" *ngIf='displayStack'>
   <!-- TODO: MOVE TO HEADER? -->
   <div class="action-buttons">
     <button class="action-button" (click)="goBack()" title="Back">
       <i class="action-icon material-icons md-light">arrow_back</i>
     </button>
-    <button class="action-button" [disabled]="!isDirty" (click)="save(false)" title="Save">
+    <button class="action-button" [disabled]="!isDirty" (click)="saveStack(false);" title="Save">
       <i class="action-icon material-icons md-light">save</i>
     </button>
     <button class="action-button" (click)="deleteStack(); $event.stopPropagation()" title="Delete stack">
@@ -17,14 +17,15 @@
 
   <div class="stackContent">
     <div class="name" title="Edit stack name">
-      <h2 *ngIf="!isEditingName" (click)="editName();">{{ unsavedStack.name }}</h2>
-      <input *ngIf="isEditingName" [(ngModel)]="unsavedStack.name" placeholder="Name" (blur)="updateName()" (keydown.enter)="updateName();"
+      <h2 *ngIf="!isEditingName" (click)="editName();">{{ displayStack.name }}</h2>
+      <input *ngIf="isEditingName" [(ngModel)]="displayStack.name" placeholder="Name" (blur)="updateName()" (keydown.enter)="updateName();"
         (input)="isDirty=true;" appAutofocus>
     </div>
+
     <div class="cards">
       <ol class="cards-list">
-        <li class="card" *ngFor="let card of unsavedStack.cards; let i=index; trackBy: trackByIndex">
-          <input [(ngModel)]="unsavedStack.cards[i]" placeholder="card" (input)="editCard(card)">
+        <li class="card" *ngFor="let card of displayStack.cards; let i=index; trackBy: trackByIndex">
+          <input [(ngModel)]="displayStack.cards[i]" placeholder="card" (input)="editCard(card)">
           <span class="action-button" (click)="deleteCard(card); $event.stopPropagation()" title="Remove word">
             <i class="material-icons md-light">delete</i>
           </span>
@@ -38,13 +39,13 @@
         </li>
       </ol>
     </div>
+
     <div class="category">
       <h2>Category</h2>
-      <select name="category-dropdown" [style.color]="newlySelectedCategory ? newlySelectedCategory.fontColor : originalCategory.fontColor"
-        [style.background-color]="newlySelectedCategory ? newlySelectedCategory.backgroundColor : originalCategory.backgroundColor"
+      <select name="category-dropdown" [style.color]="category.defaultFontColor" [style.background-color]="category.defaultBackgroundColor"
         [(ngModel)]="selectedCategoryId" (change)="onSelectCategory($event);">
-        <option *ngFor="let category of categories" [value]="category.id" [style.color]="category.fontColor" [style.background-color]="category.backgroundColor">
-          {{category.name}}
+        <option *ngFor="let dropdownCat of categories" [value]="dropdownCat.id" [style.color]="dropdownCat.defaultFontColor" [style.background-color]="dropdownCat.defaultBackgroundColor">
+          {{dropdownCat.name}}
         </option>
       </select>
     </div>
@@ -55,7 +56,8 @@
           Use category colors
         </mat-slide-toggle>
       </div>
-      <app-stack-display-colors [categoryName]="unsavedStack.categoryName" [(backgroundColor)]="backgroundColor" [(fontColor)]="fontColor" (eitherColorChange)="onChangeColor();"></app-stack-display-colors>
+      <app-stack-display-colors [categoryName]="displayStack.categoryName" [(backgroundColor)]="displayStack.backgroundColor" [(fontColor)]="displayStack.fontColor"
+        (eitherColorChange)="onChangeColor();"></app-stack-display-colors>
     </div>
   </div>
 </div>

@@ -29,6 +29,7 @@ import { AddStackDialogComponent } from './add-stack-dialog/add-stack-dialog.com
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CategoriesComponent } from './categories/categories.component';
 import { CategoryService } from './services/category.service';
+import { StackService } from './services/stack.service';
 import { AutofocusDirective } from './directives/autofocus.directive';
 
 import 'hammerjs';
@@ -72,7 +73,7 @@ import { StackViewComponent } from './stacks/stack-view.component';
     ColorPickerModule,
     MatSlideToggleModule
   ],
-  providers: [CategoryService, MessageService],
+  providers: [CategoryService, StackService, MessageService],
   bootstrap: [AppComponent],
   entryComponents: [AddStackDialogComponent]
 })

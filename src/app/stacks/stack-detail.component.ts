@@ -1,5 +1,5 @@
 import { CategoryService } from './../services/category.service';
-import { Stack } from './../models/stack';
+import { Stack, DisplayStack } from './../models/stack';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Location } from '@angular/common';
@@ -10,6 +10,7 @@ import { forkJoin } from 'rxjs/observable/forkJoin';
 import { Category } from '../models/category';
 import { CategoriesComponent } from '../categories/categories.component';
 import { StacksComponent } from './stacks.component';
+import { StackService } from '../services/stack.service';
 
 @Component({
   selector: 'app-stack-detail',
@@ -17,70 +18,72 @@ import { StacksComponent } from './stacks.component';
   styleUrls: ['./stack-detail.component.css']
 })
 export class StackDetailComponent implements OnInit {
-  @Input() unsavedStack: Stack;
-  savedStack: Stack;
-  stackId: string;
-
-  newlySelectedCategory: Category;
-  originalCategory: Category;
-  categoryId: string;
+  @Input() displayStack: DisplayStack;
 
   categories: Category[];
+  category: Category;
 
   isEditingName = false;
   isDirty = false;
   useCategoryColors: boolean;
-
-  backgroundColor: string;
-  fontColor: string;
-
   selectedCategoryId: string;
 
   constructor(
     private _categoryService: CategoryService,
+    private _stackService: StackService,
     private _route: ActivatedRoute,
     private _router: Router,
-    private _location: Location
+    private _location: Location,
+    private _savedStack: Stack
   ) {}
 
   ngOnInit(): void {
+    let stackId: number;
     this._route.params.subscribe((params: Params) => {
-      this.stackId = params['stackId'];
-      this.categoryId = params['categoryId'];
+      stackId = params['stackId'];
     });
 
     forkJoin(
       this._categoryService.getCategories(),
-      this._categoryService.getCategory(this.categoryId)
-    ).subscribe(([categories, category]) => {
+      this._stackService.getStack(stackId)
+      // this._categoryService.getCategory(this.categoryId)
+    ).subscribe(([categories, stack]) => {
       this.categories = categories;
-      this.originalCategory = category;
-      this.savedStack = StacksComponent.getStackFromCategory(
-        category,
-        this.stackId
-      );
-      this.unsavedStack = Object.assign({}, this.savedStack);
+      this._savedStack = new Stack({
+        name: stack.name,
+        id: stack.id,
+        cards: stack.cards, // TODO: Deep COPY?
+        backgroundColor: stack.backgroundColor,
+        fontColor: stack.fontColor,
+        categoryId: stack.categoryId
+      });
 
-      this.backgroundColor =
-        this.unsavedStack.backgroundColor ||
-        this.originalCategory.backgroundColor;
-      this.fontColor =
-        this.unsavedStack.fontColor || this.originalCategory.fontColor;
-
-      if (
-        this.backgroundColor === this.originalCategory.backgroundColor &&
-        this.fontColor === this.originalCategory.fontColor
-      ) {
+      if (!this._savedStack.backgroundColor && !this._savedStack.fontColor) {
         this.useCategoryColors = true;
       }
 
-      this.selectedCategoryId = this.originalCategory.id.toString(); //TODO: Maybe this should change or not be necessary.
+      this.category = this.categories.find(
+        (x: Category) => x.id === this._savedStack.categoryId
+      ); // TODO: IF NO CATEGORY IS RETURNED?
+
+      this.selectedCategoryId = this._savedStack.categoryId.toString();
+
+      this.displayStack = new DisplayStack({
+        id: this._savedStack.id,
+        name: this._savedStack.name,
+        categoryId: this.category.id,
+        categoryName: this.category.name,
+        backgroundColor:
+          this._savedStack.backgroundColor ||
+          this.category.defaultBackgroundColor,
+        fontColor: this._savedStack.fontColor || this.category.defaultFontColor,
+        cards: this._savedStack.cards
+      });
     });
   }
 
   goBack(): void {
     // TODO: PROMPT FOR SAVE
-    //TODO: IF CATEGORY HAS CHANGED, THIS IS BROKEN
     console.log(this._location);
     this._location.back();
     // TODO: CanDeactivate guard (https://angular.io/api/router/CanDeactivate)
@@ -92,7 +95,7 @@ export class StackDetailComponent implements OnInit {
   }
 
   updateName(): void {
-    if (this.unsavedStack.name !== this.savedStack.name) {
+    if (this.displayStack.name !== this._savedStack.name) {
       this.isDirty = true;
     }
     this.isEditingName = false;
@@ -100,16 +103,18 @@ export class StackDetailComponent implements OnInit {
 
   onSelect(card: string): void {
     this.editCard(card);
+    // TODO
   }
 
   editCard(card: string): void {
     this.isDirty = true;
+    // TODO
   }
 
   deleteCard(card: string): void {
-    const index = this.unsavedStack.cards.indexOf(card);
+    const index = this.displayStack.cards.indexOf(card);
     if (index >= 0) {
-      this.unsavedStack.cards.splice(index, 1);
+      this.displayStack.cards.splice(index, 1);
     }
 
     this.isDirty = true;
@@ -121,99 +126,43 @@ export class StackDetailComponent implements OnInit {
       return;
     }
 
-    if (!this.unsavedStack.cards) {
-      this.unsavedStack.cards = [];
+    if (!this.displayStack.cards) {
+      this.displayStack.cards = [];
     }
-    this.unsavedStack.cards.push(cardContent);
+    this.displayStack.cards.push(cardContent);
 
     (<HTMLInputElement>document.getElementById('newCardContent')).value = '';
 
     this.isDirty = true;
   }
 
-  //TODO: SHOULD THESE BE STATIC? OR IN SOME SORT OF CONTROLLER CLASS?
-  removeStackFromCategory(stack: Stack, category: Category): Observable<any> {
-    console.log('StackDetailComponent: removeStackFromCategory');
-    const index = category.stacks.findIndex(s => stack.id === s.id);
-
-    if (index > -1) {
-      category.stacks.splice(index, 1);
-
-      return this._categoryService.updateCategory(category);
-    } else {
-      //TODO: Handle this better
-      console.log(
-        `stack with ${stack.id} not found in category with id ${category.id}`
-      );
+  saveStack(goBack): void {
+    console.log('StackDetailComponent: saveStack');
+    if (this.useCategoryColors) {
+      delete this.displayStack.backgroundColor;
+      delete this.displayStack.fontColor;
     }
-  }
-
-  addStackToCategory(stack: Stack, category: Category): Observable<any> {
-    console.log('StackDetailComponent: addStackToCategory');
-    //TODO: Stack will be saved with categoryName and categoryId
-    if (!category.stacks) {
-      category.stacks = [];
-    }
-    category.stacks.push(stack);
-
-    return this._categoryService.updateCategory(category);
-  }
-
-  replaceStackInCategory(stack: Stack, category: Category): Observable<any> {
-    console.log('StackDetailComponent: replaceStackInCategory');
-    //TODO: Stack will be saved with categoryName and categoryId
-    const index = category.stacks.findIndex(s => stack.id === s.id);
-
-    if (index > -1) {
-      category.stacks[index] = stack;
-
-      return this._categoryService.updateCategory(category);
-    } else {
-      //TODO: Handle this better
-      console.log(
-        `stack with ${stack.id} not found in category with id ${category.id}`
-      );
-    }
-  }
-
-  save(goBack): void {
-    const observables: Observable<any>[] = [];
-    if (this.newlySelectedCategory) {
-      observables.push(
-        this.addStackToCategory(this.unsavedStack, this.newlySelectedCategory)
-      );
-      observables.push(
-        this.removeStackFromCategory(this.unsavedStack, this.originalCategory)
-      );
-    } else {
-      observables.push(
-        this.replaceStackInCategory(this.unsavedStack, this.originalCategory)
-      );
-    }
-
-    forkJoin(observables).subscribe(() => {
+    this._stackService.updateStack(this.displayStack).subscribe(() => {
       if (goBack) {
         this.goBack();
       }
       this.isDirty = false;
-      if (this.newlySelectedCategory) {
-        this.originalCategory = Object.assign({}, this.newlySelectedCategory);
-        delete this.newlySelectedCategory;
-      }
-
-      this.savedStack = Object.assign({}, this.unsavedStack);
+      //TODO: RESET THIS.savedStack?
     });
   }
 
-  deleteStack(): void {
-    //TODO!
+  deleteStack(id): void {
     //TODO: warn that can't be undone.
+    this._stackService.deleteStack(id).subscribe(() => {
+      //TODO
+    });
   }
 
   play(): void {
     //TODO: prompt for saving
-    this.save(false);
-    this._router.navigate(['/play', this.categoryId, this.savedStack.id]);
+    this.saveStack(false);
+    console.log(this._savedStack.id);
+    this._router.navigate(['/play', this._savedStack.id]);
   }
 
   trackByIndex(index: number, obj: any): number {
@@ -223,54 +172,43 @@ export class StackDetailComponent implements OnInit {
   onChangeColor(): void {
     console.log('StackDetailComponent: onChangeColor');
     this.isDirty = true;
-    const category = this.newlySelectedCategory || this.originalCategory;
 
     if (
-      this.fontColor !== category.fontColor ||
-      this.backgroundColor !== category.backgroundColor
+      this.displayStack.fontColor &&
+      this.displayStack.backgroundColor &&
+      (this.displayStack.fontColor !== this.category.defaultFontColor ||
+        this.displayStack.backgroundColor !==
+          this.category.defaultBackgroundColor)
     ) {
       this.useCategoryColors = false;
-      this.unsavedStack.backgroundColor = this.backgroundColor;
-      this.unsavedStack.fontColor = this.fontColor;
-    } else {
-      delete this.unsavedStack.backgroundColor;
-      delete this.unsavedStack.fontColor;
     }
   }
 
   onChangeUseCategoryColors(): void {
     console.log('StackDetailComponent: onChangeUseCategoryColors');
-    const category = this.newlySelectedCategory || this.originalCategory;
-
+    console.log(`useCategoryColors: ${this.useCategoryColors}`);
     if (this.useCategoryColors) {
-      this.fontColor = category.fontColor;
-      this.backgroundColor = category.backgroundColor;
+      this.displayStack.fontColor = this.category.defaultFontColor;
+      this.displayStack.backgroundColor = this.category.defaultBackgroundColor;
     }
   }
 
   onSelectCategory(): void {
     console.log('StackDetailComponent: onSelectCategory');
-    this.newlySelectedCategory = this.categories.find((category: Category) => {
-      return this.selectedCategoryId === category.id.toString();
-    });
+    this.category = this.categories.find(
+      (category: Category) => this.selectedCategoryId === category.id.toString()
+    );
 
-    this.unsavedStack.categoryId = this.newlySelectedCategory.id;
-    this.unsavedStack.categoryName = this.newlySelectedCategory.name;
+    this.displayStack.categoryId = this.category.id;
+    this.displayStack.categoryName = this.category.name;
 
-    if (this.newlySelectedCategory.id === this.originalCategory.id) {
-      delete this.newlySelectedCategory;
-    } else {
+    if (this.displayStack.categoryId !== this._savedStack.categoryId) {
       this.isDirty = true;
     }
+
     if (this.useCategoryColors) {
-      const category = this.newlySelectedCategory || this.originalCategory;
-      this.backgroundColor = category.backgroundColor;
-      this.fontColor = category.fontColor;
+      this.displayStack.backgroundColor = this.category.defaultBackgroundColor;
+      this.displayStack.fontColor = this.category.defaultFontColor;
     }
   }
 }
-
-// NOTE: IF YOU CHANGE THE CATEGORY, YOUR CURRENT URL WILL BE INCORRECT. SO YOU WOULD HAVE TO RE-ROUTE
-// AND THEN SOMEHOW REMOVE THE 'BACK' FUNCTIONALITY. DO WE NEED TO REDO STACK URLS TO NOT CONTAIN CATEGORY URLS.
-
-// TODO: USE MESSAGE SERVICE

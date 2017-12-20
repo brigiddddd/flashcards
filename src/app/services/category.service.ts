@@ -1,5 +1,4 @@
 import { Category } from './../models/category';
-import { Stack } from '../models/stack';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
@@ -33,7 +32,7 @@ export class CategoryService {
     };
   }
 
-  getCategory(id: string): Observable<Category> {
+  getCategory(id: string | number): Observable<Category> {
     const url = `${this._categoriesUrl}/${id}`;
     return this._http
       .get<Category>(url)
@@ -47,7 +46,7 @@ export class CategoryService {
     return this._http
       .get<Category[]>(this._categoriesUrl)
       .pipe(
-        tap(heroes => this.log(`fetched categories`)),
+        tap(categories => this.log(`fetched categories`)),
         catchError(this._handleError('getCategories', []))
       );
   }
@@ -83,6 +82,4 @@ export class CategoryService {
         catchError(this._handleError<Category>('deleteCategory'))
       );
   }
-
-
 }

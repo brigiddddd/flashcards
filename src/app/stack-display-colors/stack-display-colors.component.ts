@@ -12,6 +12,7 @@ export class StackDisplayColorsComponent implements OnInit {
   fontColorValue: string;
 
   mockStack: Stack;
+  //TODO: USE DISPLAY STACK AS INPUT INSTEAD OF 3 DIFFERENT ONES!
   @Input() categoryName: string;
 
   @Output() backgroundColorChange = new EventEmitter<string>();
@@ -24,11 +25,14 @@ export class StackDisplayColorsComponent implements OnInit {
   }
 
   createMockStack() {
-    this.mockStack = new Stack();
-    this.mockStack.backgroundColor = this.backgroundColor;
-    this.mockStack.fontColor = this.fontColor;
-    this.mockStack.name = 'Sample Stack';
-    this.mockStack.cards = ['card', 'data', 'will', 'show', 'up', 'here'];
+    this.mockStack = new Stack({
+      backgroundColor: this.backgroundColor,
+      fontColor: this.fontColor,
+      name: 'Sample Stack',
+      cards: ['card', 'data', 'will', 'show', 'up', 'here'],
+      id: 999,
+      categoryId: 999
+    });
   }
 
   @Input()

@@ -1,5 +1,5 @@
 import { Component, Input, EventEmitter } from '@angular/core';
-import { Stack } from '../models/stack';
+import { DisplayStack } from '../models/stack';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
@@ -8,7 +8,7 @@ import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
   styleUrls: ['./stack-view.component.css']
 })
 export class StackViewComponent implements OnInit {
-  @Input() stack: Stack;
+  @Input() stack: DisplayStack;
   @Input() categoryName: string;
 
   ngOnInit() {

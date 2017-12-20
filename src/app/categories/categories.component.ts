@@ -37,25 +37,24 @@ export class CategoriesComponent implements OnInit {
     }
     const category = new Category();
     category.name = name;
-    category.stacks = [];
-    category.backgroundColor = defaultBackgroundColor;
-    category.fontColor = defaultFontColor;
+    category.defaultBackgroundColor = defaultBackgroundColor;
+    category.defaultFontColor = defaultFontColor;
     this._categoryService
       .addCategory(category)
       .subscribe((newCategory: Category) => {
-        this._router.navigate(['/details', newCategory.id]);
+        this._router.navigate(['/categoryDetails', newCategory.id]);
       });
   }
 
   editCategory(category: Category): void {
-    this._router.navigate(['/details', category.id]);
+    this._router.navigate(['/categoryDetails', category.id]);
   }
 
   addStack(category: Category): void {
     console.log(`add stack to category ${category.id}`);
     // TODO
     // this._stackService.create(name).then(stack => {
-    //   this._router.navigate(['/details', category.id, stack.id]);
+    //   this._router.navigate(['/categoryDetails', category.id, stack.id]);
     // });
   }
 
