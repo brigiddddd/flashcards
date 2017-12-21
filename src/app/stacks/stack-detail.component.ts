@@ -19,6 +19,7 @@ import { StackService } from '../services/stack.service';
 })
 export class StackDetailComponent implements OnInit {
   @Input() displayStack: DisplayStack;
+  private _savedStack: Stack; // TODO: VERIFY THIS IS NECESSARY?
 
   categories: Category[];
   category: Category;
@@ -33,9 +34,8 @@ export class StackDetailComponent implements OnInit {
     private _stackService: StackService,
     private _route: ActivatedRoute,
     private _router: Router,
-    private _location: Location,
-    private _savedStack: Stack
-  ) {}
+    private _location: Location
+  ) { }
 
   ngOnInit(): void {
     let stackId: number;
@@ -74,8 +74,8 @@ export class StackDetailComponent implements OnInit {
         categoryId: this.category.id,
         categoryName: this.category.name,
         backgroundColor:
-          this._savedStack.backgroundColor ||
-          this.category.defaultBackgroundColor,
+        this._savedStack.backgroundColor ||
+        this.category.defaultBackgroundColor,
         fontColor: this._savedStack.fontColor || this.category.defaultFontColor,
         cards: this._savedStack.cards
       });
@@ -96,6 +96,7 @@ export class StackDetailComponent implements OnInit {
 
   updateName(): void {
     if (this.displayStack.name !== this._savedStack.name) {
+      //TODO: THIS GETS SET TO DIRTY EARLY
       this.isDirty = true;
     }
     this.isEditingName = false;
@@ -148,6 +149,11 @@ export class StackDetailComponent implements OnInit {
       }
       this.isDirty = false;
       //TODO: RESET THIS.savedStack?
+      this._savedStack = this.displayStack;
+      this.displayStack.backgroundColor = this.displayStack.backgroundColor || this.category.defaultBackgroundColor;
+      this.displayStack.fontColor = this.displayStack.fontColor || this.category.defaultFontColor;
+      console.log(this.displayStack.backgroundColor);
+      console.log(this.displayStack.fontColor);
     });
   }
 
@@ -161,7 +167,6 @@ export class StackDetailComponent implements OnInit {
   play(): void {
     //TODO: prompt for saving
     this.saveStack(false);
-    console.log(this._savedStack.id);
     this._router.navigate(['/play', this._savedStack.id]);
   }
 
@@ -178,7 +183,7 @@ export class StackDetailComponent implements OnInit {
       this.displayStack.backgroundColor &&
       (this.displayStack.fontColor !== this.category.defaultFontColor ||
         this.displayStack.backgroundColor !==
-          this.category.defaultBackgroundColor)
+        this.category.defaultBackgroundColor)
     ) {
       this.useCategoryColors = false;
     }
@@ -203,6 +208,7 @@ export class StackDetailComponent implements OnInit {
     this.displayStack.categoryName = this.category.name;
 
     if (this.displayStack.categoryId !== this._savedStack.categoryId) {
+      //TODO: IS THIS NECESSARY? COLOR CHANGE TRIGGERS DIRTY??
       this.isDirty = true;
     }
 

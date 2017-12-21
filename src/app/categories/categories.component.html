@@ -1,6 +1,6 @@
 <ul class="categories">
   <li *ngFor="let category of categories">
-    <span class="category" [style.background-color]="category.backgroundColor" [style.color]="category.fontColor">
+    <span class="category" [style.background-color]="category.defaultBackgroundColor" [style.color]="category.defaultFontColor">
       {{category.name}}
     </span>
     <span mat-button class="action-button edit" (click)="editCategory(category); $event.stopPropagation();" title="Edit">
